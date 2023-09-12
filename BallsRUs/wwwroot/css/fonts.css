@@ -16,7 +16,7 @@
 }
 /* POPPINS BOLD */
 @font-face {
-    font-family: 'Poppins regular';
+    font-family: 'Poppins';
     src: url('../fonts/poppins-bold-webfont.eot');
     src: url('../fonts/poppins-bold-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/poppins-bold-webfont.woff2') format('woff2'), url('../fonts/poppins-bold-webfont.woff') format('woff'), url('../fonts/poppins-bold-webfont.ttf') format('truetype'), url('../fonts/poppins-bold-webfont.svg#poppinsbold') format('svg');
     font-weight: bolder;
