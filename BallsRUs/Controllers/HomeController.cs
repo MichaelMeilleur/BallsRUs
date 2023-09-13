@@ -1,4 +1,5 @@
 ﻿using BallsRUs.Models;
+using BallsRUs.Models.Home;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -21,6 +22,15 @@ namespace BallsRUs.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Submit(NousContacterVM vm)
+        {
+            if (!ModelState.IsValid)
+                return View(nameof(Index));
+
+            return View(nameof(Index));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
