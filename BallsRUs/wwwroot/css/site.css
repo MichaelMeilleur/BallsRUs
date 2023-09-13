@@ -41,6 +41,11 @@ body {
     display: flex;
 }
 
+#footer-bar {
+    width: 100%;
+    display: flex;
+}
+
 .navbar-brand {
     padding-top: 0;
     padding-bottom: 0;
