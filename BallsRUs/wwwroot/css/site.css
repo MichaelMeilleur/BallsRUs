@@ -107,3 +107,11 @@ body {
     color: white;
     text-align: center;
 }
+#carouselExampleControls{
+    padding-top : 10px;
+  
+}
+#carousel-container{
+    max-height: 1200px;
+    text-align: center;
+}
