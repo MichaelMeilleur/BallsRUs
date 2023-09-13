@@ -38,9 +38,27 @@ input[type=submit] {
     margin: auto;
     margin-top: 10px;
 }
-
     input[type=submit]:hover {
         filter: brightness(.96);
+    }
+
+input[type=text], input[type=password], textarea {
+    border: 0px solid #000000;
+    outline: none;
+    margin-bottom: 1px;
+    border-bottom-width: 1px;
+    background-color: white;
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 0px;
+}
+    input[type=text]:focus, input[type=password]:focus, textarea:focus {
+        outline: none;
+        box-shadow: none;
+        margin-bottom: 0px;
+        border-bottom-width: 2px;
+        border-color: forestgreen;
     }
 
 .row {
@@ -141,6 +159,6 @@ input[type=submit] {
 }
 
 .newsletter-form-item {
-    margin-left:3vw;
-    margin-right:3vw;
+    margin-left: 3vw;
+    margin-right: 3vw;
 }
