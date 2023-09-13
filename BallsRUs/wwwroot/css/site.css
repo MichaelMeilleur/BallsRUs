@@ -98,6 +98,7 @@ body {
 .footer-block {
     justify-content: center;
     display: flex;
+    margin-top:min(35px,4vw);
 }
 
 .footer-block-title {
