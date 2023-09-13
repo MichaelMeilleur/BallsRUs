@@ -3,5 +3,26 @@
 }
 
 <div class="text-center">
-    
+    <div style="padding-block:100px;">
+    </div>
+    <div id="newsletter-form" class="col-sm-6">
+        <label id="newsletter-header">Nous contacter</label>
+        <form>
+            <div class="newsletter-form-item form-group my-3 text-start">
+                <label class="mb-1" for="nom">Nom</label>
+                <input type="text" class="form-control" id="newsletter-form-name" placeholder="Votre nom" name="nom"/>
+            </div>
+            <div class="newsletter-form-item form-group my-3 text-start">
+                <label class="mb-1" for="courriel">Courriel</label>
+                <input type="text" class="form-control" id="newsletter-form-email" placeholder="nom@exemple.com" name="courriel" />
+            </div>
+            <div class="newsletter-form-item form-group my-3 text-start">
+                <label class="mb-1" for="description">Description</label>
+                <textarea type="text" class="form-control" id="newsletter-form-description" placeholder="Description de la demande" name="description"></textarea>
+            </div>
+            <div class="newsletter-form-item form-group mt-4 mb-1 text-start">
+                <input type="submit" value="Envoyer"/>
+            </div>
+        </form>
+    </div>
 </div>
