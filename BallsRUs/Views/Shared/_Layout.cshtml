@@ -51,17 +51,34 @@
             </span>
         </div>
     }
-    <div class="container">
+    <div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
+        <footer class="border-top footer text-muted">
+            <div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <h5 style="margin-left:15px">À PROPOS DE NOUS</h5>
+                        <ul class="list-unstyled">
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">À propos</a></li>
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Politiques de confidentialité</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 style="margin-left:15px">SERVICE À LA CLIENTÈLE</h5>
+                        <ul class="list-unstyled">
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Retours et échanges</a></li>
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Nous contacter</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="border-top">
+                    &copy; 2023 Balls R Us Ltd. Tous droits réservés.
+                </div>
+            </div>
+        </footer>
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 Balls R Us Ltd. Tous droits réservés.
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
