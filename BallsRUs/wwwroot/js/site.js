@@ -1,4 +1,10 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿// Textareas auto adjust
+var textareas = document.querySelectorAll("textarea");
+var heightLimit = 200; /* Maximum height: 200px */
 
-// Write your JavaScript code.
+textareas.forEach(function (textarea) {
+    textarea.addEventListener("input", function () {
+        textarea.style.height = ""; /* Reset the height*/
+        textarea.style.height = Math.min(textarea.scrollHeight, heightLimit) + "px";
+    });
+});

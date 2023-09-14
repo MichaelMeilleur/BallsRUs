@@ -1,3 +1,6 @@
+using FluentValidation.AspNetCore;
+using FluentValidation;
+
 namespace BallsRUs
 {
     public class Program
@@ -8,6 +11,9 @@ namespace BallsRUs
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
             var app = builder.Build();
 
