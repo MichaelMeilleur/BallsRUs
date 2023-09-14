@@ -108,6 +108,23 @@ body {
 .footer-block-element {
 }
 
+.footer {
+    bottom: 0;
+    height: 2em;
+    left: 0;
+    width: 100%;
+}
+
+#footer-copyright {
+    justify-content:center;
+    display:flex;
+}
+
+#footer-copyright-text {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #homepage-slogan-image {
     background-image: url("/img/default_background.jpg");
     background-size: cover;
