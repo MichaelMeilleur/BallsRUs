@@ -135,7 +135,7 @@ body {
 }
 
 @media(max-width: 650px) {
-    .column-notre-quipe {
+    .column-notre-equipe {
         width: 100%;
         display: block;
     }
