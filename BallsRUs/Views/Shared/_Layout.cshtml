@@ -53,17 +53,42 @@
             </span>
         </div>
     }
-    <div class="container">
+    <div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                <div class="row pb-4">
+                    <div class="footer-block row col-lg-3 col-sm-6 col-12">
+                        <h5 class="footer-block-title col-12">À PROPOS DE NOUS</h5>
+                        <span class="footer-block-element col-12"><a class="footer-link " asp-area="" asp-controller="Home" asp-action="About">À propos</a></span>
+                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Politiques de confidentialité</a></span>
+                    </div>
+                    <div class="footer-block row col-lg-3 col-sm-6 col-12">
+                        <h5 class="footer-block-title col-12">ESPACE CLIENT</h5>
+                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Retours et échanges</a></span>
+                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Nous contacter</a></span>
+                    </div>
+                    <div class="footer-block row col-lg-3 col-sm-6 col-12">
+                        <h5 class="footer-block-title col-12">SERVICES</h5>
+                        <span class="footer-block-element col-12"><a class="footer-link " asp-area="" asp-controller="Home" asp-action="About">Localisateur de magasin</a></span>
+                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Promotions</a></span>
+                    </div>
+                    <div class="footer-block row col-lg-3 col-sm-6 col-12">
+                        <h5 class="footer-block-title col-12">RESTEZ CONNECTÉ</h5>
+                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Blogue</a></span>
+                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Événements</a></span>
+                    </div>
+                </div>
+            </div>
+            <div id="footer-copyright" class="border-top">
+                <span id="footer-copyright-text">
+                    &copy; 2023 Balls R Us Ltd. Tous droits réservés.
+                </span>
+            </div>
+        </footer>
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 Balls R Us Ltd. Tous droits réservés.
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
