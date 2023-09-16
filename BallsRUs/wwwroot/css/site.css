@@ -207,3 +207,13 @@ input[type=text], input[type=password], textarea {
     margin-left: 3vw;
     margin-right: 3vw;
 }
+
+#carouselExampleControls{
+    padding-top : 10px;
+  
+}
+
+#carousel-container{
+    max-height: 1200px;
+    text-align: center;
+}
