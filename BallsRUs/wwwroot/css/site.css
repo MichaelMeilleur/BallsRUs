@@ -113,12 +113,13 @@ body {
     border-bottom: solid 1px grey;
 }
 
-#titres-a-propos {
+#titres-a-propos, .apropos-contianer h3 {
     margin-top: 30px;
     margin-bottom: 30px;
     font-family: 'Poppins';
     font-weight: bold;
     margin-left: auto;
+    text-align : center;
     margin-right: auto;
 }
 
@@ -178,3 +179,22 @@ body {
     height:400px;
 }
 
+
+.nos-coord {
+    border: 1px solid black;
+    display: flex;
+    background: linear-gradient(#e2ebea,#ededed);
+    width: inherit;
+    margin-left: auto;
+    margin-right: auto;
+}
+.nos-coord {
+    display: flex;
+    justify-content: space-around;
+}
+
+.nos-coord p {
+    width: 700px;
+    padding: 40px 50px 40px 10px;
+
+}
