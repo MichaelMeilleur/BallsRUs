@@ -18,13 +18,16 @@
         <div id="header-bar-container" class="row">
             <div class="container">
                 <div class="row">
-                    <div class="col-6 col-sm-3">
-                        <div id="header-bar">
-                            <a asp-area="" asp-controller="Home" asp-action="Index"><img id="header-logo" title="Accueil" src="../img/logo_no_background_white.png" /></a>
+                    <div class="col-4 col-sm-3">
+                        <div id="header-bar-logo-container-left" class="d-none d-sm-block">
+                            <a asp-area="" asp-controller="Home" asp-action="Index"><img class="header-logo" title="Accueil" src="../img/logo_no_background_white.png" /></a>
+                        </div>
+                        <div id="header-icons-container-left" class="row d-flex d-sm-none">
+                            <img class="header-icons" src="~/img/recherche.svg" />
                         </div>
                     </div>
-                    <div class="col-6 d-none d-sm-block">
-                        <div id="search-bar-container">
+                    <div class="col-4 col-sm-6">
+                        <div id="search-bar-container" class="d-none d-sm-flex">
                             <div id="search-bar">
                                 <input id="search-bar-text" type="text" name="search-bar-text" placeholder="Rechercher..." />
                                 <button id="search-bar-button" type="submit" name="search-bar-button">
@@ -32,13 +35,13 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
-                    <div id="icons-header-container" class="col-6 col-sm-3">
-                        <div class="row">
-                            <img class="icons-header d-block d-sm-none" src="~/img/recherche.svg" />
-                            <img class="icons-header" src="~/img/user.svg" />
-                            <img class="icons-header" src="~/img/shopping-cart.svg" />
+                        <div id="header-bar-logo-container-center" class="d-flex d-sm-none">
+                            <a asp-area="" asp-controller="Home" asp-action="Index"><img class="header-logo" title="Accueil" src="../img/logo_no_background_white.png" /></a>
                         </div>
+                    </div>
+                    <div id="header-icons-container-right" class="row col-4 col-sm-3">
+                        <img class="header-icons" src="~/img/user.svg" />
+                        <img class="header-icons" src="~/img/shopping-cart.svg" />
                     </div>
                 </div>
             </div>
