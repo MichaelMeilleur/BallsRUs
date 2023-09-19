@@ -7,7 +7,8 @@
 }
 
 <div id="carousel-container">
-    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <h1 id="carousel-title">Des promotions à couper le souffle!</h1>
+    <div id="carousel-example-controls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img class="d-block w-100" src="~/img/slider1.png" alt="First slide">
@@ -19,19 +20,18 @@
                 <img class="d-block w-100" src="~/img/slider3.png" alt="Third slide">
             </div>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <a class="carousel-control-prev" href="#carousel-example-controls" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
         </a>
-        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <a class="carousel-control-next" href="#carousel-example-controls" role="button" data-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
     </div>
 </div>
 <div class="text-center">
-    <div style="padding-block:100px;"></div>
-    <div id="newsletter-form" class="col-sm-6">
+    <div id="newsletter-form" class="col-lg-6 col-md-8 col-sm-10">
         <label id="newsletter-header">Nous contacter</label>
         <form asp-action="Submit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
