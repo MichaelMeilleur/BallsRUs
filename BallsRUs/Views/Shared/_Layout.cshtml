@@ -17,8 +17,29 @@
     <header>
         <div id="header-bar-container" class="row">
             <div class="container">
-                <div id="header-bar">
-                    <a asp-area="" asp-controller="Home" asp-action="Index"><img id="header-logo" title="Accueil" src="../img/logo_no_background_white.png" /></a>
+                <div class="row">
+                    <div class="col-6 col-sm-3">
+                        <div id="header-bar">
+                            <a asp-area="" asp-controller="Home" asp-action="Index"><img id="header-logo" title="Accueil" src="../img/logo_no_background_white.png" /></a>
+                        </div>
+                    </div>
+                    <div class="col-6 d-none d-sm-block">
+                        <div id="search-bar-container">
+                            <div id="search-bar">
+                                <input id="search-bar-text" type="text" name="search-bar-text" placeholder="Rechercher..." />
+                                <button id="search-bar-button" type="submit" name="search-bar-button">
+                                    <img src="~/img/recherche.svg" />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="icons-header-container" class="col-6 col-sm-3">
+                        <div class="row">
+                            <img class="icons-header d-block d-sm-none" src="~/img/recherche.svg" />
+                            <img class="icons-header" src="~/img/user.svg" />
+                            <img class="icons-header" src="~/img/shopping-cart.svg" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -28,19 +49,19 @@
                     <div id="navbar-container">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Nouveautés</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">NOUVEAUTÉS</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Bâtons</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">BÂTONS</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Balles</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">BALLES</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Vêtements</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">VÊTEMENTS</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Sacs</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">SACS</a>
                             </li>
                         </ul>
                     </div>
@@ -59,7 +80,7 @@
 
 
     }
-    <div>
+    <div class="container p-0">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
