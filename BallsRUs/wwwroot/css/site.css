@@ -66,28 +66,17 @@ input[type=text], input[type=password], textarea {
     margin-left: 0;
 }
 
+#header-bar-container {
+    margin-left: 0;
+    margin-right: 0;
+    background-color: forestgreen;
+}
+
 #header-bar {
     width: 100%;
-    height: 75px;
-    background-color: forestgreen;
-    justify-content: center;
+    height: 80px;
     align-content: center;
     display: flex;
-}
-
-#footer-bar {
-    width: 100%;
-    display: flex;
-}
-
-.navbar-brand {
-    padding-top: 0;
-    padding-bottom: 0;
-    margin-right: 0;
-    margin-top: auto;
-    margin-bottom: auto;
-    width: 75px;
-    width: 88px;
 }
 
 #header-logo {
@@ -119,6 +108,34 @@ input[type=text], input[type=password], textarea {
     margin-right: auto;
 }
 
+#homepage-slogan-image {
+    background-image: url("/img/default_background.jpg");
+    background-size: cover;
+    width: 100%;
+    height: 30vw;
+    justify-content: center;
+    display: flex;
+}
+
+@media (min-width: 576px) {
+    #homepage-slogan-image {
+        background-image: url("/img/default_background.jpg");
+        background-size: cover;
+        width: 100%;
+        height: 20vw;
+    }
+}
+
+#homepage-slogan {
+    padding-left: 5vw;
+    padding-right: 5vw;
+    margin: auto;
+    font-size: max(2vw, 14px);
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+
 .footer-link {
     text-decoration: none;
     --bs-text-opacity: 1;
@@ -128,6 +145,11 @@ input[type=text], input[type=password], textarea {
         text-decoration:underline;
         color:forestgreen;
     }
+
+#footer-bar {
+    width: 100%;
+    display: flex;
+}
 
 .footer-block {
     justify-content: center;
@@ -157,34 +179,6 @@ input[type=text], input[type=password], textarea {
 #footer-copyright-text {
     margin-left: auto;
     margin-right: auto;
-}
-
-#homepage-slogan-image {
-    background-image: url("/img/default_background.jpg");
-    background-size: cover;
-    width: 100vw;
-    height: 30vw;
-    justify-content: center;
-    display: flex;
-}
-
-@media (min-width: 576px) {
-    #homepage-slogan-image {
-        background-image: url("/img/default_background.jpg");
-        background-size: cover;
-        width: 100vw;
-        height: 20vw;
-    }
-}
-
-#homepage-slogan {
-    padding-left: 5vw;
-    padding-right: 5vw;
-    margin: auto;
-    font-size: max(2vw, 14px);
-    font-weight: bold;
-    color: white;
-    text-align: center;
 }
 
 #newsletter-form {
