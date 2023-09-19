@@ -15,12 +15,14 @@
 </head>
 <body>
     <header>
-        <div class="row">
-            <div id="header-bar">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img id="header-logo" title="Accueil" src="../img/logo_no_background_white.png" /></a>
+        <div id="header-bar-container" class="row">
+            <div class="container">
+                <div id="header-bar">
+                    <a asp-area="" asp-controller="Home" asp-action="Index"><img id="header-logo" title="Accueil" src="../img/logo_no_background_white.png" /></a>
+                </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mx-0">
             <div class="col-12 p-0">
                 <nav class="navbar navbar-expand-sm bg-white border-bottom">
                     <div id="navbar-container">
@@ -61,38 +63,38 @@
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
-        <footer class="footer text-muted" style="padding-top:30px;">
-            <div class="border-top container">
-                <div class="row pb-4">
-                    <div class="footer-block row col-lg-3 col-sm-6 col-12">
-                        <h5 class="footer-block-title col-12">À PROPOS DE NOUS</h5>
-                        <span class="footer-block-element col-12"><a class="footer-link " asp-area="" asp-controller="Home" asp-action="About">À propos</a></span>
-                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Politiques de confidentialité</a></span>
-                    </div>
-                    <div class="footer-block row col-lg-3 col-sm-6 col-12">
-                        <h5 class="footer-block-title col-12">ESPACE CLIENT</h5>
-                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Retours et échanges</a></span>
-                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Nous contacter</a></span>
-                    </div>
-                    <div class="footer-block row col-lg-3 col-sm-6 col-12">
-                        <h5 class="footer-block-title col-12">SERVICES</h5>
-                        <span class="footer-block-element col-12"><a class="footer-link " asp-area="" asp-controller="Home" asp-action="About">Localisateur de magasin</a></span>
-                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Promotions</a></span>
-                    </div>
-                    <div class="footer-block row col-lg-3 col-sm-6 col-12">
-                        <h5 class="footer-block-title col-12">RESTEZ CONNECTÉ</h5>
-                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Blogue</a></span>
-                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Événements</a></span>
-                    </div>
+    </div>
+    <footer class="footer text-muted" style="padding-top:30px;">
+        <div class="border-top container">
+            <div class="row pb-4">
+                <div class="footer-block row col-lg-3 col-sm-6 col-12">
+                    <h5 class="footer-block-title col-12">À PROPOS DE NOUS</h5>
+                    <span class="footer-block-element col-12"><a class="footer-link " asp-area="" asp-controller="Home" asp-action="About">À propos</a></span>
+                    <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Politiques de confidentialité</a></span>
                 </div>
-                <div id="footer-copyright" class="border-top">
-                    <span id="footer-copyright-text">
-                        &copy; 2023 Balls R Us Ltd. Tous droits réservés.
-                    </span>
+                <div class="footer-block row col-lg-3 col-sm-6 col-12">
+                    <h5 class="footer-block-title col-12">ESPACE CLIENT</h5>
+                    <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Retours et échanges</a></span>
+                    <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Nous contacter</a></span>
+                </div>
+                <div class="footer-block row col-lg-3 col-sm-6 col-12">
+                    <h5 class="footer-block-title col-12">SERVICES</h5>
+                    <span class="footer-block-element col-12"><a class="footer-link " asp-area="" asp-controller="Home" asp-action="About">Localisateur de magasin</a></span>
+                    <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Promotions</a></span>
+                </div>
+                <div class="footer-block row col-lg-3 col-sm-6 col-12">
+                    <h5 class="footer-block-title col-12">RESTEZ CONNECTÉ</h5>
+                    <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Blogue</a></span>
+                    <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Événements</a></span>
                 </div>
             </div>
-        </footer>
-    </div>
+            <div id="footer-copyright" class="border-top">
+                <span id="footer-copyright-text">
+                    &copy; 2023 Balls R Us Ltd. Tous droits réservés.
+                </span>
+            </div>
+        </div>
+    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
