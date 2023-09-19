@@ -247,9 +247,14 @@ input[type=text], input[type=password], textarea {
     width: 100%;
 }
 
+#footer-sections-container {
+    justify-content: center;
+    margin-right: 0;
+}
+
 #footer-copyright {
-    justify-content:center;
-    display:flex;
+    justify-content: center;
+    display: flex;
 }
 
 #footer-copyright-text {
