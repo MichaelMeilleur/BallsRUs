@@ -33,12 +33,6 @@ body {
     }
 }
 
-@media (max-width: 991px) {
-    .container {
-        max-width: 100% !important;
-    }
-}
-
 input[type=submit] {
     background-color: forestgreen;
     border: none;
@@ -50,9 +44,8 @@ input[type=submit] {
     margin: auto;
     margin-top: 10px;
 }
-
     input[type=submit]:hover {
-        filter: brightness(.96);
+        filter: brightness(1.10);
     }
 
 input[type=text], input[type=password], textarea {
@@ -66,7 +59,6 @@ input[type=text], input[type=password], textarea {
     padding-right: 15px;
     border-radius: 0px;
 }
-
     input[type=text]:focus, input[type=password]:focus, textarea:focus {
         outline: none;
         box-shadow: none;
@@ -74,11 +66,6 @@ input[type=text], input[type=password], textarea {
         border-bottom-width: 2px;
         border-color: forestgreen;
     }
-
-.row {
-    margin-right: 0;
-    margin-left: 0;
-}
 
 #header-bar-container {
     margin-left: 0;
@@ -145,7 +132,7 @@ input[type=text], input[type=password], textarea {
     align-items: center;
     margin-right: auto;
     margin-left: auto;
-    padding-right: 5vw;
+    padding-right: 4vw;
 }
 
 #header-icons-container-left {
@@ -252,7 +239,6 @@ input[type=text], input[type=password], textarea {
 
 #footer-sections-container {
     justify-content: center;
-    margin-right: 0;
 }
 
 #footer-copyright {
@@ -357,11 +343,6 @@ input[type=text], input[type=password], textarea {
     }
 }
 
-
-.text_sponsors {
-
-}
-
 .panel-thumbnail {
     height: 400px;
     text-align:center;
@@ -370,49 +351,47 @@ input[type=text], input[type=password], textarea {
     margin-left:340px;
 }
 
-
 #profile-grid {
     overflow: auto;
     white-space: normal;
 }
 
-    #profile-grid .profile {
-        padding-bottom: 40px;
-    }
-
-    #profile-grid .panel {
-        padding: 0
-    }
-
-    #profile-grid .panel-body {
-        padding: 15px
-    }
-
-    #profile-grid .profile-name {
-        font-weight: bold;
-    }
-
-    #profile-grid .thumbnail {
-        margin-bottom: 6px;
-    }
-
-    #profile-grid .panel-thumbnail {
-        overflow: hidden;
-    }
-
-    #profile-grid .img-rounded {
-        border-radius: 4px 4px 0 0;
-    }
+#profile-grid .profile {
+    padding-bottom: 40px;
 }
 
-.a-propos-block {
+#profile-grid .panel {
+    padding: 0
+}
+
+#profile-grid .panel-body {
+    padding: 15px
+}
+
+#profile-grid .profile-name {
+    font-weight: bold;
+}
+
+#profile-grid .thumbnail {
+    margin-bottom: 6px;
+}
+
+#profile-grid .panel-thumbnail {
+    overflow: hidden;
+}
+
+#profile-grid .img-rounded {
+    border-radius: 4px 4px 0 0;
+}
+
+.about-block {
     width: 100%;
     border-bottom: solid 1px grey;
     margin-bottom: 30px;
     padding-bottom: 30px;
 }
 
-.titres-a-propos {
+.about-title {
     margin-top: 30px;
     margin-bottom: 30px;
     font-family: 'Poppins';
@@ -422,41 +401,67 @@ input[type=text], input[type=password], textarea {
     margin-right: auto;
 }
 
-#texte-mission {
+.about-mission-text {
     font-family: 'Poppins';
     text-align: left;
 }
 
-.column-notre-equipe {
+.about-equipe-column {
     float: left;
-    width: 400px;
     margin-bottom: 16px;
     padding: 0 8px;
 }
 
-.container-notre-equipe {
+.about-equipe-container {
     padding: 0 16px;
+    height: 100%;
 }
-    .container-notre-equipe::after {
+    .about-equipe-container::after {
         content: "";
         clear: both;
         display: table;
     }
 
-.card-notre-equipe {
+.about-equipe-card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
-.title-notre-equipe {
-    color: grey;
-}
-
-.image-notre-equipe {
+.about-equipe-image {
     width: 100%;
     height: auto;
 }
 
-.button-notre-equipe {
+.about-equipe-title {
+    color: grey;
+}
+
+/* Ajuste la taille des cartes en fonction de leur grosseur 
+    pour qu'elles soit toujours égales et esthétique */
+.about-equipe-description {
+    height: 150px;
+}
+    @media (max-width: 1399px) {
+        .about-equipe-description {
+            height: 175px;
+        }
+    }
+    @media (max-width: 1199px) {
+        .about-equipe-description {
+            height: 215px;
+        }
+    }
+    @media (max-width: 991px) {
+        .about-equipe-description {
+            height: 175px;
+        }
+    }
+    @media (max-width: 767px) {
+        .about-equipe-description {
+            height: 100px;
+        }
+    }
+
+.about-equipe-button {
     border: none;
     outline: 0;
     display: inline-block;
@@ -467,25 +472,29 @@ input[type=text], input[type=password], textarea {
     cursor: pointer;
     width: 100%;
 }
-    .button-notre-equipe:hover {
-        filter: brightness(.90);
+    .about-equipe-button:hover {
+        filter: brightness(1.10);
+        text-decoration: none;
+        color: white;
     }
 
-.nos-coord {
-    border: 1px solid black;
-    background: linear-gradient(#e2ebea,#ededed);
-    width: inherit;
-}
-
-.nos-coord iframe {
-    max-width : 582px;
-}
-
-#a-propos-coord-container {
+#about-coord-container {
     margin-bottom: 50px;
 }
 
-#a-propos-text-coord {
+#about-coord-box {
+    background-color: #f5f5f5;
+    width: inherit;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+#about-coord-text {
     width: 700px;
-    padding: 40px 30px 0px;
+    padding: 20px 30px 5px;
+}
+
+#about-coord-map {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
 }
