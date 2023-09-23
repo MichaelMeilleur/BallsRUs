@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="~/css/fonts.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BallsRUs.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="~/js/site.js"/>
-    <link rel="stylesheet" href="~/lib/jquery/dist/jquery.js"/>
-    
+    <link rel="stylesheet" href="~/js/site.js" />
+    <link rel="stylesheet" href="~/lib/jquery/dist/jquery.js" />
+
 </head>
 <body>
     <header>
@@ -54,19 +54,19 @@
                     <div id="navbar-container">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">NOUVEAUTÉS</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">NOUVEAUTÉS</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">BÂTONS</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">BÂTONS</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">BALLES</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">BALLES</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">VÊTEMENTS</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">VÊTEMENTS</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">SACS</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">SACS</a>
                             </li>
                         </ul>
                     </div>
@@ -91,27 +91,29 @@
         </main>
     </div>
     <footer class="footer text-muted" style="padding-top:30px;">
-        <div class="border-top">
-            <div id="footer-sections-container" class="row pb-4">
-                <div class="footer-block row col-lg-3 col-sm-6 col-12">
-                    <h5 class="footer-block-title col-12">À PROPOS DE NOUS</h5>
-                    <span class="footer-block-element col-12"><a class="footer-link " asp-area="" asp-controller="Home" asp-action="About">À propos</a></span>
-                    <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Politiques de confidentialité</a></span>
-                </div>
-                <div class="footer-block row col-lg-3 col-sm-6 col-12">
-                    <h5 class="footer-block-title col-12">ESPACE CLIENT</h5>
-                    <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Retours et échanges</a></span>
-                    <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Nous contacter</a></span>
-                </div>
-                <div class="footer-block row col-lg-3 col-sm-6 col-12">
-                    <h5 class="footer-block-title col-12">SERVICES</h5>
-                    <span class="footer-block-element col-12"><a class="footer-link " asp-area="" asp-controller="Home" asp-action="About">Localisateur de magasin</a></span>
-                    <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Promotions</a></span>
-                </div>
-                <div class="footer-block row col-lg-3 col-sm-6 col-12">
-                    <h5 class="footer-block-title col-12">RESTEZ CONNECTÉ</h5>
-                    <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Blogue</a></span>
-                    <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Événements</a></span>
+        <div class="border-top" style="background-color: #f5f5f5">
+            <div class="container">
+                <div id="footer-sections-container" class="row pb-4">
+                    <div class="footer-block row col-lg-3 col-sm-6 col-11">
+                        <h5 class="footer-block-title col-12">À PROPOS DE NOUS</h5>
+                        <span class="footer-block-element col-12"><a class="footer-link " asp-area="" asp-controller="Home" asp-action="About">À propos</a></span>
+                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Politiques de confidentialité</a></span>
+                    </div>
+                    <div class="footer-block row col-lg-3 col-sm-6 col-11">
+                        <h5 class="footer-block-title col-12">ESPACE CLIENT</h5>
+                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Retours et échanges</a></span>
+                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Nous contacter</a></span>
+                    </div>
+                    <div class="footer-block row col-lg-3 col-sm-6 col-11">
+                        <h5 class="footer-block-title col-12">SERVICES</h5>
+                        <span class="footer-block-element col-12"><a class="footer-link " asp-area="" asp-controller="Home" asp-action="About">Localisateur de magasin</a></span>
+                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Promotions</a></span>
+                    </div>
+                    <div class="footer-block row col-lg-3 col-sm-6 col-11">
+                        <h5 class="footer-block-title col-12">RESTEZ CONNECTÉ</h5>
+                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Blogue</a></span>
+                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Événements</a></span>
+                    </div>
                 </div>
             </div>
             <div id="footer-copyright" class="border-top">
