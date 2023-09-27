@@ -29,10 +29,10 @@
                         </div>
                     </div>
                     <div class="col-4 col-sm-6">
-                        <div id="search-bar-container" class="d-none d-sm-flex">
-                            <div id="search-bar">
-                                <input id="search-bar-text" type="text" name="search-bar-text" placeholder="Rechercher..." />
-                                <button id="search-bar-button" type="submit" name="search-bar-button">
+                        <div id="header-search-bar-container" class="d-none d-sm-flex">
+                            <div id="header-search-bar">
+                                <input id="header-search-bar-text" type="text" placeholder="Rechercher..." />
+                                <button id="header-search-bar-button" type="submit">
                                     <img src="~/img/recherche.svg" />
                                 </button>
                             </div>
@@ -77,7 +77,7 @@
     @if (ViewData["Title"] is not null && ViewData["Title"].ToString() == "Home")
     {
         <div id="homepage-slogan-image">
-            <span id="homepage-slogan">
+            <span id="homepage-slogan-text">
                 Bienvenue sur le premier site 100% québécois de vente d'équipements de golf. <br />
                 Swingez vers la perfection, un clic à la fois!
             </span>
@@ -94,29 +94,29 @@
         <div class="border-top" style="background-color: #f5f5f5">
             <div class="container">
                 <div id="footer-sections-container" class="row pb-4">
-                    <div class="footer-block row col-lg-3 col-sm-6 col-11">
-                        <h5 class="footer-block-title col-12">À PROPOS DE NOUS</h5>
-                        <span class="footer-block-element col-12"><a class="footer-link " asp-area="" asp-controller="Home" asp-action="About">À propos</a></span>
-                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Politiques de confidentialité</a></span>
+                    <div class="footer-sections-column row col-lg-3 col-sm-6 col-11">
+                        <h5 class="footer-sections-title col-12">À PROPOS DE NOUS</h5>
+                        <span class="footer-sections-element col-12"><a class="footer-link " asp-area="" asp-controller="Home" asp-action="About">À propos</a></span>
+                        <span class="footer-sections-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Politiques de confidentialité</a></span>
                     </div>
-                    <div class="footer-block row col-lg-3 col-sm-6 col-11">
-                        <h5 class="footer-block-title col-12">ESPACE CLIENT</h5>
-                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Retours et échanges</a></span>
-                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Nous contacter</a></span>
+                    <div class="footer-sections-column row col-lg-3 col-sm-6 col-11">
+                        <h5 class="footer-sections-title col-12">ESPACE CLIENT</h5>
+                        <span class="footer-sections-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Retours et échanges</a></span>
+                        <span class="footer-sections-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Nous contacter</a></span>
                     </div>
-                    <div class="footer-block row col-lg-3 col-sm-6 col-11">
-                        <h5 class="footer-block-title col-12">SERVICES</h5>
-                        <span class="footer-block-element col-12"><a class="footer-link " asp-area="" asp-controller="Home" asp-action="About">Localisateur de magasin</a></span>
-                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Promotions</a></span>
+                    <div class="footer-sections-column row col-lg-3 col-sm-6 col-11">
+                        <h5 class="footer-sections-title col-12">SERVICES</h5>
+                        <span class="footer-sections-element col-12"><a class="footer-link " asp-area="" asp-controller="Home" asp-action="About">Localisateur de magasin</a></span>
+                        <span class="footer-sections-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Promotions</a></span>
                     </div>
-                    <div class="footer-block row col-lg-3 col-sm-6 col-11">
-                        <h5 class="footer-block-title col-12">RESTEZ CONNECTÉ</h5>
-                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Blogue</a></span>
-                        <span class="footer-block-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Événements</a></span>
+                    <div class="footer-sections-column row col-lg-3 col-sm-6 col-11">
+                        <h5 class="footer-sections-title col-12">RESTEZ CONNECTÉ</h5>
+                        <span class="footer-sections-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Blogue</a></span>
+                        <span class="footer-sections-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Événements</a></span>
                     </div>
                 </div>
             </div>
-            <div id="footer-copyright" class="border-top">
+            <div id="footer-copyright-container" class="border-top">
                 <span id="footer-copyright-text">
                     &copy; 2023 Balls R Us Ltd. Tous droits réservés.
                 </span>
