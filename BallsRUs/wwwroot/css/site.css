@@ -91,7 +91,7 @@ input[type=text], input[type=password], textarea {
     height: 100%;
 }
 
-#search-bar-container {
+#header-search-bar-container {
     width: 100%;
     height: 100%;
     max-width: 31.25rem;
@@ -100,14 +100,14 @@ input[type=text], input[type=password], textarea {
     margin: auto;
 }
 
-#search-bar {
+#header-search-bar {
     width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-#search-bar-text {
+#header-search-bar-text {
     width: 100%;
     height: 35px;
     outline: none;
@@ -117,7 +117,7 @@ input[type=text], input[type=password], textarea {
     font-size: 1rem;
 }
 
-#search-bar-button {
+#header-search-bar-button {
     width: 3.5rem;
     height: 2.8rem;
     margin-left: -3.5rem;
@@ -194,7 +194,7 @@ input[type=text], input[type=password], textarea {
     }
 }
 
-#homepage-slogan {
+#homepage-slogan-text {
     padding-left: 5vw;
     padding-right: 5vw;
     margin: auto;
@@ -204,32 +204,6 @@ input[type=text], input[type=password], textarea {
     text-align: center;
 }
 
-.footer-link {
-    text-decoration: none;
-    --bs-text-opacity: 1;
-    color: rgba(var(--bs-dark-rgb), var(--bs-text-opacity));
-}
-
-    .footer-link:hover {
-        text-decoration: underline;
-        color: forestgreen;
-    }
-
-#footer-bar {
-    width: 100%;
-    display: flex;
-}
-
-.footer-block {
-    justify-content: center;
-    display: flex;
-    margin-top: min(35px,4vw);
-}
-
-.footer-block-title {
-    font-weight: bold;
-}
-
 .footer {
     bottom: 0;
     height: 2em;
@@ -237,11 +211,32 @@ input[type=text], input[type=password], textarea {
     width: 100%;
 }
 
+.footer-link {
+
+    text-decoration: none;
+    --bs-text-opacity: 1;
+    color: rgba(var(--bs-dark-rgb), var(--bs-text-opacity));
+}
+    .footer-link:hover {
+        text-decoration: underline;
+        color: forestgreen;
+    }
+
 #footer-sections-container {
     justify-content: center;
 }
 
-#footer-copyright {
+.footer-sections-column {
+    justify-content: center;
+    display: flex;
+    margin-top: min(35px,4vw);
+}
+
+.footer-sections-title {
+    font-weight: bold;
+}
+
+#footer-copyright-container {
     justify-content: center;
     display: flex;
 }
