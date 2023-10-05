@@ -57,7 +57,56 @@
     </div>
 </div>
 
-<div class="container">
+<div class="index-carouselPaterners">
+    <button class="arrow prev" id="index-carousel-arrowPrev"><i class="ri-arrow-left-s-line"></i></button>
+    <button class="arrow next" id="index-carousel-arrowNext"><i class="ri-arrow-right-s-line"></i></button>
+    <div class="index-carouselCardWrapper">
+        <div class="index-carousel-card-item">
+            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="">
+            <div class="index-carousel-card-info">
+                <a href="#" class="index-carousel-card-title">Cooked dish on gray bowl</a>
+                <p class="index-carousel-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?</p>
+            </div>
+        </div>
+        <div class="index-carousel-card-item">
+            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="">
+            <div class="index-carousel-card-info">
+                <a href="#" class="index-carousel-card-title">Cooked dish on gray bowl</a>
+                <p class="index-carousel-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?</p>
+            </div>
+        </div>
+        <div class="index-carousel-card-item">
+            <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="">
+            <div class="index-carousel-card-info">
+                <a href="#" class="index-carousel-card-title">Cooked dish on gray bowl</a>
+                <p class="index-carousel-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?</p>
+            </div>
+        </div>
+        <div class="index-carousel-card-item">
+            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="">
+            <div class="index-carousel-card-info">
+                <a href="#" class="index-carousel-card-title">Cooked dish on gray bowl</a>
+                <p class="index-carousel-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?</p>
+            </div>
+        </div>
+        <div class="index-carousel-card-item">
+            <img src="https://images.unsplash.com/photo-1606787366850-de6330128bfc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="">
+            <div class="index-carousel-card-info">
+                <a href="#" class="index-carousel-card-title">Cooked dish on gray bowl</a>
+                <p class="index-carousel-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?</p>
+            </div>
+        </div>
+        <div class="index-carousel-card-item">
+            <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="">
+            <div class="index-carousel-card-info">
+                <a href="#" class="index-carousel-card-title">Cooked dish on gray bowl</a>
+                <p class="index-carousel-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, beatae?</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="container">
     <h1>
         Nos partenaires d'exception!
     </h1>
@@ -155,51 +204,91 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-</div>
+</div>*@
 
 @section Scripts {
     @{
         <script>
-            $('#myCarousel').on('slide.bs.carousel', function (e) {
+            const cardWrapper = document.querySelector('.index-carouselCardWrapper')
+            const cardWrapperChildren = Array.from(cardWrapper.children)
+            const widthToScroll = cardWrapper.children[0].offsetWidth
+            const arrowPrev = document.querySelector('.arrow.prev')
+            const arrowNext = document.querySelector('.arrow.next')
+            const cardBounding = cardWrapper.getBoundingClientRect()
+            const column = Math.floor(cardWrapper.offsetWidth / (widthToScroll + 24))
+            let currScroll = 0
+            let initPos = 0
+            let clicked = false
 
+            cardWrapperChildren.slice(-column).reverse().forEach(item => {
+                cardWrapper.insertAdjacentHTML('afterbegin', item.outerHTML)
+            })
 
-                var $e = $(e.relatedTarget);
-                var idx = $e.index();
-                var itemsPerSlide = 4;
-                var totalItems = $('.carousel-item').length;
+            cardWrapperChildren.slice(0, column).forEach(item => {
+                cardWrapper.insertAdjacentHTML('beforeend', item.outerHTML)
+            })
 
-                if (idx >= totalItems - (itemsPerSlide - 1)) {
-                    var it = itemsPerSlide - (totalItems - idx);
-                    for (var i = 0; i < it; i++) {
-                        // append slides to end
-                        if (e.direction == "left") {
-                            $('.carousel-item').eq(i).appendTo('.carousel-inner');
-                        }
-                        else {
-                            $('.carousel-item').eq(0).appendTo('.carousel-inner');
-                        }
-                    }
+            const cardImageAndLink = cardWrapper.querySelectorAll('img, a')
+            cardImageAndLink.forEach(item => {
+                item.setAttribute('draggable', false)
+            })
+
+            cardWrapper.classList.add('no-smooth')
+            cardWrapper.scrollLeft = cardWrapper.offsetWidth
+            cardWrapper.classList.remove('no-smooth')
+
+            arrowPrev.onclick = function () {
+                cardWrapper.scrollLeft -= widthToScroll
+            }
+
+            arrowNext.onclick = function () {
+                cardWrapper.scrollLeft += widthToScroll
+            }
+
+            cardWrapper.onmousedown = function (e) {
+                cardWrapper.classList.add('grab')
+                initPos = e.clientX - cardBounding.left
+                currScroll = cardWrapper.scrollLeft
+                clicked = true
+            }
+
+            cardWrapper.onmousemove = function (e) {
+                if (clicked) {
+                    const xPos = e.clientX - cardBounding.left
+                    cardWrapper.scrollLeft = currScroll + -(xPos - initPos)
                 }
-            });
+            }
 
+            cardWrapper.onmouseup = mouseUpAndLeave
+            cardWrapper.onmouseleave = mouseUpAndLeave
 
-            $('#myCarousel').carousel({
-                interval: 2000
-            });
+            function mouseUpAndLeave() {
+                cardWrapper.classList.remove('grab')
+                clicked = false
+            }
 
+            let autoScroll
 
-            $(document).ready(function () {
-                /* show lightbox when clicking a thumbnail */
-                $('a.thumb').click(function (event) {
-                    event.preventDefault();
-                    var content = $('.modal-body');
-                    content.empty();
-                    var title = $(this).attr("title");
-                    $('.modal-title').html(title);
-                    content.html($(this).html());
-                    $(".modal-profile").modal({ show: true });
-                });
-            });
+            cardWrapper.onscroll = function () {
+                if (cardWrapper.scrollLeft === 0) {
+                    cardWrapper.classList.add('no-smooth')
+                    cardWrapper.scrollLeft = cardWrapper.scrollWidth - (2 * cardWrapper.offsetWidth)
+                    cardWrapper.classList.remove('no-smooth')
+                } else if (cardWrapper.scrollLeft === cardWrapper.scrollWidth - cardWrapper.offsetWidth) {
+                    cardWrapper.classList.add('no-smooth')
+                    cardWrapper.scrollLeft = cardWrapper.offsetWidth
+                    cardWrapper.classList.remove('no-smooth')
+                }
+
+                if (autoScroll) {
+                    clearTimeout(autoScroll)
+                }
+
+                autoScroll = setTimeout(() => {
+                    cardWrapper.classList.remove('no-smooth')
+                    cardWrapper.scrollLeft += widthToScroll
+                }, 4000)
+            }
         </script>
 
 
