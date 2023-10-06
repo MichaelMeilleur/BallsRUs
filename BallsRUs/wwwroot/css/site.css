@@ -545,7 +545,6 @@ input[type=text], input[type=password], textarea {
     }
 
 .index-carouselCardWrapper {
-
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: calc((100% / 4) - 70px);
@@ -554,10 +553,10 @@ input[type=text], input[type=password], textarea {
     gap: 75px;
     cursor: grab;
     scroll-snap-type: x mandatory;
-    scroll-padding-inline: 24px;
+    scroll-padding-inline: 50px;
     scroll-behavior: smooth;
     scrollbar-width: none;
-    padding-bottom:75px;
+    padding-bottom: 75px;
 }
 
     .index-carouselCardWrapper::-webkit-scrollbar {
@@ -578,9 +577,9 @@ input[type=text], input[type=password], textarea {
 .index-carousel-card-item {
     /*padding:6px;*/
     scroll-snap-align: start;
-    border-radius: 6px;
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 8px 8px 24px rgba(0, 0, 0, .1);
+    box-shadow: 10px 8px 24px rgba(0, 0, 0, .1);
 }
 
     .index-carousel-card-item img {
@@ -610,14 +609,13 @@ input[type=text], input[type=password], textarea {
 .index-carousel-card-description {
     color: #888;
 }
-/* end: Slider */
 
 
 
 @media screen and (max-width: 576px) {
 
     .index-carouselCardWrapper {
-        margin-left: -15px;
+        margin:100px;
         width: 100vw;
         grid-auto-columns: 100%;
     }
