@@ -6,9 +6,9 @@
     ViewData["Title"] = "Home";
 }
 
-<div id="carousel-container">
-    <h1 id="carousel-title">Des promotions à couper le souffle!</h1>
-    <div id="carousel-example-controls" class="carousel slide" data-ride="carousel">
+<div id="homepage-promotions-carousel-container">
+    <h1 id="homepage-promotions-carousel-title">Des promotions à couper le souffle!</h1>
+    <div id="homepage-promotions-carousel-controls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img class="d-block w-100" src="~/img/slider1.png" alt="First slide">
@@ -20,46 +20,44 @@
                 <img class="d-block w-100" src="~/img/slider3.png" alt="Third slide">
             </div>
         </div>
-        <a class="carousel-control-prev" href="#carousel-example-controls" role="button" data-slide="prev">
+        <a class="carousel-control-prev" href="#homepage-promotions-carousel-controls" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
         </a>
-        <a class="carousel-control-next" href="#carousel-example-controls" role="button" data-slide="next">
+        <a class="carousel-control-next" href="#homepage-promotions-carousel-controls" role="button" data-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
     </div>
 </div>
 <div class="text-center">
-    <div id="newsletter-form" class="col-lg-6 col-md-8 col-sm-10">
-        <label id="newsletter-header">Nous contacter</label>
+    <div id="homepage-newsletter-form" class="col-lg-6 col-md-8 col-sm-10">
+        <label id="homepage-newsletter-header">Nous contacter</label>
         <form asp-action="Submit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="newsletter-form-item form-group my-3 text-start">
+            <div class="homepage-newsletter-form-item form-group my-3 text-start">
                 <label asp-for="Name" class="mb-1">Nom</label>
-                <input asp-for="Name" type="text" id="newsletter-form-name" placeholder="Votre nom" />
+                <input asp-for="Name" type="text" id="homepage-newsletter-form-name" placeholder="Votre nom" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="newsletter-form-item form-group my-3 text-start">
+            <div class="homepage-newsletter-form-item form-group my-3 text-start">
                 <label asp-for="Email" class="mb-1">Courriel</label>
-                <input asp-for="Email" type="text" id="newsletter-form-email" placeholder="nom@exemple.com" />
+                <input asp-for="Email" type="text" id="homepage-newsletter-form-email" placeholder="nom@exemple.com" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="newsletter-form-item form-group my-3 text-start">
+            <div class="homepage-newsletter-form-item form-group my-3 text-start">
                 <label asp-for="Description" class="mb-1">Description</label>
-                <textarea asp-for="Description" id="newsletter-form-description" placeholder="Description de la demande"></textarea>
-                <span asp-validation-for="Description" class="text-danger" style="width=10px"></span>
+                <textarea asp-for="Description" id="homepage-newsletter-form-description" placeholder="Description de la demande"></textarea>
+                <span asp-validation-for="Description" class="text-danger" style="width: 10px;"></span>
             </div>
-            <div class="newsletter-form-item form-group mt-4 mb-1 text-start">
+            <div class="homepage-newsletter-form-item form-group mt-4 mb-1 text-start">
                 <input type="submit" value="Envoyer" />
             </div>
         </form>
     </div>
 </div>
 <div class="container">
-    <h1>
-        Nos partenaires d'exception!
-    </h1>
+    <h1>Nos partenaires d'exception!</h1>
     <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="4000">
         <div class="carousel-inner row w-100 mx-auto text-center" role="listbox">
             <div class="carousel-item col-md-3  ">
