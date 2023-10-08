@@ -44,6 +44,7 @@ input[type=submit] {
     margin: auto;
     margin-top: 10px;
 }
+
     input[type=submit]:hover {
         filter: brightness(1.10);
     }
@@ -59,6 +60,7 @@ input[type=text], input[type=password], textarea {
     padding-right: 15px;
     border-radius: 0px;
 }
+
     input[type=text]:focus, input[type=password]:focus, textarea:focus {
         outline: none;
         box-shadow: none;
@@ -212,11 +214,11 @@ input[type=text], input[type=password], textarea {
 }
 
 .footer-link {
-
     text-decoration: none;
     --bs-text-opacity: 1;
     color: rgba(var(--bs-dark-rgb), var(--bs-text-opacity));
 }
+
     .footer-link:hover {
         text-decoration: underline;
         color: forestgreen;
@@ -304,24 +306,23 @@ input[type=text], input[type=password], textarea {
     }
 
     .carousel-control-next {
-        width:100px;
+        width: 100px;
     }
 
 
-    /* Style des flèches au survol */
-    .carousel-control-prev:hover,
-    .carousel-control-next:hover {
-        background-color: #555;
-        
-    }
+        /* Style des flèches au survol */
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            background-color: #555;
+        }
 
-    /* Style du texte "Previous" et "Next" */
-    .carousel-control-prev span,
-    .carousel-control-next span {
-        position: absolute; /* Position absolue pour centrer le texte */
-        top: 50%; /* Position verticale au centre */
-        transform: translateY(-50%); /* Décalage vertical pour centrer */
-    }
+        /* Style du texte "Previous" et "Next" */
+        .carousel-control-prev span,
+        .carousel-control-next span {
+            position: absolute; /* Position absolue pour centrer le texte */
+            top: 50%; /* Position verticale au centre */
+            transform: translateY(-50%); /* Décalage vertical pour centrer */
+        }
 
     /* Style du texte "Previous" */
     .carousel-control-prev span {
@@ -340,10 +341,10 @@ input[type=text], input[type=password], textarea {
 
 .panel-thumbnail {
     height: 400px;
-    text-align:center;
+    text-align: center;
     width: 400px;
     display: flex;
-    margin-left:340px;
+    margin-left: 340px;
 }
 
 #profile-grid {
@@ -351,33 +352,33 @@ input[type=text], input[type=password], textarea {
     white-space: normal;
 }
 
-#profile-grid .profile {
-    padding-bottom: 40px;
-}
+    #profile-grid .profile {
+        padding-bottom: 40px;
+    }
 
-#profile-grid .panel {
-    padding: 0
-}
+    #profile-grid .panel {
+        padding: 0
+    }
 
-#profile-grid .panel-body {
-    padding: 15px
-}
+    #profile-grid .panel-body {
+        padding: 15px
+    }
 
-#profile-grid .profile-name {
-    font-weight: bold;
-}
+    #profile-grid .profile-name {
+        font-weight: bold;
+    }
 
-#profile-grid .thumbnail {
-    margin-bottom: 6px;
-}
+    #profile-grid .thumbnail {
+        margin-bottom: 6px;
+    }
 
-#profile-grid .panel-thumbnail {
-    overflow: hidden;
-}
+    #profile-grid .panel-thumbnail {
+        overflow: hidden;
+    }
 
-#profile-grid .img-rounded {
-    border-radius: 4px 4px 0 0;
-}
+    #profile-grid .img-rounded {
+        border-radius: 4px 4px 0 0;
+    }
 
 .about-block {
     width: 100%;
@@ -411,6 +412,7 @@ input[type=text], input[type=password], textarea {
     padding: 0 16px;
     height: 100%;
 }
+
     .about-equipe-container::after {
         content: "";
         clear: both;
@@ -435,26 +437,30 @@ input[type=text], input[type=password], textarea {
 .about-equipe-description {
     height: 150px;
 }
-    @media (max-width: 1399px) {
-        .about-equipe-description {
-            height: 175px;
-        }
+
+@media (max-width: 1399px) {
+    .about-equipe-description {
+        height: 175px;
     }
-    @media (max-width: 1199px) {
-        .about-equipe-description {
-            height: 215px;
-        }
+}
+
+@media (max-width: 1199px) {
+    .about-equipe-description {
+        height: 215px;
     }
-    @media (max-width: 991px) {
-        .about-equipe-description {
-            height: 175px;
-        }
+}
+
+@media (max-width: 991px) {
+    .about-equipe-description {
+        height: 175px;
     }
-    @media (max-width: 767px) {
-        .about-equipe-description {
-            height: 100px;
-        }
+}
+
+@media (max-width: 767px) {
+    .about-equipe-description {
+        height: 100px;
     }
+}
 
 .about-equipe-button {
     border: none;
@@ -467,6 +473,7 @@ input[type=text], input[type=password], textarea {
     cursor: pointer;
     width: 100%;
 }
+
     .about-equipe-button:hover {
         filter: brightness(1.10);
         text-decoration: none;
@@ -495,17 +502,13 @@ input[type=text], input[type=password], textarea {
 }
 
 
-
-
-
-
-/*Ajout carrousel françois*/
+/*CSS pour le homePage*/
 
 .homePage-partnersTitle-container {
-    padding-top:150px;
-    padding-bottom:50px;
-    text-align:center;
-    justify-content:center;
+    padding-top: 150px;
+    padding-bottom: 50px;
+    text-align: center;
+    justify-content: center;
 }
 
 .index-carouselPartners {
@@ -514,35 +517,62 @@ input[type=text], input[type=password], textarea {
     width: 100%;
 }
 
-.arrow {
-
+.homePage-Carousel-ArrowLeft {
     position: absolute;
     top: 50%;
+    color:white;
+    left: 0; /* Positionnez le bouton de gauche à gauche */
     transform: translateY(-50%);
-    width: 32px;
-    height: 56px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: forestgreen;
-    background-color: gainsboro;
-    font-size: 20px;
-    cursor: pointer;
-    border: none;
-    outline: none;
 }
 
-    .arrow:hover {
-        background-color: rgba(0, 0, 0, .7);
+/*.ri-arrow-left-s-line {
+    color:white;
+}
+
+
+.ri-arrow-right-s-line {
+    color: white;
+}*/
+
+
+.homePage-Carousel-ArrowRight {
+    position: absolute;
+    color:white;
+    top: 50%;
+    right: 0; /* Positionnez le bouton de droite à droite */
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .homePage-Carousel-ArrowLeft button,
+    .homePage-Carousel-ArrowRight button {
+        width: 32px;
+        height: 56px;
+        color: #000 !important;
+        background-color: gainsboro;
+        font-size: 20px;
+        cursor: pointer;
+        border: none;
+        outline: none;
     }
 
-    .arrow.prev {
-        left: 0;
-    }
+.homePage-Carousel-ArrowLeft button:hover,
+.homePage-Carousel-ArrowRight button:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
 
-    .arrow.next {
-        right: 0;
-    }
+.homePage-Carousel-Arrows #index-carousel-arrowPrev {
+    left: 0;
+}
+
+.homePage-Carousel-Arrows #index-carousel-arrowNext {
+    right: 0;
+}
 
 .index-carouselCardWrapper {
     display: grid;
@@ -559,20 +589,20 @@ input[type=text], input[type=password], textarea {
     padding-bottom: 75px;
 }
 
-    .index-carouselCardWrapper::-webkit-scrollbar {
-        display: none;
-    }
+.index-carouselCardWrapper::-webkit-scrollbar {
+    display: none;
+}
 
-    .index-carouselCardWrapper.grab {
-        cursor: grabbing;
-        user-select: none;
-        scroll-snap-type: none;
-        scroll-behavior: auto;
-    }
+.index-carouselCardWrapper.grab {
+    cursor: grabbing;
+    user-select: none;
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+}
 
-    .index-carouselCardWrapper.no-smooth {
-        scroll-behavior: auto;
-    }
+.index-carouselCardWrapper.no-smooth {
+    scroll-behavior: auto;
+}
 
 .index-carousel-card-item {
     /*padding:6px;*/
@@ -582,40 +612,30 @@ input[type=text], input[type=password], textarea {
     box-shadow: 10px 8px 24px rgba(0, 0, 0, .1);
 }
 
-    .index-carousel-card-item img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        padding:4px;
-    }
+.index-carousel-card-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 4px;
+}
 
 .index-carousel-card-info {
     padding: 16px;
 }
 
-.index-carousel-card-title {
-    font-weight: 600;
-    margin-bottom: 10px;
-    display: inline-block;
-    font-size: 20px;
-    text-decoration: none;
-    color: #222;
+.index-carousel-card-title:hover {
+    color: #006aff;
 }
-
-    .index-carousel-card-title:hover {
-        color: #006aff;
-    }
 
 .index-carousel-card-description {
     color: #888;
 }
 
 
-
 @media screen and (max-width: 576px) {
 
     .index-carouselCardWrapper {
-        margin:100px;
+        margin: 100px;
         width: 100vw;
         grid-auto-columns: 100%;
     }
