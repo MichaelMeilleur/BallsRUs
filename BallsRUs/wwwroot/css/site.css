@@ -520,7 +520,7 @@ input[type=text], input[type=password], textarea {
 .homePage-Carousel-ArrowLeft {
     position: absolute;
     top: 50%;
-    color:white;
+    color: white;
     left: 0; /* Positionnez le bouton de gauche à gauche */
     transform: translateY(-50%);
     display: flex;
@@ -528,19 +528,19 @@ input[type=text], input[type=password], textarea {
     justify-content: center;
 }
 
-/*.ri-arrow-left-s-line {
-    color:white;
+.ri-arrow-left-s-line {
+    color: white;
 }
 
 
 .ri-arrow-right-s-line {
     color: white;
-}*/
+}
 
 
 .homePage-Carousel-ArrowRight {
     position: absolute;
-    color:white;
+    color: white;
     top: 50%;
     right: 0; /* Positionnez le bouton de droite à droite */
     transform: translateY(-50%);
@@ -561,10 +561,10 @@ input[type=text], input[type=password], textarea {
         outline: none;
     }
 
-.homePage-Carousel-ArrowLeft button:hover,
-.homePage-Carousel-ArrowRight button:hover {
-    background-color: rgba(0, 0, 0, 0.3);
-}
+        .homePage-Carousel-ArrowLeft button:hover,
+        .homePage-Carousel-ArrowRight button:hover {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
 
 .homePage-Carousel-Arrows #index-carousel-arrowPrev {
     left: 0;
@@ -577,16 +577,28 @@ input[type=text], input[type=password], textarea {
 .index-carouselCardWrapper {
     display: grid;
     grid-auto-flow: column;
-    grid-auto-columns: calc((100% / 4) - 70px);
     overflow-x: auto;
     padding: 24px;
-    gap: 75px;
+    gap: 24px;
     cursor: grab;
     scroll-snap-type: x mandatory;
-    scroll-padding-inline: 50px;
+    scroll-padding-inline: 24px;
     scroll-behavior: smooth;
     scrollbar-width: none;
-    padding-bottom: 75px;
+}
+
+/* Appliquer grid-auto-columns pour les écrans larges */
+@media screen and (min-width: 1025px) {
+    .index-carouselCardWrapper {
+        grid-auto-columns: calc((100% / 4) - 12px);
+    }
+}
+
+/* Appliquer grid-auto-columns pour les écrans petits */
+@media screen and (max-width: 1024px) {
+    .index-carouselCardWrapper {
+        grid-auto-columns: calc((100% / 2) - 12px);
+    }
 }
 
 .index-carouselCardWrapper::-webkit-scrollbar {
@@ -612,12 +624,12 @@ input[type=text], input[type=password], textarea {
     box-shadow: 10px 8px 24px rgba(0, 0, 0, .1);
 }
 
-.index-carousel-card-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 4px;
-}
+    .index-carousel-card-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        padding: 4px;
+    }
 
 .index-carousel-card-info {
     padding: 16px;
