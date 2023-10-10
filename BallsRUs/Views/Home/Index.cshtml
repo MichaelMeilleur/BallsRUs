@@ -104,106 +104,6 @@
     </div>
 </div>
 
-@*<div class="container">
-    <h1>
-        Nos partenaires d'exception!
-    </h1>
-    <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="4000">
-        <div class="carousel-inner row w-100 mx-auto text-center" role="listbox">
-            <div class="carousel-item col-md-3  ">
-                <div class="panel panel-default">
-                    <div class="panel-thumbnail">
-                        <a href="#" title="image 1" class="thumb">
-                            <img class="img-fluid mx-auto d-block" src="~/img/indice_c_1.png" alt="slide 1">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item col-md-3 ">
-                <div class="panel panel-default">
-                    <div class="panel-thumbnail">
-                        <a href="#" title="image 2" class="thumb">
-                            <img class="img-fluid mx-auto d-block" src="~/img/indice_c_2.jpg" alt="slide 2">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item col-md-3 ">
-                <div class="panel panel-default">
-                    <div class="panel-thumbnail">
-                        <a href="#" title="image 3" class="thumb">
-                            <img class="img-fluid mx-auto d-block" src="~/img/indice_c_3.jpg" alt="slide 3">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item col-md-3 active">
-                <div class="panel panel-default">
-                    <div class="panel-thumbnail">
-                        <a href="#" title="image 4" class="thumb">
-                            <img class="img-fluid mx-auto d-block" src="~/img/indice_c_4.jpg" alt="slide 4">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item col-md-3 ">
-                <div class="panel panel-default">
-                    <div class="panel-thumbnail">
-                        <a href="#" title="image 5" class="thumb">
-                            <img class="img-fluid mx-auto d-block" src="~/img/indice_c_5.png" style="background-color:green" alt="slide 5">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item col-md-3 ">
-                <div class="panel panel-default">
-                    <div class="panel-thumbnail">
-                        <a href="#" title="image 7" class="thumb">
-                            <img class="img-fluid mx-auto d-block" src="~/img/indice_c_7.jpg" alt="slide 7">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item col-md-3  ">
-                <div class="panel panel-default">
-                    <div class="panel-thumbnail">
-                        <a href="#" title="image 8" class="thumb">
-                            <img class="img-fluid mx-auto d-block" src="~/img/indice_c_8.jpg" alt="slide 8">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item col-md-3  ">
-                <div class="panel panel-default">
-                    <div class="panel-thumbnail">
-                        <a href="#" title="image 9" class="thumb">
-                            <img class="img-fluid mx-auto d-block" src="~/img/indice_c_9.jpg" alt="slide 9">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item col-md-3  ">
-                <div class="panel panel-default">
-                    <div class="panel-thumbnail">
-                        <a href="#" title="image 11" class="thumb">
-                            <img class="img-fluid mx-auto d-block" src="~/img/indice_c_11.jpg" alt="slide 11">
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next text-faded" href="#myCarousel" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-</div>*@
-
 @section Scripts {
     @{
         <script>
@@ -218,6 +118,12 @@
             let initPos = 0
             let clicked = false
 
+            console.log(column)
+
+            cardWrapper.classList.add('no-smooth')
+            cardWrapper.scrollLeft = cardWrapper.offsetWidth
+            cardWrapper.classList.remove('no-smooth')
+
             cardWrapperChildren.slice(-column).reverse().forEach(item => {
                 cardWrapper.insertAdjacentHTML('afterbegin', item.outerHTML)
             })
@@ -231,9 +137,6 @@
                 item.setAttribute('draggable', false)
             })
 
-            cardWrapper.classList.add('no-smooth')
-            cardWrapper.scrollLeft = cardWrapper.offsetWidth
-            cardWrapper.classList.remove('no-smooth')
 
             arrowPrev.onclick = function () {
                 cardWrapper.scrollLeft -= widthToScroll
