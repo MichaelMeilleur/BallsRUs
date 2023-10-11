@@ -6,10 +6,10 @@
     ViewData["Title"] = "Home";
 }
 
-<div id="carousel-container">
-    <h1 id="carousel-title">Des promotions à couper le souffle!</h1>
-    <div id="carousel-example-controls" class="carousel slide" data-ride="carousel">
-        <div class="index-carousel-item">
+<div id="homepage-carousel-promotion-container">
+    <h1 id="homepage-carousel-promotion-title">Des promotions à couper le souffle!</h1>
+    <div id="homepage-carousel-promotion-example-controls" class="carousel slide" data-ride="carousel">
+        <div class="homepage-carousel-promotion-item">
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img class="d-block w-100" src="~/img/slider1.png" alt="First slide">
@@ -23,13 +23,18 @@
             </div>
         </div>
 
-        <a class="carousel-cont" href="#carousel-example-controls" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="false"></span>
-            <span class="sr-only">Previous</span>
+        <a class="carousel-cont" href="#homepage-carousel-promotion-example-controls" role="button" data-slide="prev">
+            <div class="homepage-carousel-promotion-control-prev">
+                <span class="carousel-control-prev-icon" aria-hidden="false"></span>
+                <span class="sr-only">Previous</span>
+            </div>
         </a>
-        <a class="carousel-control-next" href="#carousel-example-controls" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="false"></span>
-            <span class="sr-only">Next</span>
+        <a class="carousel-control-next" href="#homepage-carousel-promotion-example-controls" role="button" data-slide="next">
+            <div class="homepage-carousel-promotion-control-next">
+                <span class="carousel-control-next-icon" aria-hidden="false"></span>
+                <span class="sr-only">Next</span>
+            </div>
+
         </a>
     </div>
 </div>
@@ -67,12 +72,12 @@
 
 <div class="homepage-carousel-partners">
     <div class="homepage-carousel-arrowleft">
-        <button class="arrow prev" ><i class="ri-arrow-left-s-line"></i></button>
-    </div >
+        <button class="arrow prev"><i class="ri-arrow-left-s-line"></i></button>
+    </div>
     <div class="homepage-carousel-arrowright">
         <button class="arrow next"><i class="ri-arrow-right-s-line"></i></button>
     </div>
-    
+
     <div class="homepage-carousel-cardwrapper">
         <div class="homepage-carousel-card-item-partners">
             <img class="img-fluid mx-auto d-block" src="~/img/indice_c_1.png" alt="slide 1">
