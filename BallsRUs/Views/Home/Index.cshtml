@@ -172,24 +172,31 @@
 
             cardWrapper.onscroll = function () {
                 if (cardWrapper.scrollLeft === 0) {
-                    cardWrapper.classList.add('no-smooth')
-                    cardWrapper.scrollLeft = cardWrapper.scrollWidth - (2 * cardWrapper.offsetWidth)
-                    cardWrapper.classList.remove('no-smooth')
-                } else if (cardWrapper.scrollLeft === cardWrapper.scrollWidth - cardWrapper.offsetWidth) {
-                    cardWrapper.classList.add('no-smooth')
-                    cardWrapper.scrollLeft = cardWrapper.offsetWidth
-                    cardWrapper.classList.remove('no-smooth')
+                    // Réinsérez les éléments à la fin lorsque vous atteignez le début
+                    const lastChildren = cardWrapperChildren.slice();
+                    lastChildren.reverse().forEach(item => {
+                        cardWrapper.insertAdjacentHTML('afterbegin', item.outerHTML);
+                    });
+                    //cardWrapper.scrollLeft = widthToScroll;
+                } else if (cardWrapper.scrollLeft >= cardWrapper.scrollWidth - (cardWrapper.offsetWidth + 24)) {
+                    // Réinsérez les éléments au début lorsque vous atteignez la fin
+                    const firstChildren = cardWrapperChildren.slice();
+                    firstChildren.reverse().forEach(item => {
+                        cardWrapper.insertAdjacentHTML('beforeend', item.outerHTML);
+                    });
+                    //cardWrapper.scrollLeft -= widthToScroll
                 }
 
                 if (autoScroll) {
-                    clearTimeout(autoScroll)
+                    clearTimeout(autoScroll);
                 }
 
                 autoScroll = setTimeout(() => {
-                    cardWrapper.classList.remove('no-smooth')
-                    cardWrapper.scrollLeft += widthToScroll
-                }, 4000)
+                    cardWrapper.classList.remove('no-smooth');
+                    cardWrapper.scrollLeft += widthToScroll;
+                }, 4000);
             }
+
         </script>
 
 
