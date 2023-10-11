@@ -502,22 +502,21 @@ input[type=text], input[type=password], textarea {
 }
 
 
-/*CSS pour le homePage*/
-
-.homePage-partnersTitle-container {
+/*CSS partners carousel*/
+.homepage-partners-title-container {
     padding-top: 150px;
     padding-bottom: 50px;
     text-align: center;
     justify-content: center;
 }
 
-.index-carouselPartners {
+.homepage-carousel-partners {
     position: relative;
     /*max-width: 940px;*/
     width: 100%;
 }
 
-.homePage-Carousel-ArrowLeft {
+.homepage-carousel-arrowleft {
     position: absolute;
     top: 50%;
     color: white;
@@ -538,7 +537,7 @@ input[type=text], input[type=password], textarea {
 }
 
 
-.homePage-Carousel-ArrowRight {
+.homepage-carousel-arrowright {
     position: absolute;
     color: white;
     top: 50%;
@@ -549,22 +548,22 @@ input[type=text], input[type=password], textarea {
     justify-content: center;
 }
 
-    .homePage-Carousel-ArrowLeft button,
-    .homePage-Carousel-ArrowRight button {
-        width: 32px;
-        height: 56px;
-        color: #000 !important;
-        background-color: gainsboro;
-        font-size: 20px;
-        cursor: pointer;
-        border: none;
-        outline: none;
-    }
+.homepage-carousel-arrowleft button,
+.homepage-carousel-arrowright button {
+    width: 32px;
+    height: 56px;
+    color: #000 !important;
+    background-color: gainsboro;
+    font-size: 20px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
 
-        .homePage-Carousel-ArrowLeft button:hover,
-        .homePage-Carousel-ArrowRight button:hover {
-            background-color: rgba(0, 0, 0, 0.3);
-        }
+.homepage-carousel-arrowleft button:hover,
+.homepage-carousel-arrowright button:hover {
+        background-color: rgba(0, 0, 0, 0.3);
+}
 
 .homePage-Carousel-Arrows #index-carousel-arrowPrev {
     left: 0;
@@ -575,7 +574,7 @@ input[type=text], input[type=password], textarea {
 }
 
 
-.index-carouselCardWrapper {
+.homepage-carousel-cardwrapper {
     display: grid;
     grid-auto-flow: column;
     overflow-x: auto;
@@ -590,34 +589,34 @@ input[type=text], input[type=password], textarea {
 
 /* Appliquer grid-auto-columns pour les écrans larges */
 @media screen and (min-width: 1025px) {
-    .index-carouselCardWrapper {
+    .homepage-carousel-cardwrapper {
         grid-auto-columns: calc((100% / 4) - 12px);
     }
 }
 
 /* Appliquer grid-auto-columns pour les écrans petits */
 @media screen and (max-width: 1024px) {
-    .index-carouselCardWrapper {
+    .homepage-carousel-cardwrapper {
         grid-auto-columns: calc((100% / 2) - 12px);
     }
 }
 
-.index-carouselCardWrapper::-webkit-scrollbar {
+.homepage-carousel-cardwrapper::-webkit-scrollbar {
     display: none;
 }
 
-.index-carouselCardWrapper.grab {
+.homepage-carousel-cardwrapper.grab {
     cursor: grabbing;
     user-select: none;
     scroll-snap-type: none;
     scroll-behavior: auto;
 }
 
-.index-carouselCardWrapper.no-smooth {
+.homepage-carousel-cardwrapper.no-smooth {
     scroll-behavior: auto;
 }
 
-.index-carousel-card-item {
+.homepage-carousel-card-item-partners {
     /*padding:6px;*/
     scroll-snap-align: start;
     border-radius: 10px;
@@ -625,29 +624,16 @@ input[type=text], input[type=password], textarea {
     box-shadow: 10px 8px 24px rgba(0, 0, 0, .1);
 }
 
-    .index-carousel-card-item img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        padding: 4px;
-    }
-
-.index-carousel-card-info {
-    padding: 16px;
+.homepage-carousel-card-item-partners img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 4px;
 }
-
-.index-carousel-card-title:hover {
-    color: #006aff;
-}
-
-.index-carousel-card-description {
-    color: #888;
-}
-
 
 @media screen and (max-width: 576px) {
 
-    .index-carouselCardWrapper {
+    .homepage-carousel-cardwrapper {
         margin: 100px;
         width: 100vw;
         grid-auto-columns: 100%;

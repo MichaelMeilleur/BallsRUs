@@ -59,46 +59,46 @@
         </form>
     </div>
 </div>
-<div class="homePage-partnersTitle-container">
+<div class="homepage-partners-title-container">
     <h1>
         Nos partenaires d'exception!
     </h1>
 </div>
 
-<div class="index-carouselPartners">
-    <div class="homePage-Carousel-ArrowLeft">
-        <button class="arrow prev" id="index-carousel-arrowPrev"><i class="ri-arrow-left-s-line"></i></button>
+<div class="homepage-carousel-partners">
+    <div class="homepage-carousel-arrowleft">
+        <button class="arrow prev" ><i class="ri-arrow-left-s-line"></i></button>
     </div >
-    <div class="homePage-Carousel-ArrowRight">
-        <button class="arrow next" id="index-carousel-arrowNext"><i class="ri-arrow-right-s-line"></i></button>
+    <div class="homepage-carousel-arrowright">
+        <button class="arrow next"><i class="ri-arrow-right-s-line"></i></button>
     </div>
     
-    <div class="index-carouselCardWrapper">
-        <div class="index-carousel-card-item">
+    <div class="homepage-carousel-cardwrapper">
+        <div class="homepage-carousel-card-item-partners">
             <img class="img-fluid mx-auto d-block" src="~/img/indice_c_1.png" alt="slide 1">
         </div>
-        <div class="index-carousel-card-item">
+        <div class="homepage-carousel-card-item-partners">
             <img class="img-fluid mx-auto d-block" src="~/img/indice_c_2.jpg" alt="slide 2">
         </div>
-        <div class="index-carousel-card-item">
+        <div class="homepage-carousel-card-item-partners">
             <img class="img-fluid mx-auto d-block" src="~/img/indice_c_3.jpg" alt="slide 3">
         </div>
-        <div class="index-carousel-card-item">
+        <div class="homepage-carousel-card-item-partners">
             <img class="img-fluid mx-auto d-block" src="~/img/indice_c_4.jpg" alt="slide 4">
         </div>
-        <div class="index-carousel-card-item">
+        <div class="homepage-carousel-card-item-partners">
             <img class="img-fluid mx-auto d-block" src="~/img/indice_c_5.png" style="background-color:green" alt="slide 5">
         </div>
-        <div class="index-carousel-card-item">
+        <div class="homepage-carousel-card-item-partners">
             <img class="img-fluid mx-auto d-block" src="~/img/indice_c_7.jpg" alt="slide 7">
         </div>
-        <div class="index-carousel-card-item">
+        <div class="homepage-carousel-card-item-partners">
             <img class="img-fluid mx-auto d-block" src="~/img/indice_c_8.jpg" alt="slide 8">
         </div>
-        <div class="index-carousel-card-item">
+        <div class="homepage-carousel-card-item-partners">
             <img class="img-fluid mx-auto d-block" src="~/img/indice_c_9.jpg" alt="slide 9">
         </div>
-        <div class="index-carousel-card-item">
+        <div class="homepage-carousel-card-item-partners">
             <img class="img-fluid mx-auto d-block" src="~/img/indice_c_11.jpg" alt="slide 11">
         </div>
     </div>
@@ -107,7 +107,7 @@
 @section Scripts {
     @{
         <script>
-            const cardWrapper = document.querySelector('.index-carouselCardWrapper')
+            const cardWrapper = document.querySelector('.homepage-carousel-cardwrapper')
             const cardWrapperChildren = Array.from(cardWrapper.children)
             const widthToScroll = cardWrapper.children[0].offsetWidth
             const arrowPrev = document.querySelector('.arrow.prev')
