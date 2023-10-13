@@ -5,7 +5,7 @@ namespace BallsRUs.Entities
     public class Product
     {
         public Guid Id { get; set; }
-        public long? SKU { get; set; }
+        public string? SKU { get; set; }
         public string? Name { get; set; }
         public string? Brand { get; set; }
         public string? Model { get; set; }
@@ -20,6 +20,8 @@ namespace BallsRUs.Entities
         public DateTime? PublicationDate { get; set; }
         public DateTime? LastUpdated { get; set; }
         public bool IsArchived { get; set; }
+
+        public decimal? DiscountPercentage => ((RetailPrice - DiscountedPrice) / RetailPrice) * 100;
 
         // Navigation properties
         public List<Category> Categories { get; set; } = new();
