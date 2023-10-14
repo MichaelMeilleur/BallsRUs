@@ -41,14 +41,14 @@
                             <a asp-area="" asp-controller="Home" asp-action="Index"><img class="header-logo" title="Accueil" src="../img/logo_no_background_white.png" /></a>
                         </div>
                     </div>
-                    <div id="header-icons-container-right" class="row col-4 col-sm-3">
+                    <div id="header-icons-container-right" class="d-flex row col-4 col-sm-3">
                         @if (User?.Identity?.IsAuthenticated ?? false)
                         {
                             <div class="d-flex align-items-center">
-                                <p style="color: white; margin: 0;" class="mb-0 ml-2">Bonjour @User.Identity.Name</p>
-                                <img class="header-icons" src="~/img/user.svg" />
+                                <p style="color: white;margin-right:10px" class="mb-0 ml-2">Bonjour @User.Identity.Name</p>
+                                <img style="margin-right:10px" class="header-icons" src="~/img/user.svg" />
+                                <img class="header-icons" src="~/img/shopping-cart.svg" />
                             </div>
-                            <img class="header-icons" src="~/img/shopping-cart.svg" />
                         }
                         else
                         {
