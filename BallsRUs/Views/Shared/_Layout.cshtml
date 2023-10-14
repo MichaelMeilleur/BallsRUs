@@ -56,14 +56,14 @@
                         {
                             <div class="d-flex align-items-center">
                                 <p class="header-nomuser-paragraphe mb-0 ml-2">Bonjour @User.Identity.Name</p>
-                                <img style="margin-right:10px" class="header-icons" src="~/img/user.svg" />
-                                <img class="header-icons" src="~/img/shopping-cart.svg" />
+                                <img style="margin-right:10px" class="header-icon" src="~/img/user.svg" />
+                                <img class="header-icon" src="~/img/shopping-cart.svg" />
                             </div>
                         }
                         else
                         {
-                            <img class="header-icons" src="~/img/user.svg" />
-                            <img class="header-icons" src="~/img/shopping-cart.svg" />
+                            <a class="header-icon-link" asp-controller="Account" asp-action="LogIn"><img class="header-icon" src="~/img/user.svg" /></a>
+                            <img class="header-icon" src="~/img/shopping-cart.svg" />
                         }
                     </div>
                 </div>
