@@ -44,7 +44,7 @@ namespace BallsRUs.ViewComponents
                 {
                     IEnumerable<Category> categories = _context.Categories.AsEnumerable();
 
-                    if (!categories.Any(c => c.Name!.ToLower() == category.ToLower()))
+                    if (categories.Any(c => c.Name!.ToLower() == category.ToLower()))
                     {
                         Category? selectedCategory = categories.FirstOrDefault(c => c.Name!.ToLower() == category.ToLower());
 
