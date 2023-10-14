@@ -241,6 +241,7 @@ input[type=text], input[type=password], textarea {
     height: 2em;
     left: 0;
     width: 100%;
+    position: static !important;
 }
 
 .footer-link {
@@ -318,106 +319,6 @@ input[type=text], input[type=password], textarea {
     margin-right: 3vw;
 }
 
-/* ------------------------------------------------------------------------------------------------------------------------------- */
-
-.text_sponsors {
-    font-size: max(2vw, 13px);
-    text-align: center;
-    padding: 50px;
-}
-
-@media (min-width: 576px) {
-    /* Personnalisation du carousel */
-
-    .carousel-item {
-        align-content: center;
-        padding: 15px; /* Espace entre les éléments */
-        /* Bordure des éléments */
-    }
-
-    /* Personnalisation des flèches de défilement */
-    .carousel-control-prev,
-    .carousel-control-next {
-        width: 5%; /* Largeur des flèches */
-    }
-
-    .carousel-control-next {
-        width: 100px;
-    }
-
-
-        /* Style des flèches au survol */
-        .carousel-control-prev:hover,
-        .carousel-control-next:hover {
-            background-color: #555;
-        }
-
-        /* Style du texte "Previous" et "Next" */
-        .carousel-control-prev span,
-        .carousel-control-next span {
-            position: absolute; /* Position absolue pour centrer le texte */
-            top: 50%; /* Position verticale au centre */
-            transform: translateY(-50%); /* Décalage vertical pour centrer */
-        }
-
-    /* Style du texte "Previous" */
-    .carousel-control-prev span {
-        left: 15px; /* Position horizontale à gauche */
-    }
-
-    .carousel-control-prev-icon span {
-        left: 15px; /* Position horizontale à gauche */
-    }
-
-    /* Style du texte "Next" */
-    .carousel-control-next span {
-        right: 15px; /* Position horizontale à droite */
-    }
-}
-
-.panel-thumbnail {
-    height: 400px;
-    text-align: center;
-    width: 400px;
-    display: flex;
-    margin-left: 340px;
-}
-
-#profile-grid {
-    overflow: auto;
-    white-space: normal;
-}
-
-    #profile-grid .profile {
-        padding-bottom: 40px;
-    }
-
-    #profile-grid .panel {
-        padding: 0
-    }
-
-    #profile-grid .panel-body {
-        padding: 15px
-    }
-
-    #profile-grid .profile-name {
-        font-weight: bold;
-    }
-
-    #profile-grid .thumbnail {
-        margin-bottom: 6px;
-    }
-
-    #profile-grid .panel-thumbnail {
-        overflow: hidden;
-    }
-
-    #profile-grid .img-rounded {
-        border-radius: 4px 4px 0 0;
-    }
-
-/* ------------------------------------------------------------------------------------------------------------------------------- */
-
 .about-section {
     width: 100%;
     border-bottom: solid 1px grey;
@@ -450,7 +351,6 @@ input[type=text], input[type=password], textarea {
     padding: 0 16px;
     height: 100%;
 }
-
     .about-equipe-container::after {
         content: "";
         clear: both;
@@ -475,25 +375,21 @@ input[type=text], input[type=password], textarea {
 .about-equipe-description {
     height: 150px;
 }
-
 @media (max-width: 1399px) {
     .about-equipe-description {
         height: 175px;
     }
 }
-
 @media (max-width: 1199px) {
     .about-equipe-description {
         height: 215px;
     }
 }
-
 @media (max-width: 991px) {
     .about-equipe-description {
         height: 175px;
     }
 }
-
 @media (max-width: 767px) {
     .about-equipe-description {
         height: 100px;
@@ -511,7 +407,6 @@ input[type=text], input[type=password], textarea {
     cursor: pointer;
     width: 100%;
 }
-
     .about-equipe-button:hover {
         filter: brightness(1.10);
         text-decoration: none;
@@ -573,7 +468,6 @@ input[type=text], input[type=password], textarea {
 .vc-product-list-product-link {
     color: black;
 }
-
     .vc-product-list-product-link:hover {
         color: forestgreen;
         text-decoration: none;
@@ -584,13 +478,15 @@ input[type=text], input[type=password], textarea {
     text-decoration: line-through;
 }
 
-.account-login-signin-form {
+.account-login-container {
     display: inline-block;
     margin: auto;
+    margin-top: 100px;
+    margin-bottom: 143px;
     width: auto;
 }
 
-.account-login-container {
+.account-login-signin-form {
     display: inline-block;
     margin: auto;
     width: auto;
@@ -616,7 +512,6 @@ input[type=text], input[type=password], textarea {
     margin-top: 20px;
     align-content: center;
 }
-
     #account-login-register-button:hover {
         text-decoration: none;
         filter: brightness(1.10);
@@ -626,12 +521,14 @@ input[type=text], input[type=password], textarea {
     display: inline-block;
     margin: auto;
     width: auto;
+    margin-top: 50px;
+    margin-bottom: 100px;
 }
 
 .account-register-form {
     display: inline-block;
     margin: auto;
-    width: auto;
+    width: min(100%, 400px);
 }
 
 #account-register-title {
