@@ -26,9 +26,9 @@
                             <a asp-area="" asp-controller="Home" asp-action="Index"><img class="header-logo" title="Accueil" src="../img/logo_no_background_white.png" /></a>
                         </div>
                         <div id="header-icons-container-left" class="row d-flex d-sm-none">
-                            <img class="header-icon-menu-hamburger" src="~/img/menuhamburger.svg.png" id="hamburger-icon" />
+                            <img id="header-hamburger-menu-icon" src="~/img/menuhamburger.svg.png" />
                         </div>
-                        <div id="shared-header-hamburger-menu" class="shared-header-hamburger-menu">
+                        <div id="header-hamburger-menu-container">
                             <ul>
                                 <li><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">NOUVEAUTÉS</a></li>
                                 <li><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">BÂTONS</a></li>
@@ -155,8 +155,8 @@
 
 <script>
     $(document).ready(function () {
-        $('#hamburger-icon').click(function () {
-            $('#shared-header-hamburger-menu').toggle();
+        $('#header-hamburger-menu-icon').click(function () {
+            $('#header-hamburger-menu-container').toggle();
         });
     });
 </script>

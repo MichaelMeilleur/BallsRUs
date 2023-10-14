@@ -157,12 +157,17 @@ input[type=text], input[type=password], textarea {
     height: 20px;
 }
 
-.header-icon-menu-hamburger {
+#header-hamburger-menu-icon {
     width: auto;
     height: 20px;
 }
 
-.shared-header-hamburger-menu {
+#header-hamburger-menu-icon li {
+    padding: 10px;
+    text-align: center;
+}
+
+#header-hamburger-menu-container {
     display: none;
     position: absolute;
     top: 80px;
@@ -171,16 +176,10 @@ input[type=text], input[type=password], textarea {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 999;
 }
-
-    .shared-header-hamburger-menu ul {
+    #header-hamburger-menu-container ul {
         list-style: none;
         padding: 0;
     }
-
-.header-icon-menu-hamburger li {
-    padding: 10px;
-    text-align: center;
-}
 
 .navbar {
     justify-content: center;
@@ -400,7 +399,7 @@ input[type=text], input[type=password], textarea {
 }
 @media screen and (max-width: 575px) {
     .homepage-carousel-partners-cardwrapper {
-        width: 100vw;
+        width: 96.5vw;
         grid-auto-columns: calc((100% / 2) - 12px);
     }
 }
