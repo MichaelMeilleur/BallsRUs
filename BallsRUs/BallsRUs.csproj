@@ -28,4 +28,10 @@
     <Folder Include="wwwroot\img\products\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\img\menuhamburger.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

@@ -94,8 +94,8 @@ input[type=text], input[type=password], textarea {
 }
 
 .header-nomuser-paragraphe {
-    color:white;
-    margin-right:10px;
+    color: white;
+    margin-right: 10px;
 }
 
 #header-search-bar-container {
@@ -156,6 +156,40 @@ input[type=text], input[type=password], textarea {
     filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(305deg) brightness(103%) contrast(103%);
     width: auto;
     height: 20px;
+}
+
+.header-icon-menu-hamburger {
+    width: auto;
+    height: 20px;
+}
+
+.shared-header-hamburger-menu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.shared-header-hamburger-menu {
+    display: none;
+    position: absolute;
+    top: 80px;
+    left: 0;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+}
+
+    .shared-header-hamburger-menu ul {
+        list-style: none;
+        padding: 0;
+    }
+
+.header-icon-menu-hamburger li {
+    padding: 10px;
+    text-align: center;
 }
 
 .navbar {
@@ -585,12 +619,13 @@ input[type=text], input[type=password], textarea {
     height: 35px;
     display: block;
     justify-self: center;
-    padding-top:5px;
-    padding-bottom:5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     margin: auto;
     margin-top: 20px;
     align-content: center;
 }
+
     #account-login-register-button:hover {
         text-decoration: none;
         filter: brightness(1.10);
