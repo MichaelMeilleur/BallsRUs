@@ -26,7 +26,16 @@
                             <a asp-area="" asp-controller="Home" asp-action="Index"><img class="header-logo" title="Accueil" src="../img/logo_no_background_white.png" /></a>
                         </div>
                         <div id="header-icons-container-left" class="row d-flex d-sm-none">
-                            <img class="header-icons" src="~/img/recherche.svg" />
+                            <img class="header-icon-menu-hamburger" src="~/img/menuhamburger.svg.png" id="hamburger-icon" />
+                        </div>
+                        <div id="shared-header-hamburger-menu" class="shared-header-hamburger-menu">
+                            <ul>
+                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">NOUVEAUTÉS</a></li>
+                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">BÂTONS</a></li>
+                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">BALLES</a></li>
+                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">VÊTEMENTS</a></li>
+                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">SACS</a></li>
+                            </ul>
                         </div>
                     </div>
                     <div class="col-4 col-sm-6">
@@ -42,9 +51,20 @@
                             <a asp-area="" asp-controller="Home" asp-action="Index"><img class="header-logo" title="Accueil" src="../img/logo_no_background_white.png" /></a>
                         </div>
                     </div>
-                    <div id="header-icons-container-right" class="row col-4 col-sm-3">
-                        <img class="header-icons" src="~/img/user.svg" />
-                        <img class="header-icons" src="~/img/shopping-cart.svg" />
+                    <div id="header-icons-container-right" class="d-flex row col-4 col-sm-3">
+                        @if (User?.Identity?.IsAuthenticated ?? false)
+                        {
+                            <div class="d-flex align-items-center">
+                                <p class="header-nomuser-paragraphe mb-0 ml-2">Bonjour @User.Identity.Name</p>
+                                <img style="margin-right:10px" class="header-icons" src="~/img/user.svg" />
+                                <img class="header-icons" src="~/img/shopping-cart.svg" />
+                            </div>
+                        }
+                        else
+                        {
+                            <img class="header-icons" src="~/img/user.svg" />
+                            <img class="header-icons" src="~/img/shopping-cart.svg" />
+                        }
                     </div>
                 </div>
             </div>
@@ -100,7 +120,7 @@
                     </div>
                     <div class="footer-sections-column row col-lg-3 col-sm-6 col-11">
                         <h5 class="footer-sections-title col-12">ESPACE CLIENT</h5>
-                        <span class="footer-sections-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Retours et échanges</a></span>
+                        <span class="footer-sections-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Échange et remboursement</a></span>
                         <span class="footer-sections-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Nous contacter</a></span>
                     </div>
                     <div class="footer-sections-column row col-lg-3 col-sm-6 col-11">
@@ -125,9 +145,18 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+<script>
+    $(document).ready(function () {
+        $('#hamburger-icon').click(function () {
+            $('#shared-header-hamburger-menu').toggle();
+        });
+    });
+</script>
