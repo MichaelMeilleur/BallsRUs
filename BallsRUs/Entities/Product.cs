@@ -21,8 +21,6 @@ namespace BallsRUs.Entities
         public DateTime? LastUpdated { get; set; }
         public bool IsArchived { get; set; }
 
-        public decimal? DiscountPercentage => ((RetailPrice - DiscountedPrice) / RetailPrice) * 100;
-
         // Navigation properties
         public List<Category> Categories { get; set; } = new();
     }
