@@ -23,10 +23,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
     <Folder Include="wwwroot\fonts\" />
     <Folder Include="wwwroot\img\categories\" />
     <Folder Include="wwwroot\img\products\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\img\menuhamburger.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

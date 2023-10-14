@@ -16,7 +16,7 @@ namespace BallsRUs.Data
             _ = AddRole(builder, "Utilisateur");
 
             // Ajouter l'utilisateur admin
-            var adminUser = AddUser(builder, "admin", "Toto123!");
+            var adminUser = AddUser(builder, "admin@ballsrus.ca", "Toto123!","Admin","Admin");
             AddUserToRole(builder, adminUser, adminRole);
 
             // Ajouter les catégories de produits.
@@ -173,13 +173,17 @@ namespace BallsRUs.Data
         /// <param name="userName">Nom d'utilisateur</param>
         /// <param name="password">Mot de passe</param>
         /// <returns>L'utilisateur créé</returns>
-        private static User AddUser(ModelBuilder builder, string userName, string password)
+        private static User AddUser(ModelBuilder builder, string email, string password, string firstName,string lastName)
         {
-            var newUser = new User(userName)
+            var newUser = new User(email)
             {
                 Id = Guid.NewGuid(),
-                NormalizedUserName = userName.ToUpper(),
-                SecurityStamp = Guid.NewGuid().ToString()
+                NormalizedUserName = email.ToUpper(),
+                SecurityStamp = Guid.NewGuid().ToString(),
+                Email = email,
+                NormalizedEmail = email.ToUpper(),
+                FirstName = firstName,
+                LastName = lastName
             };
             newUser.PasswordHash = PASSWORD_HASHER.HashPassword(newUser, password);
             builder.Entity<User>().HasData(newUser);
