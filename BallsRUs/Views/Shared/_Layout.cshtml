@@ -42,8 +42,19 @@
                         </div>
                     </div>
                     <div id="header-icons-container-right" class="row col-4 col-sm-3">
-                        <img class="header-icons" src="~/img/user.svg" />
-                        <img class="header-icons" src="~/img/shopping-cart.svg" />
+                        @if (User?.Identity?.IsAuthenticated ?? false)
+                        {
+                            <div class="d-flex align-items-center">
+                                <p style="color: white; margin: 0;" class="mb-0 ml-2">Bonjour @User.Identity.Name</p>
+                                <img class="header-icons" src="~/img/user.svg" />
+                            </div>
+                            <img class="header-icons" src="~/img/shopping-cart.svg" />
+                        }
+                        else
+                        {
+                            <img class="header-icons" src="~/img/user.svg" />
+                            <img class="header-icons" src="~/img/shopping-cart.svg" />
+                        }
                     </div>
                 </div>
             </div>
@@ -99,7 +110,7 @@
                     </div>
                     <div class="footer-sections-column row col-lg-3 col-sm-6 col-11">
                         <h5 class="footer-sections-title col-12">ESPACE CLIENT</h5>
-                        <span class="footer-sections-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Retours et échanges</a></span>
+                        <span class="footer-sections-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Échange et remboursement</a></span>
                         <span class="footer-sections-element col-12"><a class="footer-link" asp-area="" asp-controller="Home" asp-action="Privacy">Nous contacter</a></span>
                     </div>
                     <div class="footer-sections-column row col-lg-3 col-sm-6 col-11">
