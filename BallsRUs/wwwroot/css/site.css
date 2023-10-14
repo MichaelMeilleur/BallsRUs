@@ -270,49 +270,6 @@ input[type=text], input[type=password], textarea {
     margin-right: 3vw;
 }
 
-
-
-.panel-thumbnail {
-    height: 400px;
-    text-align: center;
-    width: 400px;
-    display: flex;
-    margin-left: 340px;
-}
-
-#profile-grid {
-    overflow: auto;
-    white-space: normal;
-}
-
-    #profile-grid .profile {
-        padding-bottom: 40px;
-    }
-
-    #profile-grid .panel {
-        padding: 0
-    }
-
-    #profile-grid .panel-body {
-        padding: 15px
-    }
-
-    #profile-grid .profile-name {
-        font-weight: bold;
-    }
-
-    #profile-grid .thumbnail {
-        margin-bottom: 6px;
-    }
-
-    #profile-grid .panel-thumbnail {
-        overflow: hidden;
-    }
-
-    #profile-grid .img-rounded {
-        border-radius: 4px 4px 0 0;
-    }
-
 .about-block {
     width: 100%;
     border-bottom: solid 1px grey;
@@ -434,83 +391,6 @@ input[type=text], input[type=password], textarea {
     padding-right: 0;
 }
 
-
-
-
-/*CAROUSEL TITLE*/
-#homepage-carousel-promotion-title {
-    margin-top: 50px;
-    font-weight: bold;
-}
-
-#homepage-carousel-promotion-example-controls {
-    padding-top: 10px;
-}
-
-#homepage-carousel-promotion-container {
-    max-height: 1200px;
-    text-align: center;
-}
-
-.text_sponsors {
-    font-size: max(2vw, 13px);
-    text-align: center;
-    padding: 50px;
-}
-
-@media (min-width: 576px) {
-    /* Personnalisation du carousel */
-
-    .homepage-carousel-promotion-item {
-        align-content: center;
-        padding: 15px; /* Espace entre les éléments */
-        /* Bordure des éléments */
-    }
-
-    /* Personnalisation des flèches de défilement */
-    .homepage-carousel-promotion-control-prev,
-    .homepage-carousel-promotion-control-next {
-        width: 5%; /* Largeur des flèches */
-    }
-
-    .homepage-carousel-promotion-control-next {
-        width: 100px;
-    }
-
-
-        /* Style des flèches au survol */
-        .homepage-carousel-promotion-control-prev:hover,
-        .homepage-carousel-promotion-control-next:hover {
-            background-color: #555;
-        }
-
-        /* Style du texte "Previous" et "Next" */
-        .homepage-carousel-promotion-control-prev span,
-        .homepage-carousel-promotion-control-next span {
-            position: absolute; /* Position absolue pour centrer le texte */
-            top: 50%; /* Position verticale au centre */
-            transform: translateY(-50%); /* Décalage vertical pour centrer */
-        }
-
-    /* Style du texte "Previous" */
-    .homepage-carousel-promotion-control-prev span {
-        left: 15px; /* Position horizontale à gauche */
-    }
-
-    .homepage-carousel-promotion-control-prev span {
-        left: 15px; /* Position horizontale à gauche */
-    }
-
-    /* Style du texte "Next" */
-    .homepage-carousel-promotion-control-next span {
-        right: 15px; /* Position horizontale à droite */
-    }
-}
-
-/*END CAROUSEL*/
-
-
-/*CSS partners carousel*/
 .homepage-partners-title-container {
     padding-top: 150px;
     padding-bottom: 50px;
@@ -524,7 +404,15 @@ input[type=text], input[type=password], textarea {
     width: 100%;
 }
 
-.homepage-carousel-arrowleft {
+.ri-arrow-left-s-line {
+    color: white;
+}
+
+.ri-arrow-right-s-line {
+    color: white;
+}
+
+#homepage-carousel-partners-left-arrow {
     position: absolute;
     top: 50%;
     color: white;
@@ -535,17 +423,7 @@ input[type=text], input[type=password], textarea {
     justify-content: center;
 }
 
-.ri-arrow-left-s-line {
-    color: white;
-}
-
-
-.ri-arrow-right-s-line {
-    color: white;
-}
-
-
-.homepage-carousel-arrowright {
+#homepage-carousel-partners-right-arrow {
     position: absolute;
     color: white;
     top: 50%;
@@ -556,33 +434,23 @@ input[type=text], input[type=password], textarea {
     justify-content: center;
 }
 
-    .homepage-carousel-arrowleft button,
-    .homepage-carousel-arrowright button {
-        width: 32px;
-        height: 56px;
-        color: #000 !important;
-        background-color: gainsboro;
-        font-size: 20px;
-        cursor: pointer;
-        border: none;
-        outline: none;
-    }
-
-        .homepage-carousel-arrowleft button:hover,
-        .homepage-carousel-arrowright button:hover {
+#homepage-carousel-partners-left-arrow button,
+#homepage-carousel-partners-right-arrow button {
+    width: 32px;
+    height: 56px;
+    color: #000 !important;
+    background-color: gainsboro;
+    font-size: 20px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+        #homepage-carousel-partners-left-arrow button:hover,
+        #homepage-carousel-partners-right-arrow button:hover {
             background-color: rgba(0, 0, 0, 0.3);
         }
 
-.homePage-Carousel-Arrows #index-carousel-arrowPrev {
-    left: 0;
-}
-
-.homePage-Carousel-Arrows #index-carousel-arrowNext {
-    right: 0;
-}
-
-
-.homepage-carousel-cardwrapper {
+.homepage-carousel-partners-cardwrapper {
     display: grid;
     grid-auto-flow: column;
     overflow-x: auto;
@@ -597,52 +465,50 @@ input[type=text], input[type=password], textarea {
 
 /* Appliquer grid-auto-columns pour les écrans larges */
 @media screen and (min-width: 1025px) {
-    .homepage-carousel-cardwrapper {
+    .homepage-carousel-partners-cardwrapper {
         grid-auto-columns: calc((100% / 4) - 12px);
     }
 }
 
 /* Appliquer grid-auto-columns pour les écrans petits */
 @media screen and (min-width: 576px) and (max-width: 1024px) {
-    .homepage-carousel-cardwrapper {
+    .homepage-carousel-partners-cardwrapper {
         grid-auto-columns: calc((100% / 2) - 12px);
     }
 }
 
 @media screen and (max-width: 575px) {
-
-    .homepage-carousel-cardwrapper {
+    .homepage-carousel-partners-cardwrapper {
         width: 100vw;
         grid-auto-columns: calc((100% / 2) - 12px);
     }
 }
-.homepage-carousel-cardwrapper::-webkit-scrollbar {
+
+.homepage-carousel-partners-cardwrapper::-webkit-scrollbar {
     display: none;
 }
 
-.homepage-carousel-cardwrapper.grab {
+.homepage-carousel-partners-cardwrapper.grab {
     cursor: grabbing;
     user-select: none;
     scroll-snap-type: none;
     scroll-behavior: auto;
 }
 
-.homepage-carousel-cardwrapper.no-smooth {
+.homepage-carousel-partners-cardwrapper.no-smooth {
     scroll-behavior: auto;
 }
 
-.homepage-carousel-card-item-partners {
-    /*padding:6px;*/
+.homepage-carousel-partners-card-item {
     scroll-snap-align: start;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 10px 8px 24px rgba(0, 0, 0, .1);
 }
 
-    .homepage-carousel-card-item-partners img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        padding: 4px;
-    }
-
+.homepage-carousel-partners-card-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 4px;
+}
