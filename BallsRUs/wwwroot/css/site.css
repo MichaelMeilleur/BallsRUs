@@ -595,3 +595,21 @@ input[type=text], input[type=password], textarea {
         text-decoration: none;
         filter: brightness(1.10);
     }
+
+.account-register-container {
+    display: inline-block;
+    margin: auto;
+    width: auto;
+}
+
+.account-register-form {
+    display: inline-block;
+    margin: auto;
+    width: auto;
+}
+
+#account-register-title {
+    margin-top: 40px;
+    font-weight: bold;
+    color: forestgreen;
+}
