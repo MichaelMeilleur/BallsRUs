@@ -87,7 +87,6 @@ namespace BallsRUs.Controllers
                 return View(vm);
             }
 
-            //CORRIGER
             result = await userManager.AddToRoleAsync(newUser, role);
 
             if (!result.Succeeded)
@@ -96,7 +95,7 @@ namespace BallsRUs.Controllers
                 return View(vm);
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("LogIn", "Account");
         }
 
         [HttpPost]
