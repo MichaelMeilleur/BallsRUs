@@ -79,6 +79,9 @@ namespace BallsRUs.Controllers
             var role = "Utilisateur";
 
             var newUser = new User(vm.UserName);
+            newUser.LastName = vm.LastName;
+            newUser.FirstName = vm.FirstName;
+
             var result = await userManager.CreateAsync(newUser, vm.Password);
 
             if (!result.Succeeded)
