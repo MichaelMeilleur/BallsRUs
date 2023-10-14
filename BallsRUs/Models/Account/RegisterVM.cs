@@ -9,10 +9,12 @@ namespace BallsRUs.Models.Account
         public string UserName { get; set; }
 
         [Display(Name = "Password")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required]
         [Display(Name = "Password confirmation")]
+        [DataType(DataType.Password)]
         [Compare(nameof(Password))]
         public string PasswordConfirmation { get; set; }
     }
