@@ -5,10 +5,10 @@
 }
 
 <div class="text-center">
-    <div class="account-login-container col-md-8">
-        <h3 id="account-login-title" class="display-4">Créer un compte</h3>
+    <div class="account-register-container col-md-8">
+        <h3 id="account-register-title" class="display-4">Créer un compte</h3>
         <div class="row" style="margin-top:60px">
-            <form asp-action="Register" asp-route-returnUrl="@ViewBag.ReturnUrl" class="account-login-signin-form">
+            <form asp-action="Register" asp-route-returnUrl="@ViewBag.ReturnUrl" class="account-register-form">
                 <div class="col-12">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
