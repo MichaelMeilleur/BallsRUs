@@ -108,6 +108,64 @@ namespace BallsRUs.Controllers
             return RedirectToAction(nameof(ManageProduct));
         }
 
+        public IActionResult EditProduct(Guid id)
+        {
+            ViewBag.Id = id;
+
+            var toEdit = _context.Products.Find(id);
+
+            if (toEdit is null)
+                throw new ArgumentOutOfRangeException(nameof(id));
+
+            var vm = new AdminEditProductVM
+            {
+                SKU = toEdit.SKU,
+                Name = toEdit.Name,
+                Brand = toEdit.Brand,
+                Model = toEdit.Model,
+                WeightInGrams = toEdit.WeightInGrams,
+                Size = toEdit.Size,
+                Quantity = toEdit.Quantity,
+                RetailPrice = toEdit.RetailPrice,
+                DiscountedPrice = toEdit.DiscountedPrice,
+                ShortDescription = toEdit.ShortDescription,
+                FullDescription = toEdit.FullDescription
+            };
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult EditProduct(AdminEditProductVM vm, Guid id)
+        {
+            ViewBag.Id = id;
+
+            if (!ModelState.IsValid)
+                return View(vm);
+
+            var toEdit = _context.Products.Find(id);
+
+            if (toEdit is null)
+                throw new ArgumentOutOfRangeException(nameof(id));
+
+            toEdit.SKU = vm.SKU;
+            toEdit.Name = vm.Name;
+            toEdit.Brand = vm.Brand;
+            toEdit.Model = vm.Model;
+            toEdit.WeightInGrams = vm.WeightInGrams;
+            toEdit.Size = vm.Size;
+            toEdit.Quantity = vm.Quantity;
+            toEdit.RetailPrice = vm.RetailPrice;
+            toEdit.DiscountedPrice = vm.DiscountedPrice;
+            toEdit.ShortDescription = vm.ShortDescription;
+            toEdit.FullDescription = vm.FullDescription;
+            toEdit.LastUpdated = (DateTime?)DateTime.Now;
+
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(DetailsProduct), new { id = id });
+        }
+
         public IActionResult DetailsProduct(Guid id)
         {
             var toShow = _context.Products.Find(id);
