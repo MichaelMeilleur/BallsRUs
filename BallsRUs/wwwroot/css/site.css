@@ -33,7 +33,7 @@ body {
     }
 }
 
-input[type=submit] {
+input[type=submit], input[type=button] {
     background-color: forestgreen;
     border: none;
     color: white;
@@ -44,7 +44,7 @@ input[type=submit] {
     margin: auto;
     margin-top: 10px;
 }
-    input[type=submit]:hover {
+    input[type=submit]:hover, input[type=button]:hover {
         filter: brightness(1.10);
     }
 
@@ -320,11 +320,58 @@ input[type=text], input[type=password], textarea {
 }
 
 #homepage-produits-vedettes-title {
+    font-family: 'Poppins';
+    font-weight: bold;
     width: fit-content;
-    margin-top: 2vw;
+    margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
 }
+
+#homepage-produits-vedettes-button-container {
+    width: fit-content;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#homepage-produits-vedettes-button {
+    background-color: forestgreen;
+    margin-top: 25px;
+    color: white;
+    width: 290px;
+    height: 50px;
+    font-size: 18px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    justify-content: center;
+}
+    #homepage-produits-vedettes-button:hover {
+        text-decoration: none;
+        filter: brightness(1.10);
+    }
+
+/*#account-login-register-button {
+    background-color: forestgreen;
+    color: white;
+    width: 200px;
+    height: 35px;
+    display: block;
+    justify-self: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: auto;
+    margin-top: 20px;
+    align-content: center;
+}
+
+    #account-login-register-button:hover {
+        text-decoration: none;
+        filter: brightness(1.10);
+    }*/
 
 #homepage-newsletter-container {
     border-top: solid 1px grey;
@@ -356,6 +403,11 @@ input[type=text], input[type=password], textarea {
 #homepage-partners-title-container {
     text-align: center;
     justify-content: center;
+}
+
+#homepage-partners-title {
+    font-family: 'Poppins';
+    font-weight: bold;
 }
 
 .homepage-carousel-partners {
@@ -470,7 +522,7 @@ input[type=text], input[type=password], textarea {
     padding: 4px;
 }
 
-.about-block {
+.about-section {
     width: 100%;
     border-bottom: solid 1px grey;
     margin-bottom: 30px;
