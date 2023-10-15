@@ -49,5 +49,15 @@ namespace BallsRUs.Controllers
 
             return View(vm);
         }
+
+        public IActionResult Search(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return RedirectToAction(nameof(Index));
+
+            ViewBag.Search = value;
+
+            return View();
+        }
     }
 }

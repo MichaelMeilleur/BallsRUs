@@ -354,25 +354,6 @@ input[type=text], input[type=password], textarea {
         filter: brightness(1.10);
     }
 
-/*#account-login-register-button {
-    background-color: forestgreen;
-    color: white;
-    width: 200px;
-    height: 35px;
-    display: block;
-    justify-self: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    margin: auto;
-    margin-top: 20px;
-    align-content: center;
-}
-
-    #account-login-register-button:hover {
-        text-decoration: none;
-        filter: brightness(1.10);
-    }*/
-
 #homepage-newsletter-container {
     border-top: solid 1px grey;
     padding-top: 50px;

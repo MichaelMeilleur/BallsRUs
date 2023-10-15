@@ -38,7 +38,7 @@ namespace BallsRUs.ViewComponents
                 {
                     search = search.ToLower();
                     products = products.Where(p => p.Name!.ToLower().Contains(search) || p.Brand!.ToLower().Contains(search) || p.Model!.ToLower().Contains(search) ||
-                                                   p.SKU!.ToLower() == search || p.ShortDescription!.ToLower().Contains(search));
+                                                   p.SKU!.ToLower() == search || p.Categories.Any(c => c.Name!.ToLower().Contains(search)));
                 }
                 else if (category is not null)
                 {
