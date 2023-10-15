@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BallsRUs.Models.Admin
 {
-    public class AdminCreateProductVM
+    public class AdminEditProductVM
     {
         [Display(Name = "SKU")]
         public string? SKU { get; set; }
@@ -16,9 +16,6 @@ namespace BallsRUs.Models.Admin
 
         [Display(Name = "Modèle")]
         public string? Model { get; set; }
-
-        [Display(Name = "Fichier image")]
-        public IFormFile? Image { get; set; }
 
         [Display(Name = "Description courte")]
         public string? ShortDescription { get; set; }
@@ -41,7 +38,7 @@ namespace BallsRUs.Models.Admin
         [Display(Name = "Prix en rabais (si en rabais)")]
         public decimal? DiscountedPrice { get; set; }
 
-        public class Validator : AbstractValidator<AdminCreateProductVM>
+        public class Validator : AbstractValidator<AdminEditProductVM>
         {
             private const int MIN_NAME_LENGTH = 5;
             private const int MAX_NAME_LENGTH = 100;
@@ -73,9 +70,6 @@ namespace BallsRUs.Models.Admin
                         .WithMessage("Veuillez entrer un modèle.")
                     .Length(MIN_NAME_LENGTH, MAX_NAME_LENGTH)
                         .WithMessage($"Veuillez entrer un modèle entre {MIN_NAME_LENGTH} et {MAX_NAME_LENGTH} caractères.");
-                RuleFor(vm => vm.Image)
-                    .NotEmpty()
-                        .WithMessage("Veuillez sélectionner une image");
                 RuleFor(vm => vm.ShortDescription)
                     .NotEmpty()
                         .WithMessage("Veuillez entrer une description courte.")
