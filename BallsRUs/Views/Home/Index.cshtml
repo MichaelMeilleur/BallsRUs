@@ -7,9 +7,12 @@
 }
 
 <div class="w-100 justify-content-center">
-    <h1 id="homepage-produits-vedettes-title">Nos produits en vedette!</h1>
+    <h3 id="homepage-produits-vedettes-title">Nos produits en vedette</h3>
 </div>
 <vc:product-list is-homepage-showcase="true"></vc:product-list>
+<div id="homepage-produits-vedettes-button-container">
+    <a id="homepage-produits-vedettes-button" class="" asp-controller="Product" asp-action="Index"><span class="m-auto">Voir catalogue complet</span></a>
+</div>
 <div id="homepage-newsletter-container" class="homepage-section text-center">
     <div id="homepage-newsletter-form" class="col-lg-6 col-md-8 col-sm-10">
         <label id="homepage-newsletter-header">Nous contacter</label>
@@ -37,9 +40,9 @@
     </div>
 </div>
 <div id="homepage-partners-title-container">
-    <h1>
-        Nos partenaires d'exception!
-    </h1>
+    <h3 id="homepage-partners-title">
+        Nos partenaires d'exception
+    </h3>
 </div>
 
 <div class="homepage-carousel-partners">
