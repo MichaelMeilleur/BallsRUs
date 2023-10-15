@@ -12,7 +12,7 @@
 <div id="homepage-newsletter-container" class="homepage-section text-center">
     <div id="homepage-newsletter-form" class="col-lg-6 col-md-8 col-sm-10">
         <label id="homepage-newsletter-header">Nous contacter</label>
-        <form action="mailto:info@ballsRUs.com" method="get">
+        <form name="contactForm" action="mailto:info@ballsRUs.com" method="get" onsubmit="return validateContactFormSubmit()">
             <div class="text-danger"></div>
             <div class="homepage-newsletter-form-item form-group my-3 text-start">
                 <label class="mb-1">Nom</label>
@@ -82,9 +82,7 @@
 
 @section Scripts {
     @{
-        <script>
-
-        </script>
+        <script src="~/js/contactFormValidation.js"></script>
         <script>
             const cardWrapper = document.querySelector('.homepage-carousel-partners-cardwrapper')
             const cardWrapperChildren = Array.from(cardWrapper.children)
