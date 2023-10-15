@@ -12,7 +12,7 @@
             <img id="product-details-specs-image" title="@Html.Raw(Model.Brand) @Html.Raw(Model.Model)" src="@Url.Content(Model.ImagePath)" />
         </div>
         <div class="col-12 col-sm-5 mx-5 mx-sm-0">
-            <p id="product-details-specs-brand">@Model.Brand</p>
+            <a id="product-details-specs-brand-link" asp-controller="Product" asp-action="Search" asp-route-value="@Model.Brand"><p id="product-details-specs-brand">@Model.Brand</p></a>
             <p id="product-details-specs-name">@Model.Name</p>
             @if (Model.DiscountedPrice == string.Empty)
             {
