@@ -743,6 +743,10 @@ input[type=text], input[type=password], textarea {
     color: grey;
 }
 
+#product-details-specs-brand:hover, #product-details-specs-brand-link {
+    color: forestgreen;
+}
+
 #product-details-specs-name {
     font-weight: bold;
     font-size: 20px;
