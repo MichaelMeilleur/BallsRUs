@@ -625,7 +625,7 @@ input[type=text], input[type=password], textarea {
     }
 
 .vc-product-list-product-beaten-price {
-    color: red;
+    color: #bd0b11;
     text-decoration: line-through;
 }
 
@@ -686,4 +686,79 @@ input[type=text], input[type=password], textarea {
     margin-top: 40px;
     font-weight: bold;
     color: forestgreen;
+}
+
+#product-details-container {
+    width: 100%;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+#product-details-specs-container {
+    margin-bottom: 30px;
+}
+
+#product-details-specs-image {
+    width: min(80%, 400px);
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+}
+
+#product-details-specs-brand {
+    color: grey;
+}
+
+#product-details-specs-name {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#product-details-specs-price {
+    font-size: 30px;
+}
+
+#product-details-specs-price-discounted {
+    color: #bd0b11;
+    text-decoration: line-through;
+}
+
+#product-details-specs-sku {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+#product-details-specs-low-stock-text {
+    font-style: italic;
+    color: #bd0b11;
+}
+
+#product-details-specs-button {
+    margin-top: 40px;
+    display: initial;
+}
+
+#product-details-info-container {
+    padding-top: 100px;
+    padding-bottom: 100px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: #f5f5f5;
+}
+
+#product-details-info-title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: justify;
+}
+
+#product-details-info-full-desc {
+    margin-top: 50px;
+    text-align: justify;
+}
+
+.product-details-info-table-title {
+    font-weight: 500;
+    border-right: 1px solid #dee2e6;
 }

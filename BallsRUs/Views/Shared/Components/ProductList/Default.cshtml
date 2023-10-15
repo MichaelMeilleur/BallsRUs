@@ -6,7 +6,7 @@
     {
         <div class="vc-product-list-product-container col-6 col-lg-4 col-xl-3">
             <div id="@Html.Raw(product.Name)-@Html.Raw(product.SKU)" class="vc-product-list-product-card">
-                <a class="vc-product-list-product-link" asp-action="Details" asp-route-productId="@product.Id">
+                <a class="vc-product-list-product-link" asp-controller="Product" asp-action="Details" asp-route-productId="@product.Id">
                     <img class="vc-product-list-product-image" src="@Url.Content(product.ImagePath)" alt="@Html.Raw(product.Brand) @Html.Raw(product.Model)" />
                     <div>
                         <p>@product.Brand</p>
@@ -14,7 +14,7 @@
                         @if (product.DiscountedPrice is not null)
                         {
                             <p>
-                                <span class="vc-product-list-product-beaten-price" style="color:red;">@product.RetailPrice$</span>
+                                <span class="vc-product-list-product-beaten-price">@product.RetailPrice$</span>
                                 <span>@product.DiscountedPrice$</span>
                             </p>
                         }
