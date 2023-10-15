@@ -18,14 +18,14 @@
         return false;
     }
     let regexNom = /^.{2,20}$/;
-    if (!regexNom.text(y)) {
+    if (!regexNom.test(y)) {
         alert("Entrez un nom valide.");
         return false;
     }
 
     // Valide le message
     let z = document.forms["contactForm"]["body"].value;
-    if (y == "") {
+    if (z == "") {
         alert("Vous devez entrer un message.");
         return false;
     }
