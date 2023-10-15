@@ -26,7 +26,7 @@
     // Valide le message
     let z = document.forms["contactForm"]["body"].value;
     if (z == "") {
-        alert("Vous devez entrer un message.");
+        alert("Vous devez entrer une description pour votre demande.");
         return false;
     }
 
