@@ -39,14 +39,14 @@
                         </div>
                     </div>
                     <div class="col-4 col-sm-6">
-                        <div id="header-search-bar-container" class="d-none d-sm-flex">
+                        <form id="header-search-bar-container" asp-controller="Product" asp-action="Search" method="get" class="d-none d-sm-flex">
                             <div id="header-search-bar">
-                                <input id="header-search-bar-text" type="text" placeholder="Rechercher..." />
+                                <input id="header-search-bar-text" type="text" name="value" placeholder="Rechercher..." />
                                 <button id="header-search-bar-button" type="submit">
                                     <img src="~/img/recherche.svg" />
                                 </button>
                             </div>
-                        </div>
+                        </form>
                         <div id="header-bar-logo-container-center" class="d-flex d-sm-none">
                             <a asp-area="" asp-controller="Home" asp-action="Index"><img class="header-logo" title="Accueil" src="../img/logo_no_background_white.png" /></a>
                         </div>
@@ -92,14 +92,14 @@
                         </ul>
                     </div>
                 </nav>
-                <div id="header-navbar-search-bar-container" class="d-block d-sm-none bg-white border-bottom">
+                <form id="header-navbar-search-bar-container" asp-controller="Product" asp-action="Search" method="get" class="d-block d-sm-none bg-white">
                     <div id="header-navbar-search-bar">
-                        <input id="header-navbar-search-bar-text" type="text" placeholder="Rechercher..." />
+                        <input id="header-navbar-search-bar-text" type="text" name="value" placeholder="Rechercher..." />
                         <button id="header-navbar-search-bar-button" type="submit">
                             <img src="~/img/recherche.svg" />
                         </button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </header>
