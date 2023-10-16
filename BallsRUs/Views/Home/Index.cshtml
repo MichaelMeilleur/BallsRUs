@@ -7,12 +7,12 @@
 </div>
 <vc:product-list is-homepage-showcase="true"></vc:product-list>
 <div id="homepage-produits-vedettes-button-container">
-    <a id="homepage-produits-vedettes-button" class="" asp-controller="Product" asp-action="Index"><span class="m-auto">Voir catalogue complet</span></a>
+    <a id="homepage-produits-vedettes-button" class="" asp-controller="Product" asp-action="Catalog"><span class="m-auto">Voir catalogue complet</span></a>
 </div>
 <div id="homepage-newsletter-container" class="homepage-section text-center">
     <div id="homepage-newsletter-form" class="col-lg-6 col-md-8 col-sm-10">
         <label id="homepage-newsletter-header">Nous contacter</label>
-        <form name="contactForm" action="mailto:info@ballsrus.com" method="get" onsubmit="return validateContactFormSubmit()">
+        <form name="contactForm" action="mailto:info@ballsrus.ca" method="get" onsubmit="return validateContactFormSubmit()">
             <div class="text-danger"></div>
             <div class="homepage-newsletter-form-item form-group my-3 text-start">
                 <label class="mb-1">Nom</label>
@@ -83,95 +83,7 @@
 @section Scripts {
     @{
         <script src="~/js/contactFormValidation.js"></script>
-        <script>
-            const cardWrapper = document.querySelector('.homepage-carousel-partners-cardwrapper')
-            const cardWrapperChildren = Array.from(cardWrapper.children)
-            const widthToScroll = cardWrapper.children[0].offsetWidth
-            const arrowPrev = document.querySelector('.arrow.prev')
-            const arrowNext = document.querySelector('.arrow.next')
-            const cardBounding = cardWrapper.getBoundingClientRect()
-            const column = Math.floor(cardWrapper.offsetWidth / (widthToScroll + 24))
-            let currScroll = 0
-            let initPos = 0
-            let clicked = false
-
-            console.log(column)
-
-            cardWrapper.classList.add('no-smooth')
-            cardWrapper.scrollLeft = cardWrapper.offsetWidth
-            cardWrapper.classList.remove('no-smooth')
-
-            cardWrapperChildren.slice(-column).reverse().forEach(item => {
-                cardWrapper.insertAdjacentHTML('afterbegin', item.outerHTML)
-            })
-
-            cardWrapperChildren.slice(0, column).forEach(item => {
-                cardWrapper.insertAdjacentHTML('beforeend', item.outerHTML)
-            })
-
-            const cardImageAndLink = cardWrapper.querySelectorAll('img, a')
-            cardImageAndLink.forEach(item => {
-                item.setAttribute('draggable', false)
-            })
-
-            arrowPrev.onclick = function () {
-                cardWrapper.scrollLeft -= widthToScroll
-            }
-
-            arrowNext.onclick = function () {
-                cardWrapper.scrollLeft += widthToScroll
-            }
-
-            cardWrapper.onmousedown = function (e) {
-                cardWrapper.classList.add('grab')
-                initPos = e.clientX - cardBounding.left
-                currScroll = cardWrapper.scrollLeft
-                clicked = true
-            }
-
-            cardWrapper.onmousemove = function (e) {
-                if (clicked) {
-                    const xPos = e.clientX - cardBounding.left
-                    cardWrapper.scrollLeft = currScroll + -(xPos - initPos)
-                }
-            }
-
-            cardWrapper.onmouseup = mouseUpAndLeave
-            cardWrapper.onmouseleave = mouseUpAndLeave
-
-            function mouseUpAndLeave() {
-                cardWrapper.classList.remove('grab')
-                clicked = false
-            }
-
-            let autoScroll
-
-            cardWrapper.onscroll = function () {
-                if (cardWrapper.scrollLeft === 0) {
-                    // Réinsérez les éléments à la fin lorsque vous atteignez le début
-                    const lastChildren = cardWrapperChildren.slice();
-                    lastChildren.reverse().forEach(item => {
-                        cardWrapper.insertAdjacentHTML('afterbegin', item.outerHTML);
-                    });
-                    //cardWrapper.scrollLeft = widthToScroll;
-                } else if (cardWrapper.scrollLeft >= cardWrapper.scrollWidth - (cardWrapper.offsetWidth + 24)) {
-                    // Réinsérez les éléments au début lorsque vous atteignez la fin
-                    const firstChildren = cardWrapperChildren.slice();
-                    firstChildren.reverse().forEach(item => {
-                        cardWrapper.insertAdjacentHTML('beforeend', item.outerHTML);
-                    });
-                }
-
-                if (autoScroll) {
-                    clearTimeout(autoScroll);
-                }
-
-                autoScroll = setTimeout(() => {
-                    cardWrapper.classList.remove('no-smooth');
-                    cardWrapper.scrollLeft += widthToScroll;
-                }, 4000);
-            }
-        </script>
+        <script src="~/js/carouselPartnersHomepage.js"></script>
 
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

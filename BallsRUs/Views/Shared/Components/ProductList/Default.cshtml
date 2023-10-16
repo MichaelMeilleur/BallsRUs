@@ -4,7 +4,7 @@
 <div class="row m-0 w-100 align-content-center justify-content-center">
     @foreach (var product in Model)
     {
-        <div class="vc-product-list-product-container col-6 col-lg-4 col-xl-3">
+        <div class="vc-product-list-product-container col-6 col-lg-4 @if(ViewBag.IsHomepageShowcase){@Html.Raw("col-xl-3")}">
             <div id="@Html.Raw(product.Name)-@Html.Raw(product.SKU)" class="vc-product-list-product-card">
                 <a class="vc-product-list-product-link" asp-controller="Product" asp-action="Details" asp-route-productId="@product.Id">
                     <img class="vc-product-list-product-image" src="@Url.Content(product.ImagePath)" alt="@Html.Raw(product.Brand) @Html.Raw(product.Model)" />

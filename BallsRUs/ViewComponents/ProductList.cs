@@ -2,6 +2,7 @@
 using BallsRUs.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration.EnvironmentVariables;
 
 namespace BallsRUs.ViewComponents
 {
@@ -17,30 +18,34 @@ namespace BallsRUs.ViewComponents
         }
 
         public async Task<IViewComponentResult> InvokeAsync(bool isHomepageShowcase = false, string? category = null, string? search = null,
-            List<Product>? productsAlreadyFiltered = null)
+            List<Product>? productsAlreadyFiltered = null, bool priceHighToLow = false, bool priceLowToHigh = false, bool brandAlphabetical = false, bool newToOld = false)
         {
+            ViewBag.IsHomePageShowcase = false;
+            IQueryable<Product> products;
+
             if (productsAlreadyFiltered is not null && productsAlreadyFiltered.Any())
             {
-                return View(productsAlreadyFiltered);
+                products = productsAlreadyFiltered.AsQueryable();
             }
             else
             {
-                var products = _context.Products.AsQueryable();
+                products = _context.Products.AsQueryable();
 
                 if (isHomepageShowcase)
                 {
+                    ViewBag.IsHomePageShowcase = true;
                     products = products.Where(p => p.DiscountedPrice.HasValue)
                                        .OrderByDescending(p => (p.RetailPrice - p.DiscountedPrice) / p.RetailPrice * 100)
                                        .Take(NB_OF_SHOWCASED_PRODUCTS)
                                        .AsQueryable();
                 }
-                else if (search is not null)
+                else if (!string.IsNullOrWhiteSpace(search))
                 {
                     search = search.ToLower();
                     products = products.Where(p => p.Name!.ToLower().Contains(search) || p.Brand!.ToLower().Contains(search) || p.Model!.ToLower().Contains(search) ||
                                                    p.SKU!.ToLower() == search || p.Categories.Any(c => c.Name!.ToLower().Contains(search)));
                 }
-                else if (category is not null)
+                else if (!string.IsNullOrWhiteSpace(category))
                 {
                     IEnumerable<Category> categories = _context.Categories.AsEnumerable();
 
@@ -55,8 +60,27 @@ namespace BallsRUs.ViewComponents
                 }
 
                 List<Product>? filteredProducts = await products.ToListAsync();
-                return View(filteredProducts);
             }
+
+            // Trier les produits
+            if (priceHighToLow)
+            {
+                products = products.OrderByDescending(p => p.DiscountedPrice ?? p.RetailPrice);
+            }
+            else if (priceLowToHigh)
+            {
+                products = products.OrderBy(p => p.DiscountedPrice ?? p.RetailPrice);
+            }
+            else if (brandAlphabetical)
+            {
+                products = products.OrderBy(p => p.Brand);
+            }
+            else if (newToOld)
+            {
+                products = products.OrderByDescending(p => p.PublicationDate);
+            }
+                
+            return View(products);
         }
 
         List<Category> GetCategoryAndChildren(IEnumerable<Category> allCategories, Category parentCategory)
