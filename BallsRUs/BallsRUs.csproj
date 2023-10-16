@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Home\**" />
+    <Content Remove="Models\Home\**" />
+    <EmbeddedResource Remove="Models\Home\**" />
+    <None Remove="Models\Home\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Views\Home\contact_mail.php" />
   </ItemGroup>
 
@@ -27,7 +34,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Home\" />
     <Folder Include="wwwroot\fonts\" />
     <Folder Include="wwwroot\img\categories\" />
     <Folder Include="wwwroot\img\products\" />
