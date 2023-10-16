@@ -101,6 +101,14 @@
                 </form>
             </div>
         </div>
+        @if (User!.IsInRole("Administrateur"))
+        {
+            <div id="header-admin-bar-container">
+                <a class="header-admin-bar-link nav-link text-dark" asp-controller="Admin" asp-action="Index">
+                    <span>SYSTÈME DE GESTION DE CONTENU</span>
+                </a>
+            </div>
+        }
     </header>
     @if (ViewData["Title"] is not null && ViewData["Title"]!.ToString() == "Home")
     {
