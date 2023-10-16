@@ -1,6 +1,7 @@
 ﻿using BallsRUs.Context;
 using BallsRUs.Entities;
 using BallsRUs.Models.Admin;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -8,6 +9,7 @@ using System.Globalization;
 
 namespace BallsRUs.Controllers
 {
+    [Authorize(Roles = "Administrateur")]
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
