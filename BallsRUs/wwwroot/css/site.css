@@ -655,6 +655,25 @@ input[type=text], input[type=password], textarea {
     padding-right: 1vw;
 }
 
+#product-index-filter-sort-dropdown {
+    width: min(300px, 80%);
+    height: 30px;
+    border-radius: 0;
+    border-color: lightgrey;
+    justify-self: center;
+    margin-left: auto;
+    margin-right:auto;
+    display: flex;
+}
+    #product-index-filter-sort-dropdown:focus {
+        outline: none;
+    }
+
+#product-index-filter-sort-button {
+    width: min(300px, 80%);
+    height: 30px;
+}
+
 .vc-product-list-product-container {
     margin-top: 1vw;
     margin-bottom: 1vw;
