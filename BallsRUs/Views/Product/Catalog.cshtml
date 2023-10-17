@@ -30,8 +30,8 @@
         </a>
     </div>
 </div>
-<div class="row">
-    <div id="product-index-filter-container" class="col-12 col-md-3 mb-3 mb-md-0 mx-4 mx-md-0">
+<div class="row mx-0">
+    <div id="product-index-filter-container" class="col-11 col-md-3 mb-3 mb-md-0 mx-auto mx-md-0 justify-self-center">
         <form asp-controller="Product" asp-action="Catalog" method="post">
             <div class="row">
                 <div class="col-6 col-md-12 justify-content-center">
@@ -46,7 +46,7 @@
                 </div>
                 <div class="col-6 col-md-12 mt-0 mt-md-4">
                     <h4>Filtrer</h4>
-                    <input id="product-index-filter-discounted-checkbox" type="checkbox" name="discounted" /> Produits en rabais
+                    <input id="product-index-filter-discounted-checkbox" name="discounted" type="checkbox" value="true" @if(ViewBag.FilterDiscounted){@Html.Raw("checked")} /> Produits en rabais
                 </div>
                 <input id="product-index-filter-sort-button" asp-route-category="@ViewBag.Category" asp-route-search="@ViewBag.Search" type="submit" value="Trier" class="mb-4" />
             </div>

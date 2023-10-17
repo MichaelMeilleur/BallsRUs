@@ -669,9 +669,102 @@ input[type=text], input[type=password], textarea {
         outline: none;
     }
 
+#product-index-filter-discounted-checkbox {
+    -webkit-appearance: none;
+    background-color: white;
+    border: 1px solid #cacece;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    padding: 7px;
+    border-radius: 0px;
+}
+    #product-index-filter-discounted-checkbox:checked {
+        background-color: forestgreen;
+        background-image: url("/img/crochet.svg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
 #product-index-filter-sort-button {
     width: min(300px, 80%);
     height: 30px;
+}
+
+#product-details-container {
+    width: 100%;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+#product-details-specs-container {
+    margin-bottom: 30px;
+}
+
+#product-details-specs-image {
+    width: min(80%, 400px);
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+}
+
+#product-details-specs-brand {
+    color: grey;
+}
+    #product-details-specs-brand:hover, #product-details-specs-brand-link {
+        color: forestgreen;
+    }
+
+#product-details-specs-name {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#product-details-specs-price {
+    font-size: 30px;
+}
+
+#product-details-specs-price-discounted {
+    color: #bd0b11;
+    text-decoration: line-through;
+}
+
+#product-details-specs-sku {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+#product-details-specs-low-stock-text {
+    font-style: italic;
+    color: #bd0b11;
+}
+
+#product-details-specs-button {
+    margin-top: 40px;
+    display: initial;
+}
+
+#product-details-info-container {
+    padding-top: 100px;
+    padding-bottom: 100px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: #f5f5f5;
+}
+
+#product-details-info-title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: justify;
+}
+
+#product-details-info-full-desc {
+    margin-top: 50px;
+    text-align: justify;
+}
+
+.product-details-info-table-title {
+    font-weight: 500;
+    border-right: 1px solid #dee2e6;
 }
 
 .vc-product-list-product-container {
@@ -765,83 +858,4 @@ input[type=text], input[type=password], textarea {
     margin-top: 40px;
     font-weight: bold;
     color: forestgreen;
-}
-
-#product-details-container {
-    width: 100%;
-    margin-top: 100px;
-    margin-bottom: 100px;
-}
-
-#product-details-specs-container {
-    margin-bottom: 30px;
-}
-
-#product-details-specs-image {
-    width: min(80%, 400px);
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-}
-
-#product-details-specs-brand {
-    color: grey;
-}
-
-#product-details-specs-brand:hover, #product-details-specs-brand-link {
-    color: forestgreen;
-}
-
-#product-details-specs-name {
-    font-weight: bold;
-    font-size: 20px;
-}
-
-#product-details-specs-price {
-    font-size: 30px;
-}
-
-#product-details-specs-price-discounted {
-    color: #bd0b11;
-    text-decoration: line-through;
-}
-
-#product-details-specs-sku {
-    font-size: 13px;
-    font-weight: 500;
-}
-
-#product-details-specs-low-stock-text {
-    font-style: italic;
-    color: #bd0b11;
-}
-
-#product-details-specs-button {
-    margin-top: 40px;
-    display: initial;
-}
-
-#product-details-info-container {
-    padding-top: 100px;
-    padding-bottom: 100px;
-    padding-left: 30px;
-    padding-right: 30px;
-    background-color: #f5f5f5;
-}
-
-#product-details-info-title {
-    font-size: 20px;
-    font-weight: bold;
-    text-align: justify;
-}
-
-#product-details-info-full-desc {
-    margin-top: 50px;
-    text-align: justify;
-}
-
-.product-details-info-table-title {
-    font-weight: 500;
-    border-right: 1px solid #dee2e6;
 }
