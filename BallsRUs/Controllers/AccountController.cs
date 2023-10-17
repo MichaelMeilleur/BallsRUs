@@ -4,24 +4,25 @@ using BallsRUs.Models.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BallsRUs.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly SignInManager<User> signInManager;
-        private readonly UserManager<User> userManager;
-        private readonly RoleManager<IdentityRole<Guid>> roleManager;
-        private readonly ApplicationDbContext context;
+        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole<Guid>> _roleManager;
+        private readonly ApplicationDbContext _context;
 
         public AccountController(SignInManager<User> signInManager,
            UserManager<User> userManager, RoleManager<IdentityRole<Guid>>
            roleManager, ApplicationDbContext context)
         {
-            this.signInManager = signInManager;
-            this.userManager = userManager;
-            this.roleManager = roleManager;
-            this.context = context;
+            this._signInManager = signInManager;
+            this._userManager = userManager;
+            this._roleManager = roleManager;
+            this._context = context;
         }
 
         public IActionResult LogIn(string? returnUrl = "")
@@ -31,36 +32,27 @@ namespace BallsRUs.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> LogIn(LogInVM vm, string? returnUrl = "")
+        public async Task<IActionResult> LogIn(LogInVM vm)
         {
             if (!ModelState.IsValid)
-            {
-                ViewBag.ReturnUrl = returnUrl;
                 return View(vm);
-            }
 
             try
             {
-                var result = await signInManager.PasswordSignInAsync(
-                    vm.NomUtilisateur, vm.MotDePasse, false, false);
+                var result = await _signInManager.PasswordSignInAsync(
+                    vm.NomUtilisateur!, vm.MotDePasse!, false, false);
 
                 if (!result.Succeeded)
                 {
-                    ModelState.AddModelError(string.Empty, "Mauvais nom d'utilisateur ou mot de passe!");
-                    ViewBag.ReturnUrl = returnUrl;
+                    ModelState.AddModelError(string.Empty, "Le nom d'utilisateur et le mot de passe ne correspondent pas. Veuillez réessayer");
                     return View(vm);
                 }
-
             }
             catch
             {
                 ModelState.AddModelError(string.Empty, "SVP veuillez essayer de nouveau!");
-                ViewBag.ReturnUrl = returnUrl;
                 return View(vm);
             }
-
-            var idUser = context.Users.Where(u => u.UserName == vm.NomUtilisateur).Select(u => u.Id).FirstOrDefault();
-            var roleId = context.UserRoles.Where(r => r.UserId == idUser).Select(r => r.RoleId).FirstOrDefault();
 
             return RedirectToAction("Index", "Home");
         }
@@ -76,25 +68,43 @@ namespace BallsRUs.Controllers
             if (!ModelState.IsValid)
                 return View(vm);
 
-            var role = "Utilisateur";
+            bool userAlreadyExists = _context.Users.Any(u => u.UserName == vm.UserName);
 
-            var newUser = new User(vm.UserName);
-            newUser.LastName = vm.LastName;
-            newUser.FirstName = vm.FirstName;
-
-            var result = await userManager.CreateAsync(newUser, vm.Password);
-
-            if (!result.Succeeded)
+            if (userAlreadyExists)
             {
-                ModelState.AddModelError(string.Empty, "Erreur");
+                ModelState.AddModelError(string.Empty, "Un utilisateur avec ce courriel existe déjà.");
                 return View(vm);
             }
 
-            result = await userManager.AddToRoleAsync(newUser, role);
-
-            if (!result.Succeeded)
+            try
             {
-                ModelState.AddModelError(string.Empty, $"Erreur dans la création d'un compte!");
+                var newUser = new User(vm.UserName!)
+                {
+                    FirstName = vm.FirstName,
+                    LastName = vm.LastName,
+                    Email = vm.UserName,
+                    NormalizedEmail = vm.UserName!.ToUpper()
+                };
+
+                var result = await _userManager.CreateAsync(newUser, vm.Password!);
+
+                if (!result.Succeeded)
+                {
+                    ModelState.AddModelError(string.Empty, "Impossible de créer le compte. Veuillez réessayer.");
+                    return View(vm);
+                }
+
+                result = await _userManager.AddToRoleAsync(newUser, "Utilisateur");
+
+                if (!result.Succeeded)
+                {
+                    ModelState.AddModelError(string.Empty, "Impossible de créer le compte. Veuillez réessayer.");
+                    return View(vm);
+                }
+            }
+            catch
+            {
+                ModelState.AddModelError(string.Empty, "Une erreur est survenue. Veuillez réessayer.");
                 return View(vm);
             }
 
@@ -104,7 +114,7 @@ namespace BallsRUs.Controllers
         [HttpPost]
         public async Task<IActionResult> LogOut()
         {
-            await signInManager.SignOutAsync();
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
     }
