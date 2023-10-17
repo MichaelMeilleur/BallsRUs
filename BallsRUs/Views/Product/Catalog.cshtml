@@ -37,16 +37,19 @@
                 <div class="col-6 col-md-12 justify-content-center">
                     <h4>Trier</h4>
                     <select id="product-index-filter-sort-dropdown" name="filter">
-                        <option value="empty">&lt;aucun&gt;</option>
-                        <option value="low-to-high">Prix : Croissant</option>
-                        <option value="high-to-low">Prix : Décroissant</option>
-                        <option value="brand-alphabetical">Marque</option>
-                        <option value="new-to-old">Nouveauté</option>
+                        <option id="empty-selected-filter" value="empty">&lt;aucun&gt;</option>
+                        <option id="lowtohigh-selected-filter" value="low-to-high">Prix : Croissant</option>
+                        <option id="hightolow-selected-filter" value="high-to-low">Prix : Décroissant</option>
+                        <option id="brandalphabetical-selected-filter" value="brand-alphabetical">Marque</option>
+                        <option id="newtoold-selected-filter" value="new-to-old">Nouveauté</option>
                     </select>
                 </div>
                 <div class="col-6 col-md-12 mt-0 mt-md-4">
                     <h4>Filtrer</h4>
-                    <input id="product-index-filter-discounted-checkbox" name="discounted" type="checkbox" value="true" @if(ViewBag.FilterDiscounted){@Html.Raw("checked")} /> Produits en rabais
+                    <input id="product-index-filter-discounted-checkbox" name="discounted" type="checkbox" value="true" @if (ViewBag.FilterDiscounted)
+                    {
+                        @Html.Raw("checked")
+                    } /> Produits en rabais
                 </div>
                 <input id="product-index-filter-sort-button" asp-route-category="@ViewBag.Category" asp-route-search="@ViewBag.Search" type="submit" value="Trier" class="mb-4" />
             </div>
@@ -56,3 +59,39 @@
         <vc:product-list category="@ViewBag.Category" search="@ViewBag.Search" price-high-to-low="@ViewBag.HighToLow" price-low-to-high="@ViewBag.LowToHigh" brand-alphabetical="@ViewBag.BrandAlphabetical" new-to-old="@ViewBag.NewToOld" discounted="@ViewBag.FilterDiscounted"></vc:product-list>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        var a = document.getElementById("hightolow-selected-filter");
+        if ("@ViewBag.HighToLow" == "True") {
+            a.setAttribute('selected', true);
+        }
+        else {
+            a.removeAttribute('selected');
+        }
+
+        a = document.getElementById("lowtohigh-selected-filter");
+        if ("@ViewBag.LowToHigh" == "True") {
+            a.setAttribute('selected', true);
+        }
+        else {
+            a.removeAttribute('selected');
+        }
+
+        a = document.getElementById("brandalphabetical-selected-filter");
+        if ("@ViewBag.BrandAlphabetical" == "True") {
+            a.setAttribute('selected', true);
+        }
+        else {
+            a.removeAttribute('selected');
+        }
+
+        a = document.getElementById("newtoold-selected-filter");
+        if ("@ViewBag.NewToOld" == "True") {
+            a.setAttribute('selected', true);
+        }
+        else {
+            a.removeAttribute('selected');
+        }
+    </script>
+}
