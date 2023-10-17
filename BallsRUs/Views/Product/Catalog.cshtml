@@ -32,17 +32,24 @@
 </div>
 <div class="row">
     <div id="product-index-filter-container" class="col-12 col-md-3 mb-3 mb-md-0">
-        <form asp-controller="Product" asp-action="Catalog" method="post">
-            <h4>Filtres</h4>
-            <select id="product-index-filter-sort-dropdown" name="filter">
-                <option value="empty"></option>
-                <option value="low-to-high">Prix : Croissant</option>
-                <option value="high-to-low">Prix : Décroissant</option>
-                <option value="brand-alphabetical">Marque</option>
-                <option value="new-to-old">Nouveauté</option>
-            </select>
-            <input asp-route-category="@ViewBag.Category" asp-route-search="@ViewBag.Search" type="submit" value="Trier" />
-        </form>
+        <div class="row">
+            <div class="col-6 col-md-12 justify-content-center">
+                <form asp-controller="Product" asp-action="Catalog" method="post">
+                    <h4>Trier</h4>
+                    <select id="product-index-filter-sort-dropdown" name="filter">
+                        <option value="empty">&lt;aucun&gt;</option>
+                        <option value="low-to-high">Prix : Croissant</option>
+                        <option value="high-to-low">Prix : Décroissant</option>
+                        <option value="brand-alphabetical">Marque</option>
+                        <option value="new-to-old">Nouveauté</option>
+                    </select>
+                    <input id="product-index-filter-sort-button" asp-route-category="@ViewBag.Category" asp-route-search="@ViewBag.Search" type="submit" value="Trier" class="mb-4" />
+                </form>
+            </div>
+            <div class="col-6 col-md-12">
+                <h4>Filtrer</h4>
+            </div>
+        </div>
     </div>
     <div class="col-12 col-md-9">
         <vc:product-list category="@ViewBag.Category" search="@ViewBag.Search" price-high-to-low="@ViewBag.HighToLow" price-low-to-high="@ViewBag.LowToHigh" brand-alphabetical="@ViewBag.BrandAlphabetical" new-to-old="@ViewBag.NewToOld"></vc:product-list>
