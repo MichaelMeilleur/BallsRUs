@@ -27,25 +27,6 @@
                         <div id="header-icons-container-left" class="row d-flex d-sm-none">
                             <img id="header-hamburger-menu-icon" src="~/img/menuhamburger.svg.png" />
                         </div>
-                        <div id="header-hamburger-menu-container">
-                            <ul>
-                                <li>
-                                    <a class="nav-link text-dark" style="font-weight: 500;" asp-controller="Product" asp-action="Catalog" asp-route-category="bâtons">BÂTONS</a>
-                                </li>
-                                <li>
-                                    <a class="nav-link text-dark" style="font-weight: 500;" asp-controller="Product" asp-action="Catalog" asp-route-category="vêtements">VÊTEMENTS</a>
-                                </li>
-                                <li>
-                                    <a class="nav-link text-dark" style="font-weight: 500;" asp-controller="Product" asp-action="Catalog" asp-route-category="sacs">SACS</a>
-                                </li>
-                                <li>
-                                    <a class="nav-link text-dark" style="font-weight: 500;" asp-controller="Product" asp-action="Catalog" asp-route-category="balles">BALLES</a>
-                                </li>
-                                <li>
-                                    <a class="nav-link text-dark" style="font-weight: 500;" asp-controller="Product" asp-action="Catalog" asp-route-category="accessoires">ACCESSOIRES</a>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                     <div class="col-4 col-sm-6">
                         <form id="header-search-bar-container" asp-controller="Product" asp-action="Catalog" method="get" class="d-none d-sm-flex">
@@ -74,6 +55,25 @@
                             <a class="header-icon-link" asp-controller="Account" asp-action="LogIn"><img class="header-icon" src="~/img/user.svg" /></a>
                             <img class="header-icon" src="~/img/shopping-cart.svg" />
                         }
+                    </div>
+                    <div id="header-hamburger-menu-container" class="col-12">
+                        <ul id="header-hamburger-menu-list">
+                            <li>
+                                <a class="header-hamburger-menu-list-element nav-link text-dark" asp-controller="Product" asp-action="Catalog" asp-route-category="bâtons">BÂTONS</a>
+                            </li>
+                            <li>
+                                <a class="header-hamburger-menu-list-element nav-link text-dark" asp-controller="Product" asp-action="Catalog" asp-route-category="vêtements">VÊTEMENTS</a>
+                            </li>
+                            <li>
+                                <a class="header-hamburger-menu-list-element nav-link text-dark" asp-controller="Product" asp-action="Catalog" asp-route-category="sacs">SACS</a>
+                            </li>
+                            <li>
+                                <a class="header-hamburger-menu-list-element nav-link text-dark" asp-controller="Product" asp-action="Catalog" asp-route-category="balles">BALLES</a>
+                            </li>
+                            <li>
+                                <a class="header-hamburger-menu-list-element nav-link text-dark" asp-controller="Product" asp-action="Catalog" asp-route-category="accessoires">ACCESSOIRES</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -180,6 +180,14 @@
 
 <script>
     $(document).ready(function () {
+        $(window).on('resize', function () {
+            const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+            if (width >= 576) {
+                $('#header-hamburger-menu-container').hide();
+            }
+        });
+
         $('#header-hamburger-menu-icon').click(function () {
             $('#header-hamburger-menu-container').toggle();
         });
