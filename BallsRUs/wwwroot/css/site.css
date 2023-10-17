@@ -182,11 +182,20 @@ input[type=text], input[type=password], textarea {
     background: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 999;
+    border-bottom: solid 1px grey;
+    box-shadow: 10px 8px 24px rgba(0, 0, 0, .1);
 }
-    #header-hamburger-menu-container ul {
-        list-style: none;
-        padding: 0;
-    }
+
+#header-hamburger-menu-list {
+    list-style: none;
+    padding: 0;
+}
+
+.header-hamburger-menu-list-element {
+    font-weight: 500;
+    font-size: 20px;
+    margin-top: 10px;
+}
 
 #header-navbar-search-bar-container {
     width: 100%;
