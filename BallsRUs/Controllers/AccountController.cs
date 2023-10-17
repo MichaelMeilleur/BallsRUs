@@ -50,7 +50,7 @@ namespace BallsRUs.Controllers
             }
             catch
             {
-                ModelState.AddModelError(string.Empty, "SVP veuillez essayer de nouveau!");
+                ModelState.AddModelError(string.Empty, "Une erreur est survenue. Veuillez réessayer.");
                 return View(vm);
             }
 
