@@ -15,7 +15,7 @@ namespace BallsRUs.Controllers
             _context = context;
         }
 
-        public IActionResult Catalog(string? category, string? search = null, string? filter = null)
+        public IActionResult Catalog(string? category, string? search = null, string? filter = null, bool discounted = false)
         {
             if (!string.IsNullOrWhiteSpace(search))
                 ViewBag.Search = search;
@@ -23,7 +23,7 @@ namespace BallsRUs.Controllers
             if (!string.IsNullOrWhiteSpace(category))
                 ViewBag.Category = category;
 
-            // Appliquer les filtres
+            // Appliquer le tri
             ViewBag.HighToLow = false;
             ViewBag.LowToHigh = false;
             ViewBag.BrandAlphabetical = false;
@@ -37,6 +37,9 @@ namespace BallsRUs.Controllers
                 ViewBag.BrandAlphabetical = true;
             else if (filter is not null && filter.ToLower() == "new-to-old")
                 ViewBag.NewToOld = true;
+
+            // Appliquer les filtres
+            ViewBag.FilterDiscounted = discounted;
 
             return View();
         }

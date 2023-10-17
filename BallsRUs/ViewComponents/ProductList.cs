@@ -18,7 +18,8 @@ namespace BallsRUs.ViewComponents
         }
 
         public async Task<IViewComponentResult> InvokeAsync(bool isHomepageShowcase = false, string? category = null, string? search = null,
-            List<Product>? productsAlreadyFiltered = null, bool priceHighToLow = false, bool priceLowToHigh = false, bool brandAlphabetical = false, bool newToOld = false)
+            List<Product>? productsAlreadyFiltered = null, bool priceHighToLow = false, bool priceLowToHigh = false, bool brandAlphabetical = false,
+            bool newToOld = false, bool discounted = false)
         {
             ViewBag.IsHomePageShowcase = false;
             IQueryable<Product> products;
@@ -60,6 +61,12 @@ namespace BallsRUs.ViewComponents
                 }
 
                 List<Product>? filteredProducts = await products.ToListAsync();
+            }
+
+            // Filtrer les produits
+            if (discounted)
+            {
+                products = products.Where(p => p.DiscountedPrice != null);
             }
 
             // Trier les produits
