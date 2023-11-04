@@ -36,62 +36,74 @@
             <div class="row">
                 <div class="col-6 col-md-12 justify-content-center">
                     <h4>Trier</h4>
-                    <select id="product-index-filter-sort-dropdown" name="filter">
-                        <option id="empty-selected-filter" value="empty">&lt;aucun&gt;</option>
-                        <option id="lowtohigh-selected-filter" value="low-to-high">Prix : Croissant</option>
-                        <option id="hightolow-selected-filter" value="high-to-low">Prix : Décroissant</option>
-                        <option id="brandalphabetical-selected-filter" value="brand-alphabetical">Marque</option>
-                        <option id="newtoold-selected-filter" value="new-to-old">Nouveauté</option>
+                    <select id="product-index-filter-sort-dropdown" name="sorting">
+                        <option id="empty-selected-sort" value="empty">&lt;aucun&gt;</option>
+                        <option id="lowtohigh-selected-sort" value="low-to-high">Prix : Croissant</option>
+                        <option id="hightolow-selected-sort" value="high-to-low">Prix : Décroissant</option>
+                        <option id="brandalphabetical-selected-sort" value="brand-alphabetical">Alphabétique (Marque)</option>
+                        <option id="newtoold-selected-sort" value="new-to-old">Arrivage : Décroissant</option>
                     </select>
                 </div>
                 <div class="col-6 col-md-12 mt-0 mt-md-4">
                     <h4>Filtrer</h4>
-                    <input id="product-index-filter-discounted-checkbox" name="discounted" type="checkbox" value="true" @if (ViewBag.FilterDiscounted)
+                    <input id="product-index-filter-discounted-checkbox" name="discounted" type="checkbox" value="true"
+                    @if (ViewBag.FilterDiscounted)
                     {
                         @Html.Raw("checked")
                     } /> Produits en rabais
                 </div>
-                <input id="product-index-filter-sort-button" asp-route-category="@ViewBag.Category" asp-route-search="@ViewBag.Search" type="submit" value="Trier" class="mb-4" />
+                <input id="product-index-filter-apply-button" asp-route-category="@ViewBag.Category" asp-route-search="@ViewBag.Search"
+                       asp-route-sorting="@ViewBag.SortingType" asp-route-discounted="@ViewBag.FilterDiscounted" type="submit" value="Appliquer" class="mb-4" />
             </div>
         </form>
     </div>
     <div class="col-12 col-md-9">
-        <vc:product-list category="@ViewBag.Category" search="@ViewBag.Search" price-high-to-low="@ViewBag.HighToLow" price-low-to-high="@ViewBag.LowToHigh" brand-alphabetical="@ViewBag.BrandAlphabetical" new-to-old="@ViewBag.NewToOld" discounted="@ViewBag.FilterDiscounted"></vc:product-list>
+        <vc:product-list search="@ViewBag.Search" sorting-type="@ViewBag.SortingType" category="@ViewBag.Category" discounted="@ViewBag.FilterDiscounted"></vc:product-list>
     </div>
 </div>
 
 @section Scripts {
     <script>
-        var a = document.getElementById("hightolow-selected-filter");
-        if ("@ViewBag.HighToLow" == "True") {
+        var a = document.getElementById("hightolow-selected-sort");
+        if ("@ViewBag.SortingType" == "high-to-low") {
             a.setAttribute('selected', true);
         }
         else {
             a.removeAttribute('selected');
         }
 
-        a = document.getElementById("lowtohigh-selected-filter");
-        if ("@ViewBag.LowToHigh" == "True") {
+        a = document.getElementById("lowtohigh-selected-sort");
+        if ("@ViewBag.SortingType" == "low-to-high") {
             a.setAttribute('selected', true);
         }
         else {
             a.removeAttribute('selected');
         }
 
-        a = document.getElementById("brandalphabetical-selected-filter");
-        if ("@ViewBag.BrandAlphabetical" == "True") {
+        a = document.getElementById("brandalphabetical-selected-sort");
+        if ("@ViewBag.SortingType" == "brand-alphabetical") {
             a.setAttribute('selected', true);
         }
         else {
             a.removeAttribute('selected');
         }
 
-        a = document.getElementById("newtoold-selected-filter");
-        if ("@ViewBag.NewToOld" == "True") {
+        a = document.getElementById("newtoold-selected-sort");
+        if ("@ViewBag.SortingType" == "new-to-old") {
             a.setAttribute('selected', true);
         }
         else {
             a.removeAttribute('selected');
         }
+    </script>
+    <script>
+        // document.addEventListener("DOMContentLoaded", function () {
+        //     var checkbox = document.getElementById("product-index-filter-discounted-checkbox");
+        //     var submitButton = document.getElementById("product-index-filter-sort-button");
+
+        //     checkbox.addEventListener("change", function () {
+        //         submitButton.setAttribute("asp-route-discounted", checkbox.checked.toString());
+        //     });
+        // });
     </script>
 }

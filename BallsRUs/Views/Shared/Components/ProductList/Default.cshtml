@@ -27,4 +27,10 @@
             </div>
         </div>
     }
+    @if (!string.IsNullOrWhiteSpace(ViewBag.MessageBasDePage))
+    {
+        <div class="col-12 d-flex">
+            <p id="vc-product-list-bottom-message">@ViewBag.MessageBasDePage</p>
+        </div>
+    }
 </div>

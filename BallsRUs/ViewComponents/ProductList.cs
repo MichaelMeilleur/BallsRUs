@@ -9,6 +9,10 @@ namespace BallsRUs.ViewComponents
     public class ProductList : ViewComponent
     {
         private const int NB_OF_SHOWCASED_PRODUCTS = 4;
+        private const string PRICE_HIGH_TO_LOW = "high-to-low";
+        private const string PRICE_LOW_TO_HIGH = "low-to-high";
+        private const string BRAND_ALPHABETICAL = "brand-alphabetical";
+        private const string RELEASE_NEW_TO_OLD = "new-to-old";
 
         private readonly ApplicationDbContext _context;
 
@@ -18,50 +22,58 @@ namespace BallsRUs.ViewComponents
         }
 
         public async Task<IViewComponentResult> InvokeAsync(bool isHomepageShowcase = false, string? category = null, string? search = null,
-            List<Product>? productsAlreadyFiltered = null, bool priceHighToLow = false, bool priceLowToHigh = false, bool brandAlphabetical = false,
-            bool newToOld = false, bool discounted = false)
+            string? sortingType = null, bool discounted = false)
         {
             ViewBag.IsHomePageShowcase = false;
             IQueryable<Product> products;
 
-            if (productsAlreadyFiltered is not null && productsAlreadyFiltered.Any())
+            products = _context.Products.Where(p => !p.IsArchived).AsQueryable();
+
+            if (isHomepageShowcase)
             {
-                products = productsAlreadyFiltered.AsQueryable();
+                ViewBag.IsHomePageShowcase = true;
+                products = products.Where(p => p.DiscountedPrice.HasValue)
+                                   .OrderByDescending(p => (p.RetailPrice - p.DiscountedPrice) / p.RetailPrice * 100)
+                                   .Take(NB_OF_SHOWCASED_PRODUCTS)
+                                   .AsQueryable();
             }
-            else
+            else if (!string.IsNullOrWhiteSpace(search))
             {
-                products = _context.Products.AsQueryable();
+                search = search.ToLower();
+                string[] searchTerms = search.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-                if (isHomepageShowcase)
+                foreach (string term in searchTerms)
                 {
-                    ViewBag.IsHomePageShowcase = true;
-                    products = products.Where(p => p.DiscountedPrice.HasValue)
-                                       .OrderByDescending(p => (p.RetailPrice - p.DiscountedPrice) / p.RetailPrice * 100)
-                                       .Take(NB_OF_SHOWCASED_PRODUCTS)
-                                       .AsQueryable();
-                }
-                else if (!string.IsNullOrWhiteSpace(search))
-                {
-                    search = search.ToLower();
-                    products = products.Where(p => p.Name!.ToLower().Contains(search) || p.Brand!.ToLower().Contains(search) || p.Model!.ToLower().Contains(search) ||
-                                                   p.SKU!.ToLower() == search || p.Categories.Any(c => c.Name!.ToLower().Contains(search)));
-                }
-                else if (!string.IsNullOrWhiteSpace(category))
-                {
-                    IEnumerable<Category> categories = _context.Categories.AsEnumerable();
-
-                    if (categories.Any(c => c.Name!.ToLower() == category.ToLower()))
-                    {
-                        Category? selectedCategory = categories.FirstOrDefault(c => c.Name!.ToLower() == category.ToLower());
-
-                        List<Category> categoryAndChildren = GetCategoryAndChildren(categories, selectedCategory!);
-
-                        products = products.Where(p => p.Categories.Any(productCategory => categoryAndChildren.Contains(productCategory)));
-                    }
+                    products = products.Where(p => p.Name!.ToLower().Contains(term) || p.Brand!.ToLower().Contains(term) || p.Model!.ToLower().Contains(term) ||
+                                               p.SKU!.ToLower() == term || p.Categories.Any(c => c.Name!.ToLower().Contains(term)));
                 }
 
-                List<Product>? filteredProducts = await products.ToListAsync();
+                if (!products.Any())
+                {
+                    ViewBag.MessageBasDePage = "Aucun produit ne correspond à la recherche.";
+                }
             }
+            else if (!string.IsNullOrWhiteSpace(category))
+            {
+                IEnumerable<Category> categories = _context.Categories.AsEnumerable();
+
+                if (categories.Any(c => c.Name!.ToLower() == category.ToLower()))
+                {
+                    Category? selectedCategory = categories.FirstOrDefault(c => c.Name!.ToLower() == category.ToLower());
+
+                    List<Category> categoryAndChildren = GetCategoryAndChildren(categories, selectedCategory!);
+
+                    products = products.Where(p => p.Categories.Any(productCategory => categoryAndChildren.Contains(productCategory)));
+                }
+                else
+                {
+                    products = products.Where(p => !p.Categories.Any());
+
+                    ViewBag.MessageBasDePage = "Aucune catégorie trouvée.";
+                }
+            }
+
+            List<Product>? filteredProducts = await products.ToListAsync();
 
             // Filtrer les produits
             if (discounted)
@@ -70,23 +82,23 @@ namespace BallsRUs.ViewComponents
             }
 
             // Trier les produits
-            if (priceHighToLow)
+            if (!string.IsNullOrWhiteSpace(sortingType))
             {
-                products = products.OrderByDescending(p => p.DiscountedPrice ?? p.RetailPrice);
+                switch (sortingType)
+                {
+                    case PRICE_HIGH_TO_LOW: products = products.OrderByDescending(p => p.DiscountedPrice ?? p.RetailPrice);
+                        break;
+                    case PRICE_LOW_TO_HIGH: products = products.OrderBy(p => p.DiscountedPrice ?? p.RetailPrice);
+                        break;
+                    case BRAND_ALPHABETICAL: products = products.OrderBy(p => p.Brand);
+                        break;
+                    case RELEASE_NEW_TO_OLD: products = products.OrderByDescending(p => p.PublicationDate);
+                        break;
+                    default:
+                        break;
+                }
             }
-            else if (priceLowToHigh)
-            {
-                products = products.OrderBy(p => p.DiscountedPrice ?? p.RetailPrice);
-            }
-            else if (brandAlphabetical)
-            {
-                products = products.OrderBy(p => p.Brand);
-            }
-            else if (newToOld)
-            {
-                products = products.OrderByDescending(p => p.PublicationDate);
-            }
-                
+
             return View(products);
         }
 

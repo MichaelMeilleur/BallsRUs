@@ -13,7 +13,7 @@
     @Html.ActionLink("Retour", "DetailsProduct", new { id = @ViewBag.Id }, new { @class = "btn btn-secondary" })
 </div>
 
-<form asp-action="EditProduct" asp-route-id="@ViewBag.Id">
+<form asp-action="EditProduct" asp-route-id="@ViewBag.Id" enctype="multipart/form-data">
     <div class="row">
         <div class="col-md-4 mb-3">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -36,6 +36,17 @@
                 <label asp-for="Model" class="control-label required"></label>
                 <input asp-for="Model" class="form-control" />
                 <span asp-validation-for="Model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-check-label form-check m-2">
+                    <input id="admin-edit-product-image-checkbox" class="form-check-input" asp-for="ModifyImage" /> @Html.DisplayNameFor(model => model.ModifyImage)
+                </label>
+                <span asp-validation-for="ModifyImage" class="text-danger"></span>
+            </div>
+            <div id="admin-edit-product-image-form-group" class="form-group">
+                <label asp-for="Image" class="control-label required"></label>
+                <input type="file" asp-for="Image" class="form-control" />
+                <span asp-validation-for="Image" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ShortDescription" class="control-label required"></label>
@@ -80,7 +91,24 @@
 </form>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        function toggleImageInput() {
+            var modifyImageCheckbox = document.getElementById("admin-edit-product-image-checkbox");
+            var imageInput = document.getElementById("admin-edit-product-image-form-group");
+
+            if (modifyImageCheckbox.checked) {
+                imageInput.style.display = "block";
+            } else {
+                imageInput.style.display = "none";
+            }
+        }
+
+        var modifyImageCheckbox = document.getElementById("admin-edit-product-image-checkbox");
+        modifyImageCheckbox.addEventListener("change", toggleImageInput);
+
+        toggleImageInput();
+    </script>
+
 }

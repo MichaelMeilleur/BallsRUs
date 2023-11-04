@@ -48,7 +48,7 @@ input[type=submit], input[type=button] {
         filter: brightness(1.10);
     }
 
-input[type=text], input[type=password], textarea {
+input[type=text], input[type=password], input[type=number], textarea {
     border: 0px solid #000000;
     outline: none;
     margin-bottom: 1px;
@@ -60,7 +60,7 @@ input[type=text], input[type=password], textarea {
     border-radius: 0px;
 }
 
-    input[type=text]:focus, input[type=password]:focus, textarea:focus {
+    input[type=text]:focus, input[type=password]:focus, input[type=number]:focus, textarea:focus {
         outline: none;
         box-shadow: none;
         margin-bottom: 0px;
@@ -693,7 +693,7 @@ input[type=text], input[type=password], textarea {
         background-size: cover;
     }
 
-#product-index-filter-sort-button {
+#product-index-filter-apply-button {
     width: min(300px, 80%);
     height: 30px;
 }
@@ -808,6 +808,13 @@ input[type=text], input[type=password], textarea {
 .vc-product-list-product-beaten-price {
     color: #bd0b11;
     text-decoration: line-through;
+}
+
+#vc-product-list-bottom-message {
+    justify-self: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
 }
 
 .account-login-container {
