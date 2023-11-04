@@ -17,6 +17,12 @@ namespace BallsRUs.Models.Admin
         [Display(Name = "Modèle")]
         public string? Model { get; set; }
 
+        [Display(Name = "Changer l'image du produit?")]
+        public bool ModifyImage { get; set; } = false;
+
+        [Display(Name = "Nouveau fichier image")]
+        public IFormFile? Image { get; set; }
+
         [Display(Name = "Description courte")]
         public string? ShortDescription { get; set; }
 
@@ -70,6 +76,10 @@ namespace BallsRUs.Models.Admin
                         .WithMessage("Veuillez entrer un modèle.")
                     .Length(MIN_NAME_LENGTH, MAX_NAME_LENGTH)
                         .WithMessage($"Veuillez entrer un modèle entre {MIN_NAME_LENGTH} et {MAX_NAME_LENGTH} caractères.");
+                RuleFor(vm => vm.Image)
+                    .NotEmpty()
+                        .When(x => x.ModifyImage)
+                            .WithMessage("Veuillez sélectionner une image.");
                 RuleFor(vm => vm.ShortDescription)
                     .NotEmpty()
                         .WithMessage("Veuillez entrer une description courte.")
@@ -80,14 +90,24 @@ namespace BallsRUs.Models.Admin
                         .WithMessage("Veuillez entrer une description complète.")
                     .Length(MIN_FULL_DESC_LENGTH, MAX_FULL_DESC_LENGTH)
                         .WithMessage($"Veuillez entrer une description complète entre {MIN_FULL_DESC_LENGTH} et {MAX_FULL_DESC_LENGTH} caractères.");
+                RuleFor(vm => vm.WeightInGrams)
+                    .GreaterThan(0)
+                        .When(x => x.WeightInGrams is not null)
+                            .WithMessage("Veuillez entrer un poids plus grand que zéro.");
                 RuleFor(vm => vm.Quantity)
                     .NotEmpty()
                         .WithMessage("Veuillez entrer une quantité.")
-                    .Must(x => x >= 0)
+                    .GreaterThanOrEqualTo(0)
                         .WithMessage("Veuillez entrer une quantité positive.");
                 RuleFor(vm => vm.RetailPrice)
                     .NotEmpty()
-                        .WithMessage("Veuillez entrer un prix.");
+                        .WithMessage("Veuillez entrer un prix.")
+                    .GreaterThan(0)
+                        .WithMessage("Veuillez entrer une prix plus grand que zéro.");
+                RuleFor(vm => vm.DiscountedPrice)
+                    .GreaterThan(0)
+                        .When(x => x.DiscountedPrice is not null)
+                            .WithMessage("Veuillez entrer un prix en rabais plus grand que zéro.");
             }
         }
     }

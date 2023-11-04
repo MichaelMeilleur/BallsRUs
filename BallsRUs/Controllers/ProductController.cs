@@ -8,6 +8,11 @@ namespace BallsRUs.Controllers
 {
     public class ProductController : Controller
     {
+        private const string PRICE_HIGH_TO_LOW = "high-to-low";
+        private const string PRICE_LOW_TO_HIGH = "low-to-high";
+        private const string BRAND_ALPHABETICAL = "brand-alphabetical";
+        private const string RELEASE_NEW_TO_OLD = "new-to-old";
+
         private readonly ApplicationDbContext _context;
 
         public ProductController(ApplicationDbContext context)
@@ -15,7 +20,7 @@ namespace BallsRUs.Controllers
             _context = context;
         }
 
-        public IActionResult Catalog(string? category, string? search = null, string? filter = null, bool discounted = false)
+        public IActionResult Catalog(string? category = null, string? search = null, string? sorting = null, bool discounted = false)
         {
             if (!string.IsNullOrWhiteSpace(search))
                 ViewBag.Search = search;
@@ -24,19 +29,14 @@ namespace BallsRUs.Controllers
                 ViewBag.Category = category;
 
             // Appliquer le tri
-            ViewBag.HighToLow = false;
-            ViewBag.LowToHigh = false;
-            ViewBag.BrandAlphabetical = false;
-            ViewBag.NewToOld = false;
-
-            if (filter is not null && filter.ToLower() == "high-to-low")
-                ViewBag.HighToLow = true;
-            else if (filter is not null && filter.ToLower() == "low-to-high")
-                ViewBag.LowToHigh = true;
-            else if (filter is not null && filter.ToLower() == "brand-alphabetical")
-                ViewBag.BrandAlphabetical = true;
-            else if (filter is not null && filter.ToLower() == "new-to-old")
-                ViewBag.NewToOld = true;
+            if (sorting is not null && sorting.ToLower() == PRICE_HIGH_TO_LOW)
+                ViewBag.SortingType = PRICE_HIGH_TO_LOW;
+            else if (sorting is not null && sorting.ToLower() == PRICE_LOW_TO_HIGH)
+                ViewBag.SortingType = PRICE_LOW_TO_HIGH;
+            else if (sorting is not null && sorting.ToLower() == BRAND_ALPHABETICAL)
+                ViewBag.SortingType = BRAND_ALPHABETICAL;
+            else if (sorting is not null && sorting.ToLower() == RELEASE_NEW_TO_OLD)
+                ViewBag.SortingType = RELEASE_NEW_TO_OLD;
 
             // Appliquer les filtres
             ViewBag.FilterDiscounted = discounted;

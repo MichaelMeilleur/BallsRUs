@@ -4,8 +4,12 @@ using BallsRUs.Models.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Extensions.Hosting.Internal;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Globalization;
+using System.IO;
 
 namespace BallsRUs.Controllers
 {
@@ -138,7 +142,7 @@ namespace BallsRUs.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditProduct(AdminEditProductVM vm, Guid id)
+        public async Task<IActionResult> EditProduct(AdminEditProductVM vm, Guid id)
         {
             ViewBag.Id = id;
 
@@ -149,6 +153,27 @@ namespace BallsRUs.Controllers
 
             if (toEdit is null)
                 throw new ArgumentOutOfRangeException(nameof(id));
+
+            if (vm.ModifyImage && vm.Image is not null && vm.Image.Length > 0)
+            {
+                var webRootPath = _hostingEnvironment.WebRootPath;
+                var filePath = Path.Combine(webRootPath, "img/products", vm.SKU! + ".jpg");
+
+                if (System.IO.File.Exists(filePath))
+                    System.IO.File.Delete(filePath);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await vm.Image.CopyToAsync(stream);
+                }
+
+                toEdit.ImagePath = "~/img/products/" + vm.SKU + ".jpg";
+            }
+            else if (vm.ModifyImage && (vm.Image is null || vm.Image.Length > 0))
+            {
+                ModelState.AddModelError(string.Empty, "Veuillez sélectionner une image.");
+                return View(vm);
+            }
 
             toEdit.SKU = vm.SKU;
             toEdit.Name = vm.Name;
