@@ -19,6 +19,9 @@ namespace BallsRUs.Models.Admin
         [Display(Name = "Modèle")]
         public string? Model { get; set; }
 
+        [Display(Name = "Catégorie")]
+        public string? Category { get; set; }
+
         [Display(Name = "Fichier image")]
         public string? Image { get; set; }
 
