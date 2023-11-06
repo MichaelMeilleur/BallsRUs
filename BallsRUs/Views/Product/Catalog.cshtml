@@ -1,4 +1,5 @@
-﻿@{
+﻿@using BallsRUs.Utilities;
+@{
     if (ViewBag.Category is not null)
         ViewData["Title"] = ViewBag.Category;
     else if (ViewBag.Search is not null)
@@ -38,10 +39,10 @@
                     <h4>Trier</h4>
                     <select id="product-index-filter-sort-dropdown" name="sorting">
                         <option id="empty-selected-sort" value="empty">&lt;aucun&gt;</option>
-                        <option id="lowtohigh-selected-sort" value="low-to-high">Prix : Croissant</option>
-                        <option id="hightolow-selected-sort" value="high-to-low">Prix : Décroissant</option>
-                        <option id="brandalphabetical-selected-sort" value="brand-alphabetical">Alphabétique (Marque)</option>
-                        <option id="newtoold-selected-sort" value="new-to-old">Arrivage : Décroissant</option>
+                        <option id="lowtohigh-selected-sort" value="@Constants.PRICE_LOW_TO_HIGH">Prix : Croissant</option>
+                        <option id="hightolow-selected-sort" value="@Constants.PRICE_HIGH_TO_LOW">Prix : Décroissant</option>
+                        <option id="brandalphabetical-selected-sort" value="@Constants.BRAND_ALPHABETICAL">Alphabétique (Marque)</option>
+                        <option id="newtoold-selected-sort" value="@Constants.RELEASE_NEW_TO_OLD">Arrivage : Décroissant</option>
                     </select>
                 </div>
                 <div class="col-6 col-md-12 mt-0 mt-md-4">
@@ -64,46 +65,66 @@
 
 @section Scripts {
     <script>
-        var a = document.getElementById("hightolow-selected-sort");
-        if ("@ViewBag.SortingType" == "high-to-low") {
-            a.setAttribute('selected', true);
+        // Redonner la valeur choisi lors de la dernière requête au <select>
+        if ("@ViewBag.SortingType" == "@Constants.PRICE_HIGH_TO_LOW") {
+            document.getElementById("hightolow-selected-sort").setAttribute('selected', true);
         }
         else {
-            a.removeAttribute('selected');
+            document.getElementById("hightolow-selected-sort").removeAttribute('selected');
         }
 
-        a = document.getElementById("lowtohigh-selected-sort");
-        if ("@ViewBag.SortingType" == "low-to-high") {
-            a.setAttribute('selected', true);
+        if ("@ViewBag.SortingType" == "@Constants.PRICE_LOW_TO_HIGH") {
+            document.getElementById("lowtohigh-selected-sort").setAttribute('selected', true);
         }
         else {
-            a.removeAttribute('selected');
+            document.getElementById("lowtohigh-selected-sort").removeAttribute('selected');
         }
 
-        a = document.getElementById("brandalphabetical-selected-sort");
-        if ("@ViewBag.SortingType" == "brand-alphabetical") {
-            a.setAttribute('selected', true);
+        if ("@ViewBag.SortingType" == "@Constants.BRAND_ALPHABETICAL") {
+            document.getElementById("brandalphabetical-selected-sort").setAttribute('selected', true);
         }
         else {
-            a.removeAttribute('selected');
+            document.getElementById("brandalphabetical-selected-sort").removeAttribute('selected');
         }
 
-        a = document.getElementById("newtoold-selected-sort");
-        if ("@ViewBag.SortingType" == "new-to-old") {
-            a.setAttribute('selected', true);
+        if ("@ViewBag.SortingType" == "@Constants.RELEASE_NEW_TO_OLD") {
+            document.getElementById("newtoold-selected-sort").setAttribute('selected', true);
         }
         else {
-            a.removeAttribute('selected');
+            document.getElementById("newtoold-selected-sort").removeAttribute('selected');
         }
     </script>
     <script>
-        // document.addEventListener("DOMContentLoaded", function () {
-        //     var checkbox = document.getElementById("product-index-filter-discounted-checkbox");
-        //     var submitButton = document.getElementById("product-index-filter-sort-button");
+        var btnAppliquer = document.getElementById("product-index-filter-apply-button");
+        var formAction = btnAppliquer.getAttribute("formaction");
 
-        //     checkbox.addEventListener("change", function () {
-        //         submitButton.setAttribute("asp-route-discounted", checkbox.checked.toString());
-        //     });
-        // });
+        // Gérer l'URL de retour du bouton de filtres dépendament des cases cochées
+        document.getElementById("product-index-filter-discounted-checkbox").addEventListener("change", function () {
+            if (this.checked) {
+                formAction = formAction.replace("discounted=False", "discounted=True");
+            } else {
+                formAction = formAction.replace("discounted=True", "discounted=False");
+            }
+
+            btnAppliquer.setAttribute("formaction", formAction);
+        });
+
+        // Gérer l'URL de retour du bouton de filtres dépendament du tri sélectionné
+        document.getElementById("product-index-filter-sort-dropdown").addEventListener("change", function () {
+            var selectedOption = this.options[this.selectedIndex];
+            var sortingValue = selectedOption.value;
+
+            if (sortingValue === "empty") {
+                formAction = formAction.replace(/[\?&]sorting=[^&]+/, "");
+            } else {
+                if (formAction.indexOf("sorting=") === -1) {
+                    formAction += (formAction.includes("?") ? "&" : "?") + "sorting=" + sortingValue;
+                } else {
+                    formAction = formAction.replace(/sorting=[^&]+/, "sorting=" + sortingValue);
+                }
+            }
+
+            btnAppliquer.setAttribute("formaction", formAction);
+        });
     </script>
 }
