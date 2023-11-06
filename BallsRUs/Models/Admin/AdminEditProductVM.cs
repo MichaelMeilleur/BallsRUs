@@ -101,7 +101,10 @@ namespace BallsRUs.Models.Admin
                 RuleFor(vm => vm.DiscountedPrice)
                     .GreaterThan(0)
                         .When(x => x.DiscountedPrice is not null)
-                            .WithMessage("Veuillez entrer un prix en rabais plus grand que zéro.");
+                            .WithMessage("Veuillez entrer un prix en rabais plus grand que zéro.")
+                    .LessThan(x => x.RetailPrice)
+                        .When(x => x.DiscountedPrice is not null)
+                            .WithMessage("Veuillez entrer un prix inférieur à celui de base.");
             }
         }
     }

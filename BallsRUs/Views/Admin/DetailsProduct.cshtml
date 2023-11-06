@@ -64,7 +64,7 @@
                 </tr>
                 <tr>
                     <td style="font-weight: bold">@Html.DisplayNameFor(model => model.Quantity):</td>
-                    @if (Model.Quantity < 5)
+                    @if (Model.Quantity > 5)
                     {
                         <td>@Html.DisplayFor(modelItem => modelItem.Quantity)</td>
                     }

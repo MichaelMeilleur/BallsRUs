@@ -141,7 +141,8 @@
                     @Html.ActionLink("Details", "DetailsProduct", new { id = item.Id }, new { @class = "btn btn-primary" })
                     @if (item.IsArchived)
                     {
-                        @Html.ActionLink("Désarchiver", "ArchiveProduct", new { id = item.Id }, new { @class = "btn btn-danger" })
+                        @Html.ActionLink("Désarchiver", "ArchiveProduct", new { id = item.Id }, new { @class = "btn btn-secondary" })
+                        @Html.ActionLink("Supprimer", "DeleteProduct", new { id = item.Id }, new { @class = "btn btn-danger" })
                     }
                     else
                     {
