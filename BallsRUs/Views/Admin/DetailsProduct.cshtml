@@ -41,6 +41,10 @@
                     <td>@Html.DisplayFor(modelItem => modelItem.Model)</td>
                 </tr>
                 <tr>
+                    <td style="font-weight: bold">@Html.DisplayNameFor(model => model.Category):</td>
+                    <td>@Html.DisplayFor(modelItem => modelItem.Category)</td>
+                </tr>
+                <tr>
                     <td style="font-weight: bold">@Html.DisplayNameFor(model => model.WeightInGrams):</td>
                     @if (Model.WeightInGrams is not null)
                     {

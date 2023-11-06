@@ -18,6 +18,12 @@ namespace BallsRUs.Models.Admin
         [Display(Name = "Modèle")]
         public string? Model { get; set; }
 
+        [Display(Name = "Catégorie sélectionnée")]
+        public string? SelectedCategory { get; set; }
+
+        [Display(Name = "Catégorie")]
+        public List<string>? Categories { get; set; }
+
         [Display(Name = "Fichier image")]
         public IFormFile? Image { get; set; }
 
@@ -67,6 +73,9 @@ namespace BallsRUs.Models.Admin
                         .WithMessage("Veuillez entrer un modèle.")
                     .Length(Constants.PRODUCT_MIN_NAME_LENGTH, Constants.PRODUCT_MAX_NAME_LENGTH)
                         .WithMessage($"Veuillez entrer un modèle entre {Constants.PRODUCT_MIN_NAME_LENGTH} et {Constants.PRODUCT_MAX_NAME_LENGTH} caractères.");
+                RuleFor(vm => vm.SelectedCategory)
+                    .NotEmpty()
+                        .WithMessage("Veuillez choisir une catégorie.");
                 RuleFor(vm => vm.Image)
                     .NotEmpty()
                         .WithMessage("Veuillez sélectionner une image.");

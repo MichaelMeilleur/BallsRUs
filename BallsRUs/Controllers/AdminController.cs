@@ -39,6 +39,7 @@ namespace BallsRUs.Controllers
                 Name = product.Name,
                 Brand = product.Brand,
                 Model = product.Model,
+                Category = product.Categories!.FirstOrDefault()!.Name,
                 Image = Path.GetFileName(product.ImagePath),
                 WeightInGrams = product.WeightInGrams,
                 Size = product.Size,
@@ -55,12 +56,19 @@ namespace BallsRUs.Controllers
 
         public IActionResult CreateProduct()
         {
-            return View();
+            AdminCreateProductVM vm = new AdminCreateProductVM
+            {
+                Categories = _context.Categories.Select(c => c.Name).ToList()
+            };
+
+            return View(vm);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateProduct(AdminCreateProductVM vm)
         {
+            vm.Categories = _context.Categories.Select(c => c.Name).ToList();
+
             if (!ModelState.IsValid)
                 return View(vm);
 
@@ -89,6 +97,14 @@ namespace BallsRUs.Controllers
                 return View(vm);
             }
 
+            Category category = _context.Categories.FirstOrDefault(c => c.Name == vm.SelectedCategory)!;
+
+            if (category is null)
+            {
+                ModelState.AddModelError(string.Empty, "Veuillez sélectionner une catégorie existante.");
+                return View(vm);
+            }
+
             var product = new Product()
             {
                 SKU = vm.SKU,
@@ -107,6 +123,8 @@ namespace BallsRUs.Controllers
                 LastUpdated = (DateTime?)DateTime.Now,
                 IsArchived = false
             };
+
+            product.Categories.Add(category);
 
             _context.Products.Add(product);
             _context.SaveChanges();
@@ -200,6 +218,11 @@ namespace BallsRUs.Controllers
             if (toShow is null)
                 throw new ArgumentOutOfRangeException(nameof(id));
 
+            var category = _context.Categories.FirstOrDefault(c => c.Products!.Contains(toShow));
+
+            if (category is null)
+                throw new ArgumentOutOfRangeException(nameof(id));
+
             var vm = new AdminDetailsProductVM
             {
                 Id = toShow.Id,
@@ -207,6 +230,7 @@ namespace BallsRUs.Controllers
                 Name = toShow.Name,
                 Brand = toShow.Brand,
                 Model = toShow.Model,
+                Category = category!.Name,
                 ImagePath = toShow.ImagePath,
                 WeightInGrams = toShow.WeightInGrams,
                 Size = toShow.Size,
@@ -250,6 +274,12 @@ namespace BallsRUs.Controllers
                 _context.Products.Remove(toDelete);
                 _context.SaveChanges();
             }
+
+            var webRootPath = _hostingEnvironment.WebRootPath;
+            var filePath = Path.Combine(webRootPath, "img/products", toDelete.SKU! + ".jpg");
+
+            if (System.IO.File.Exists(filePath))
+                System.IO.File.Delete(filePath);
 
             return RedirectToAction(nameof(ManageProduct));
         }
