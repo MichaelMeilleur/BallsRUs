@@ -237,5 +237,21 @@ namespace BallsRUs.Controllers
 
             return RedirectToAction(nameof(ManageProduct));
         }
+
+        public IActionResult DeleteProduct(Guid id)
+        {
+            var toDelete = _context.Products.Find(id);
+
+            if (toDelete is null)
+                throw new ArgumentOutOfRangeException(nameof(id));
+
+            if (toDelete.IsArchived)
+            {
+                _context.Products.Remove(toDelete);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction(nameof(ManageProduct));
+        }
     }
 }
