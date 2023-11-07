@@ -34,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Context\" />
     <Folder Include="wwwroot\fonts\" />
     <Folder Include="wwwroot\img\categories\" />
     <Folder Include="wwwroot\img\products\" />

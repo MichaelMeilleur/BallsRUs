@@ -781,6 +781,7 @@ input[type=text], input[type=password], textarea {
     margin-bottom: 1vw;
     padding-left: 1vw;
     padding-right: 1vw;
+    transition: transform .2s;
 }
 
 .vc-product-list-product-card {
@@ -795,6 +796,10 @@ input[type=text], input[type=password], textarea {
 .vc-product-list-product-image {
     width: 100%;
     height: auto;
+}
+
+.vc-product-list-product-container:hover {
+    transform: scale(1.1);
 }
 
 .vc-product-list-product-link {
