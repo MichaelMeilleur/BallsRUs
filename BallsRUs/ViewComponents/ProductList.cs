@@ -19,7 +19,7 @@ namespace BallsRUs.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(bool isHomepageShowcase = false, string? category = null, string? search = null,
             List<Product>? productsAlreadyFiltered = null, bool priceHighToLow = false, bool priceLowToHigh = false, bool brandAlphabetical = false,
-            bool newToOld = false, bool discounted = false)
+            bool newToOld = false, bool discounted = false, Dictionary<string, bool>? checkedBoxBrandFilterVC = null)
         {
             ViewBag.IsHomePageShowcase = false;
             IQueryable<Product> products;

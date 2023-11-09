@@ -2,6 +2,8 @@
 using BallsRUs.Entities;
 using BallsRUs.Models.Product;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace BallsRUs.Controllers
@@ -15,7 +17,8 @@ namespace BallsRUs.Controllers
             _context = context;
         }
 
-        public IActionResult Catalog(string? category, string? search = null, string? filter = null, bool discounted = false)
+        public IActionResult Catalog(string? category, string? search = null, string? filter = null, 
+            bool discounted = false, Dictionary<string, bool>? checkedBoxBrandFilter = null)
         {
             if (!string.IsNullOrWhiteSpace(search))
                 ViewBag.Search = search;
@@ -40,6 +43,22 @@ namespace BallsRUs.Controllers
 
             // Appliquer les filtres
             ViewBag.FilterDiscounted = discounted;
+
+            ViewBag.listBrands = _context.Products.Select(x => x.Brand).Distinct().ToList();
+            int brandNumberTotal = _context.Products.Select(x => x.Brand).Distinct().ToList().Count();
+
+            //Vérifier pourquoi le count est à 1 au début
+            if (checkedBoxBrandFilter is null || !checkedBoxBrandFilter.Any() || checkedBoxBrandFilter.Count() == 1)
+            {
+                checkedBoxBrandFilter = new Dictionary<string, bool>();
+
+                for (int i = 0; i < brandNumberTotal; i++)
+                {
+                    checkedBoxBrandFilter.Add(ViewBag.listBrands[i], true);
+                }
+            }
+
+            ViewBag.checkedBoxBrandFilter = checkedBoxBrandFilter;
 
             return View();
         }
@@ -68,7 +87,7 @@ namespace BallsRUs.Controllers
                 RetailPrice = string.Format(new CultureInfo("fr-CA"), "{0:C}", productToShow.RetailPrice),
                 DiscountedPrice = string.Format(new CultureInfo("fr-CA"), "{0:C}", productToShow.DiscountedPrice),
                 PublicationDate = string.Format("{0:dd/MM/yyyy}", productToShow.PublicationDate),
-                Categories = categories
+                Categories = categories,
             };
 
             return View(vm);

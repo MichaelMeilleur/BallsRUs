@@ -5,6 +5,8 @@
         ViewData["Title"] = ViewBag.Search;
     else
         ViewData["Title"] = "Catalogue";
+
+    Dictionary<string, bool> checkedBoxBrandFilter = ViewBag.checkedBoxBrandFilter;
 }
 
 <div id="product-index-promotions-carousel-container">
@@ -46,17 +48,46 @@
                 </div>
                 <div class="col-6 col-md-12 mt-0 mt-md-4">
                     <h4>Filtrer</h4>
-                    <input id="product-index-filter-discounted-checkbox" name="discounted" type="checkbox" value="true" @if (ViewBag.FilterDiscounted)
-                    {
-                        @Html.Raw("checked")
-                    } /> Produits en rabais
+                    <div class="product-index-filter-discounted-checkbox-container">
+                        <h5>Produits en rabais</h5>
+                        <input id="product-index-filter-discounted-checkbox" name="discounted" type="checkbox" value="true"
+                               @if (ViewBag.FilterDiscounted)
+                               {
+                               @Html.Raw("checked")
+                               } /> Produits en rabais
+                    </div>
+                    <div id="product-index-filter-brands-checkall-checkbox-container">
+                        <input type="checkbox" /> Sélectionner toutes les marques
+                    </div>
+                    <div class="product-index-filter-brands-checkbox-container">
+                        <h5>Filter by brand</h5>
+                        @for (int i = 0; i < ViewBag.listBrands.Count; i++)
+                        {
+                            <div>
+                                <input type="checkbox" name="checkedBoxBrandFilter[@ViewBag.listBrands[i]]" value="true"
+                                   @if (checkedBoxBrandFilter != null && checkedBoxBrandFilter.ContainsKey(ViewBag.listBrands[i]))
+                                   {
+                                        @Html.Raw("checked")
+                                   }>
+                                <label>@ViewBag.listBrands[i]</label>
+                            </div>
+                        }
+                    </div>
+                    <p>
+                        <label for="price">Montant sélection $</label>
+                        <input type="text" id="product-index-filter-price-input" readonly style="border:0; font-weight:bold;"/>
+                    </p>
+                    <div id="product-index-filter-price-slider">
+                        
+                    </div>
                 </div>
+
                 <input id="product-index-filter-sort-button" asp-route-category="@ViewBag.Category" asp-route-search="@ViewBag.Search" type="submit" value="Trier" class="mb-4" />
             </div>
         </form>
     </div>
     <div class="col-12 col-md-9">
-        <vc:product-list category="@ViewBag.Category" search="@ViewBag.Search" price-high-to-low="@ViewBag.HighToLow" price-low-to-high="@ViewBag.LowToHigh" brand-alphabetical="@ViewBag.BrandAlphabetical" new-to-old="@ViewBag.NewToOld" discounted="@ViewBag.FilterDiscounted"></vc:product-list>
+        <vc:product-list category="@ViewBag.Category" search="@ViewBag.Search" price-high-to-low="@ViewBag.HighToLow" price-low-to-high="@ViewBag.LowToHigh" brand-alphabetical="@ViewBag.BrandAlphabetical" new-to-old="@ViewBag.NewToOld" discounted="@ViewBag.FilterDiscounted" checked-box-brand-filter-vc="checkedBoxBrandFilter"></vc:product-list>
     </div>
 </div>
 
@@ -93,5 +124,27 @@
         else {
             a.removeAttribute('selected');
         }
+
+
+        $(function() {
+            $("#product-index-filter-price-slider").slider({
+                range: true,
+                min: 0,
+                max: 1000,
+                values: [25, 500],
+                slide: function (event, ui){
+                    $("price").val("$" + ui.values[0] + " - $" + ui.values[1]);
+
+                    var min = ui.values[0];
+                    var max = ui.values[1];
+                }
+            })
+        })
+
+        $(document).ready(function () {
+            $("#product-index-filter-brands-checkall-checkbox-container").click(function () {
+                $(".product-index-filter-brands-checkbox-container :checkbox").attr("checked", $(this).attr("checked"));
+            });
+        });
     </script>
 }
