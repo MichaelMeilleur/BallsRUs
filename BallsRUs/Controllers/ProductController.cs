@@ -16,7 +16,8 @@ namespace BallsRUs.Controllers
             _context = context;
         }
 
-        public IActionResult Catalog(string? category = null, string? search = null, bool discounted = false, string? sorting = null)
+        public IActionResult Catalog(string? category = null, string? search = null,
+            bool discounted = false, string? sorting = null, Dictionary<string, bool>? checkedBoxBrandFilter = null, string? rangePrice = null)
         {
             if (!string.IsNullOrWhiteSpace(search))
                 ViewBag.Search = search;
@@ -36,6 +37,48 @@ namespace BallsRUs.Controllers
 
             // Appliquer les filtres
             ViewBag.FilterDiscounted = discounted;
+
+            ViewBag.listBrands = _context.Products.Select(x => x.Brand).Distinct().ToList();
+            int brandNumberTotal = _context.Products.Select(x => x.Brand).Distinct().ToList().Count();
+
+            //Vérifier pourquoi le count est à 1 au début
+            if (checkedBoxBrandFilter is null || !checkedBoxBrandFilter.Any() || checkedBoxBrandFilter.Count() == 1)
+            {
+                checkedBoxBrandFilter = new Dictionary<string, bool>();
+
+                for (int i = 0; i < brandNumberTotal; i++)
+                {
+                    checkedBoxBrandFilter.Add(ViewBag.listBrands[i], true);
+                }
+            }
+
+            ViewBag.checkedBoxBrandFilter = checkedBoxBrandFilter;
+
+            if (rangePrice is not null)
+            {
+                string[] parties = rangePrice.Split('$');
+                int firstNumberRangePrice;
+                int secondNumberRangePrice;
+
+                // Convertir les parties en entiers
+                if (parties.Length >= 2)
+                {
+                    if (int.TryParse(parties[0].Trim(), out int premierNombre) && int.TryParse(parties[1].Substring(2), out int deuxiemeNombre))
+                    {
+                        firstNumberRangePrice = premierNombre;
+                        ViewBag.minValue = firstNumberRangePrice;
+                        secondNumberRangePrice = deuxiemeNombre;
+                        ViewBag.maxValue = secondNumberRangePrice;
+                    }
+                }
+            }
+
+
+            if (ViewBag.minValue is null || ViewBag.maxValue is null)
+            {
+                ViewBag.minValue = 0;
+                ViewBag.maxValue = 2000;
+            }
 
             return View();
         }
