@@ -16,7 +16,7 @@ namespace BallsRUs.Controllers
             _context = context;
         }
 
-        public IActionResult Catalog(string? category = null, string? search = null, string? sorting = null, bool discounted = false)
+        public IActionResult Catalog(string? category = null, string? search = null, bool discounted = false, string? sorting = null)
         {
             if (!string.IsNullOrWhiteSpace(search))
                 ViewBag.Search = search;
