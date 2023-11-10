@@ -7,7 +7,9 @@
     else
         ViewData["Title"] = "Catalogue";
 
-
+    Dictionary<string, bool> checkedBoxBrandFilter = ViewBag.checkedBoxBrandFilter;
+    int minValue = ViewBag.minValue;
+    int maxValue = ViewBag.maxValue;
 }
 
 <div id="product-index-promotions-carousel-container">
@@ -159,6 +161,25 @@
             }
 
             btnAppliquer.setAttribute("formaction", formAction);
+        });
+
+        $(function() {
+            $("#product-index-filter-price-slider").slider({
+                range: true,
+                min: 0,
+                max: 2000,
+                values: [0, 2000],
+                slide: function (event, ui) {
+                    $("#product-index-filter-price-input").val(ui.values[0] + "$ - " + ui.values[1] + "$");
+                }
+            });
+            $("#product-index-filter-price-input").val($("#product-index-filter-price-slider").slider("values", 0) + " - " + $("#product-index-filter-price-slider").slider("values", 1));
+        });
+
+        $(document).ready(function () {
+            $("#product-index-filter-brands-checkall-checkbox-container").click(function () {
+                $(".product-index-filter-brands-checkbox-container :checkbox").attr("checked", $(this).attr("checked"));
+            });
         });
     </script>
 }
