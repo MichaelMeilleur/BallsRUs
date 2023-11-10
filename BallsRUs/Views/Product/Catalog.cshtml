@@ -116,6 +116,9 @@
 
             if (sortingValue === "empty") {
                 formAction = formAction.replace(/[\?&]sorting=[^&]+/, "");
+                if (formAction.includes("Catalog&")) {
+                    formAction = formAction.replace("Catalog&", "Catalog?");
+                }
             } else {
                 if (formAction.indexOf("sorting=") === -1) {
                     formAction += (formAction.includes("?") ? "&" : "?") + "sorting=" + sortingValue;
