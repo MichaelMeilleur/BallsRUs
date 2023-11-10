@@ -6,6 +6,8 @@
         ViewData["Title"] = ViewBag.Search;
     else
         ViewData["Title"] = "Catalogue";
+
+
 }
 
 <div id="product-index-promotions-carousel-container">
@@ -47,11 +49,40 @@
                 </div>
                 <div class="col-6 col-md-12 mt-0 mt-md-4">
                     <h4>Filtrer</h4>
-                    <input id="product-index-filter-discounted-checkbox" name="discounted" type="checkbox" value="true"
-                    @if (ViewBag.FilterDiscounted)
-                    {
-                        @Html.Raw("checked")
-                    } /> Produits en rabais
+                    <div class="product-index-filter-discounted-checkbox-container">
+                        <h5>Produits en rabais</h5>
+                        <input id="product-index-filter-discounted-checkbox" name="discounted" type="checkbox" value="true"
+                               @if (ViewBag.FilterDiscounted)
+                               {
+                               @Html.Raw("checked")
+                               } /> Produits en rabais
+                    </div>
+                    <div id="product-index-filter-brands-checkall-checkbox-container">
+                        <input type="checkbox" /> Sélectionner toutes les marques
+                    </div>
+                    <div class="product-index-filter-brands-checkbox-container">
+                        <h5>Filter by brand</h5>
+                        @for (int i = 0; i < ViewBag.listBrands.Count; i++)
+                        {
+                            <div>
+                                <input type="checkbox" name="checkedBoxBrandFilter[@ViewBag.listBrands[i]]" value="true"
+                                   @if (checkedBoxBrandFilter != null && checkedBoxBrandFilter.ContainsKey(ViewBag.listBrands[i]))
+                                   {
+                                   @Html.Raw("checked")
+                                   }>
+                                <label>@ViewBag.listBrands[i]</label>
+                            </div>
+                        }
+                    </div>
+                    <div class="product-index-filter-price-slider-container">
+                        <p>
+                            <label for="price">Sélection du prix</label>
+                            <input type="text" name="rangePrice" id="product-index-filter-price-input" readonly style="border:0; font-weight:bold;" />
+                        </p>
+                        <div id="product-index-filter-price-slider">
+                        </div>
+                    </div>
+
                 </div>
                 <input id="product-index-filter-apply-button" asp-route-category="@ViewBag.Category" asp-route-search="@ViewBag.Search"
                        asp-route-sorting="@ViewBag.SortingType" asp-route-discounted="@ViewBag.FilterDiscounted" type="submit" value="Appliquer" class="mb-4" />
