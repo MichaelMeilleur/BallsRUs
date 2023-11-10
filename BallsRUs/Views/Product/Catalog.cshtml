@@ -92,7 +92,12 @@
         </form>
     </div>
     <div class="col-12 col-md-9">
-        <vc:product-list search="@ViewBag.Search" sorting-type="@ViewBag.SortingType" category="@ViewBag.Category" discounted="@ViewBag.FilterDiscounted"></vc:product-list>
+        <vc:product-list category="@ViewBag.Category" search="@ViewBag.Search"
+                         price-high-to-low="@ViewBag.HighToLow" price-low-to-high="@ViewBag.LowToHigh"
+                         brand-alphabetical="@ViewBag.BrandAlphabetical" new-to-old="@ViewBag.NewToOld"
+                         discounted="@ViewBag.FilterDiscounted" checked-box-brand-filter-vc="checkedBoxBrandFilter"
+                         min-value="@ViewBag.minValue" max-value="@ViewBag.maxValue">
+        </vc:product-list>
     </div>
 </div>
 
@@ -163,7 +168,7 @@
             btnAppliquer.setAttribute("formaction", formAction);
         });
 
-        $(function() {
+        $(function () {
             $("#product-index-filter-price-slider").slider({
                 range: true,
                 min: 0,
