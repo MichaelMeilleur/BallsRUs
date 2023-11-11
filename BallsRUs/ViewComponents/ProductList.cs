@@ -76,6 +76,28 @@ namespace BallsRUs.ViewComponents
                 products = products.Where(p => p.DiscountedPrice != null);
             }
 
+            // Filtrer les marques
+            List<Product> productsBrandFiltered = new();
+
+            if (checkedBoxBrandFilterVC is not null)
+            {
+                foreach (var product in products)
+                {
+                    if (checkedBoxBrandFilterVC.ContainsKey(product.Brand))
+                    {
+                        productsBrandFiltered.Add(product);
+                    }
+                }
+                products = productsBrandFiltered.AsQueryable();
+            }
+
+            // Filtrer les prix
+            if(minValue is not null && minValue >= 0 && maxValue is not null && maxValue >= 0)
+            {
+                products = products.Where(x => (x.RetailPrice >= minValue && x.RetailPrice <= maxValue) || 
+                                   (x.DiscountedPrice != null && x.DiscountedPrice >= minValue && x.DiscountedPrice <= maxValue));
+            }
+
             // Trier les produits
             if (!string.IsNullOrWhiteSpace(sortingType))
             {
