@@ -17,7 +17,8 @@ namespace BallsRUs.Controllers
         }
 
         public IActionResult Catalog(string? category = null, string? search = null,
-            bool discounted = false, string? sorting = null, Dictionary<string, bool>? checkedBoxBrandFilter = null, string? rangePrice = null)
+            bool discounted = false, string? sorting = null, Dictionary<string, bool>? checkedBoxBrandFilter = null, 
+            string? rangePrice = null, bool? selectAllBrands = null)
         {
             if (!string.IsNullOrWhiteSpace(search))
                 ViewBag.Search = search;
@@ -50,6 +51,11 @@ namespace BallsRUs.Controllers
                 {
                     checkedBoxBrandFilter.Add(ViewBag.listBrands[i], true);
                 }
+            }
+
+            if(selectAllBrands == true)
+            {
+                ViewBag.listBrands = _context.Products.Select(x => x.Brand).Distinct().ToList();
             }
 
             ViewBag.checkedBoxBrandFilter = checkedBoxBrandFilter;

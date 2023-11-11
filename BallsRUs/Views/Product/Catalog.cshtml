@@ -59,15 +59,17 @@
                                @Html.Raw("checked")
                                } /> Produits en rabais
                     </div>
-                    <div id="product-index-filter-brands-checkall-checkbox-container">
-                        <input type="checkbox" /> Sélectionner toutes les marques
-                    </div>
+                    <br />
                     <div class="product-index-filter-brands-checkbox-container">
-                        <h5>Filter by brand</h5>
+                        <h5>Filtrer par marque</h5>
+                        <input id="product-index-filter-brands-checkall-checkbox-container" name="selectAllBrands" type="checkbox" style="font-size:14px" 
+                            @Html.Raw("checked")
+                        /> Sélectionner toutes les marques
+                        <p></p>
                         @for (int i = 0; i < ViewBag.listBrands.Count; i++)
                         {
-                            <div>
-                                <input type="checkbox" name="checkedBoxBrandFilter[@ViewBag.listBrands[i]]" value="true"
+                            <div class="product-index-filter-brand-Checkbox-click-container">
+                                <input class="product-index-filter-brand-Checkbox" style="font-weight:100;" type="checkbox" name="checkedBoxBrandFilter[@ViewBag.listBrands[i]]" value="true"
                                    @if (checkedBoxBrandFilter != null && checkedBoxBrandFilter.ContainsKey(ViewBag.listBrands[i]))
                                    {
                                    @Html.Raw("checked")
@@ -77,9 +79,10 @@
                         }
                     </div>
                     <div class="product-index-filter-price-slider-container">
+                        <h5>Filtrer par prix</h5>
                         <p>
                             <label for="price">Sélection du prix</label>
-                            <input type="text" name="rangePrice" id="product-index-filter-price-input" readonly style="border:0; font-weight:bold;" />
+                            <input type="text" name="rangePrice" id="product-index-filter-price-input" readonly style="border:0"/>
                         </p>
                         <div id="product-index-filter-price-slider">
                         </div>
@@ -173,7 +176,7 @@
                 range: true,
                 min: 0,
                 max: 2000,
-                values: [0, 2000],
+                values: [@minValue, @maxValue],
                 slide: function (event, ui) {
                     $("#product-index-filter-price-input").val(ui.values[0] + "$ - " + ui.values[1] + "$");
                 }
@@ -184,6 +187,25 @@
         $(document).ready(function () {
             $("#product-index-filter-brands-checkall-checkbox-container").click(function () {
                 $(".product-index-filter-brands-checkbox-container :checkbox").attr("checked", $(this).attr("checked"));
+            });
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+
+            var selectAllBrandsCheckbox = document.getElementById('product-index-filter-brands-checkall-checkbox-container');
+            var brandCheckboxes = document.querySelectorAll('.product-index-filter-brand-Checkbox');
+
+            selectAllBrandsCheckbox.addEventListener('change', function () {
+                var isChecked = selectAllBrandsCheckbox.checked
+
+                console.log(isChecked)
+
+                // Mettre à jour l'état de toutes les cases à cocher des marques
+                brandCheckboxes.forEach(function (checkbox) {
+                    checkbox.checked = isChecked;
+                });
             });
         });
     </script>
