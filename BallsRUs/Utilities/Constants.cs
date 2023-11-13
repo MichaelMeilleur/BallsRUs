@@ -2,6 +2,10 @@
 {
     public static class Constants
     {
+        // Shopping Cart
+        public const decimal TAXES_PERCENTAGE = 0.14975m;
+        public const string SHOPPING_CART_SESSION_KEY = "ShoppingCartId";
+
         // Nombre d'occurences
         public const int NB_OF_SHOWCASED_PRODUCTS = 4;
 

@@ -880,3 +880,11 @@ input[type=text], input[type=password], input[type=number], textarea {
     font-weight: bold;
     color: forestgreen;
 }
+
+#shopping-cart-index-title {
+    font-weight: bold;
+    width: fit-content;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
