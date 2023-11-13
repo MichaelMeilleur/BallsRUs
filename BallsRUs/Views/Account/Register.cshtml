@@ -32,7 +32,7 @@
                         <span asp-validation-for="PasswordConfirmation" class="text-danger"></span>
                     </div>
                     <div class="mb-4">
-                        <input id="account-register-checkbox" type="checkbox" onchange="toggleAdress()">
+                        <input id="account-register-checkbox" type="checkbox" onchange="toggleAdress()" asp-for="addAddress">
                         Ajouter une adresse
                     </div>
                     <div id="addAddress" style="display:none">
@@ -69,13 +69,32 @@
 @section Scripts {
     <script>
         function toggleAdress() {
-            var x = document.getElementById("addAddress");
-            if (x.style.display === "none") {
-                x.style.display = "block";
+            var div = document.getElementById("addAddress");
+            if (document.getElementById("account-register-checkbox").checked) {
+                div.style.display = "block";
             } else {
-                x.style.display = "none";
+                div.style.display = "none";
             }
         }
+
+        $(document).ready(function () {
+            function toggleAddressFields() {
+                const addressFields = $("#addAddress");
+                const existingDriverCheckbox = $('#account-register-checkbox');
+                if (existingDriverCheckbox.prop('checked')) {
+                    addressFields.show();
+                } else {
+                    addressFields.hide();
+                }
+            }
+
+            toggleAddressFields();
+
+            $('#existingDriverCheckbox').change(function () {
+                toggleAddressFields();
+            });
+        });
+
     </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
