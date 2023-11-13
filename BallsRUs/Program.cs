@@ -26,6 +26,9 @@ namespace BallsRUs
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddSession();
+
             var app = builder.Build();
 
             if (!app.Environment.IsDevelopment())
@@ -41,6 +44,8 @@ namespace BallsRUs
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",
