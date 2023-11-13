@@ -31,11 +31,8 @@
                         <input asp-for="PasswordConfirmation" class="form-control" placeholder="Confirmation mot de passe" />
                         <span asp-validation-for="PasswordConfirmation" class="text-danger"></span>
                     </div>
-                    <div class="mb-4">
-                        <input id="account-register-checkbox" type="checkbox" onchange="toggleAdress()" asp-for="addAddress">
-                        Ajouter une adresse
-                    </div>
                     <div id="addAddress" style="display:none">
+                        <h4 style="margin-top:45px">Adresse</h4>
                         <div class="form-group mb-4">
                             <input asp-for="Street" class="form-control" placeholder="Numéro civique et rue" />
                             <span asp-validation-for="Street" class="text-danger"></span>
@@ -56,6 +53,10 @@
                             <input asp-for="StateProvince" class="form-control" placeholder="Province ou état" />
                             <span asp-validation-for="StateProvince" class="text-danger"></span>
                         </div>
+                    </div>
+                    <div class="mb-4">
+                        <input id="account-register-checkbox" type="checkbox" onchange="toggleAdress()" asp-for="addAddress">
+                        Ajouter une adresse
                     </div>
                     <div class="form-group mt-4 mb-1 text-start">
                         <input type="submit" value="Créer un compte" />
