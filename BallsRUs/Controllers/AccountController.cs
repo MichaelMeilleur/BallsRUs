@@ -99,7 +99,7 @@ namespace BallsRUs.Controllers
                         PostalCode = vm.PostalCode,
                         UserId = newUser.Id
                     };
-                    _context.Add(address);
+                    _context.Addresses.Add(address);
                     _context.SaveChanges();
                 }
 
