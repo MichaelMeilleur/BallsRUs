@@ -16,6 +16,14 @@ namespace BallsRUs.Models.Account
 
         [DataType(DataType.Password)]
         public string? PasswordConfirmation { get; set; }
+
+        public string? Street { get; set; }
+        public string? City { get; set; }
+        public string? PostalCode { get; set; }
+        public string? Country { get; set; }
+        public string? StateProvince { get; set; }
+
+
     }
     public class RegisterVMValidator : AbstractValidator<RegisterVM>
     {
