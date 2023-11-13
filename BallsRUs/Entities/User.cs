@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BallsRUs.Entities
 {
@@ -8,5 +9,6 @@ namespace BallsRUs.Entities
 
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
+        public virtual Address? Address { get; set; }
     }
 }
