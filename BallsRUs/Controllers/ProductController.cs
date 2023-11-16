@@ -18,7 +18,7 @@ namespace BallsRUs.Controllers
 
         public IActionResult Catalog(string? category = null, string? search = null,
             bool discounted = false, string? sorting = null, Dictionary<string, bool>? checkedBoxBrandFilter = null, 
-            string? rangePrice = null)
+            string? rangePrice = null, string? brands = null, bool selectAllBrands = true)
         {
             if (!string.IsNullOrWhiteSpace(search))
                 ViewBag.Search = search;
@@ -43,17 +43,29 @@ namespace BallsRUs.Controllers
             int brandNumberTotal = _context.Products.Select(x => x.Brand).Distinct().ToList().Count();
 
             //Vérifier pourquoi le count est à 1 au début
-            if (checkedBoxBrandFilter is null || !checkedBoxBrandFilter.Any() || checkedBoxBrandFilter.Count() == 1)
+            if(brands is not null)
             {
-                checkedBoxBrandFilter = new Dictionary<string, bool>();
-
-                for (int i = 0; i < brandNumberTotal; i++)
+                checkedBoxBrandFilter = ParseBrandFilter(brands);
+                ViewBag.checkedBoxBrandFilter = checkedBoxBrandFilter;
+            }
+            else
+            {
+                //Quick fix, au début le count du dictionnaire est à 1 et on a la category comme entrée dans la liste
+                if (checkedBoxBrandFilter is null || !checkedBoxBrandFilter.Any() || 
+                    checkedBoxBrandFilter.Count() == 1 && checkedBoxBrandFilter.ContainsKey("Category"))
                 {
-                    checkedBoxBrandFilter.Add(ViewBag.listBrands[i], true);
+                    checkedBoxBrandFilter = new Dictionary<string, bool>();
+
+                    for (int i = 0; i < brandNumberTotal; i++)
+                    {
+                        checkedBoxBrandFilter.Add(ViewBag.listBrands[i], true);
+                    }
                 }
+                ViewBag.checkedBoxBrandFilter = checkedBoxBrandFilter;
             }
 
-            ViewBag.checkedBoxBrandFilter = checkedBoxBrandFilter;
+            //Selection toutes les marques bouton
+            ViewBag.SelectAllBrands = selectAllBrands;
 
             if (rangePrice is not null)
             {
@@ -112,6 +124,22 @@ namespace BallsRUs.Controllers
             };
 
             return View(vm);
+        }
+
+        private Dictionary<string, bool> ParseBrandFilter(string brands)
+        {
+            var brandFilter = new Dictionary<string, bool>();
+
+            if (!string.IsNullOrEmpty(brands))
+            {
+                var brandArray = brands.Split(',');
+                foreach (var brand in brandArray)
+                {
+                    brandFilter.Add(brand, true);
+                }
+            }
+
+            return brandFilter;
         }
     }
 }
