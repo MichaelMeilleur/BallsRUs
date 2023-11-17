@@ -207,9 +207,6 @@
                     selectAllBrandsCheckbox.checked = true;
                 }
 
-                console.log(brandCheckboxes.length);
-                console.log(countCheckBox);
-
                 // Construisez l'URL avec les marques sélectionnées
                 var url = window.location.href.split('?')[0]; // URL de base sans les paramètres
                 if (selectedBrands.length > 0) {
@@ -226,7 +223,8 @@
         });
 
         //Price range slider
-        $(function () {
+
+        document.addEventListener('DOMContentLoaded', function () {
             $("#product-index-filter-price-slider").slider({
                 range: true,
                 min: 0,
@@ -234,9 +232,19 @@
                 values: [@minValue, @maxValue],
                 slide: function (event, ui) {
                     $("#product-index-filter-price-input").val(ui.values[0] + "$ - " + ui.values[1] + "$");
+                },
+                change: function(event, ui) {
+
+                    // Ajoutez votre logique pour mettre à jour l'URL ou effectuer d'autres actions en fonction du changement de valeur du slider.
+                    var formattedValue = ui.values[0] + "$ - " + ui.values[1] + "$";
+
+                    var url = window.location.href.split('?')[0];
+                    formAction = url + (url.includes('?') ? '&rangePrice=' : '?rangePrice=') + formattedValue;
+                    btnAppliquer.setAttribute("formaction", formAction);
                 }
             });
-            $("#product-index-filter-price-input").val($("#product-index-filter-price-slider").slider("values", 0) + " - " + $("#product-index-filter-price-slider").slider("values", 1));
+
+            $("#product-index-filter-price-input").val($("#product-index-filter-price-slider").slider("values", 0) + "$ - " + $("#product-index-filter-price-slider").slider("values", 1) + "$");
         });
 
         $(document).ready(function () {
@@ -248,7 +256,6 @@
 
         document.addEventListener('DOMContentLoaded', function () {
 
-
             var selectAllBrandsCheckbox = document.getElementById('product-index-filter-brands-checkall-checkbox-container');
             var brandCheckboxes = document.querySelectorAll('.product-index-filter-brand-Checkbox');
 
@@ -259,6 +266,18 @@
                 brandCheckboxes.forEach(function (checkbox) {
                     checkbox.checked = isChecked;
                 });
+
+                var url = window.location.href.split('?')[0];
+                if (selectAllBrandsCheckbox.checked) 
+                {
+                    formAction = url + (url.includes('?') ? '&selectAllBrands=' : '?selectAllBrands=') + 'True';
+                } 
+                else
+                {
+                    formAction = url + (url.includes('?') ? '&selectAllBrands=' : '?selectAllBrands=') + 'False';
+                }
+
+                btnAppliquer.setAttribute("formaction", formAction);
             });
         });
     </script>

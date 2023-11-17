@@ -51,8 +51,8 @@ namespace BallsRUs.Controllers
             else
             {
                 //Quick fix, au début le count du dictionnaire est à 1 et on a la category comme entrée dans la liste
-                if (checkedBoxBrandFilter is null || !checkedBoxBrandFilter.Any() || 
-                    checkedBoxBrandFilter.Count() == 1 && checkedBoxBrandFilter.ContainsKey("Category"))
+                if (selectAllBrands || checkedBoxBrandFilter is null || !checkedBoxBrandFilter.Any() || 
+                    checkedBoxBrandFilter.Count() == 1 && checkedBoxBrandFilter.ContainsKey("category"))
                 {
                     checkedBoxBrandFilter = new Dictionary<string, bool>();
 
