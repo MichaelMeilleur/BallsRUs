@@ -3,6 +3,7 @@ using BallsRUs.Entities;
 using BallsRUs.Models.ShoppingCart;
 using BallsRUs.Utilities;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 using System.Security.Claims;
 
 namespace BallsRUs.Controllers
@@ -27,35 +28,41 @@ namespace BallsRUs.Controllers
 
             List<ShoppingCartItem>? items = _context.ShoppingCartItems.Where(sci => sci.ShoppingCartId == scId).ToList();
             List<ShoppingCartProductVM>? productsVM = new();
+
             int quantity = 0;
-            decimal subTotal = 0m;
+            decimal? productsCost = 0m;
 
             if (items.Any())
             {
                 foreach (ShoppingCartItem item in items)
                 {
+                    Product? product = _context.Products.FirstOrDefault(p => p.Id == item.ProductId);
+
+                    if (product is null)
+                        throw new Exception("The product is not valid.");
+
                     ShoppingCartProductVM p = new ShoppingCartProductVM
                     {
-                        Name = item.Product!.Name,
-                        RetailPrice = item.Product!.RetailPrice,
-                        DiscountedPrice = item.Product!.DiscountedPrice,
-                        ImagePath = item.Product!.ImagePath,
+                        Id = item.Id,
+                        ProductId = product.Id,
+                        Name = product.Name,
+                        RetailPrice = product.RetailPrice,
+                        DiscountedPrice = product.DiscountedPrice,
+                        ImagePath = product.ImagePath,
                         Quantity = item.Quantity
                     };
                     productsVM.Add(p);
 
-                    quantity += p.Quantity ?? 0;
-                    subTotal += p.DiscountedPrice ?? p.RetailPrice ?? 0m;
+                    quantity += item.Quantity;
+                    productsCost += product.DiscountedPrice is not null ? product.DiscountedPrice * item.Quantity : product.RetailPrice * item.Quantity;
                 }
             }
 
             ShoppingCartListVM vm = new ShoppingCartListVM
             {
                 Quantity = quantity,
-                ShippingCost = shoppingCart.ShippingCost,
-                SubTotal = subTotal,
-                Taxes = subTotal * Constants.TAXES_PERCENTAGE,
-                Total = subTotal + (subTotal * Constants.TAXES_PERCENTAGE),
+                ShippingCost = Constants.ESTIMATED_SHIPPING_COST,
+                ProductsCost = productsCost,
                 Items = productsVM 
             };
 
@@ -71,6 +78,11 @@ namespace BallsRUs.Controllers
             if (product is null)
                 throw new ArgumentOutOfRangeException(nameof(productId));
 
+            ShoppingCart? shoppingCart = _context.ShoppingCarts.Find(scId);
+
+            if (shoppingCart is null)
+                throw new Exception("The shopping cart is not valid.");
+
             ShoppingCartItem? item = _context.ShoppingCartItems.FirstOrDefault(i => i.ShoppingCartId == scId && i.ProductId == product.Id);
 
             if (item is null)
@@ -83,12 +95,16 @@ namespace BallsRUs.Controllers
                     ProductId = product.Id
                 };
 
+                shoppingCart.ProductsQuantity++;
+
                 _context.ShoppingCartItems.Add(cartItem);
                 _context.SaveChanges();
             }
             else
             {
+                shoppingCart.ProductsQuantity++;
                 item.Quantity++;
+
                 _context.SaveChanges();
             }
 
@@ -106,7 +122,7 @@ namespace BallsRUs.Controllers
 
                 if (Guid.TryParse(userId, out Guid userGuid))
                 {
-                    ShoppingCart? shoppingCart = _context.ShoppingCarts.FirstOrDefault(sc => sc.Id == userGuid);
+                    ShoppingCart? shoppingCart = _context.ShoppingCarts.FirstOrDefault(sc => sc.UserId == userGuid);
 
                     if (shoppingCart is null)
                     {
@@ -114,7 +130,6 @@ namespace BallsRUs.Controllers
                         {
                             Id = Guid.NewGuid(),
                             ProductsQuantity = 0,
-                            SubTotal = 0,
                             CreationDate = DateTime.Now,
                             UserId = userGuid
                         };
@@ -144,7 +159,6 @@ namespace BallsRUs.Controllers
                     {
                         Id = Guid.NewGuid(),
                         ProductsQuantity = 0,
-                        SubTotal = 0,
                         CreationDate = DateTime.Now
                     };
 

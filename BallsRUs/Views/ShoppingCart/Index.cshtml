@@ -1,12 +1,69 @@
-﻿@{
+﻿@using BallsRUs.Models.ShoppingCart;
+
+@model ShoppingCartListVM
+
+@{
     ViewData["Title"] = "Panier";
 }
 
-<div id="shopping-cart-index-container" class="row mx-0">
-    <div class="w-100 justify-content-center">
-        <h3 id="shopping-cart-index-title">Votre panier</h3>
-    </div>
-    <div id="shopping-cart-items-list">
+<div id="shopping-cart-index-container" class="row justify-content-center mx-0">
+    <div class="row">
+        <div id="shopping-cart-index-products-container" class="col-12 col-lg-8">
+            <div class="row">
+                <h3 class="shopping-cart-index-title col-12">Votre panier</h3>
+            </div>
+            <div class="row justify-content-center">
+                @if (Model.Items is not null && Model.Items.Count > 0)
+                {
+                    @foreach (var item in Model.Items)
+                    {
+                        <div class="shopping-cart-index-products-card row">
+                            <div class="col-3">
+                                <a asp-controller="Product" asp-action="Details" asp-route-productId="@item.ProductId">
+                                    <img id="shopping-cart-index-products-card-image" title="@Html.Raw(item.Name)" src="@Url.Content(item.ImagePath)" />
+                                </a>
+                            </div>
+                            <div class="col-9 py-3 d-grid">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <h6>@item.Name</h6>
+                                    </div>
+                                    <div class="col-4 justify-content-end d-flex">
+                                        @if (item.ItemTotalRetailPrice is not null)
+                                        {
+                                            <h6>@item.ItemTotalDiscountedPrice <span class="shopping-cart-index-products-card-price-discounted">@item.ItemTotalRetailPrice</span></h6>
+                                        }
+                                        else
+                                        {
+                                            <h6>@item.ItemTotalRetailPrice</h6>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end align-self-end">
+                                    <div class="col-9">
+                                        <a asp-controller="ShoppingCart" asp-action="RemoveProductFromCart" asp-route-id="@item.Id" class="shopping-cart-index-products-card-action-link">Retirer le produit</a>
+                                    </div>
+                                    <div class="col-3 justify-content-end d-flex">
+                                        <h6>@item.Quantity</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="shopping-cart-index-empty-text">
+                        Le panier est vide. Vous pouvez consulter les produits dans le <a class="" asp-controller="Product" asp-action="Catalog">catalogue</a>.
+                    </p>
+                }
+            </div>
+        </div>
+        <div id="shopping-cart-index-summary-container" class="col-12 col-lg-4">
+            <h3 class="shopping-cart-index-title">Sommaire</h3>
+            <div id="shopping-cart-index-summary-card">
 
+            </div>
+        </div>
     </div>
 </div>
