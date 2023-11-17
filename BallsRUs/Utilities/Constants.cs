@@ -4,6 +4,7 @@
     {
         // Shopping Cart
         public const decimal TAXES_PERCENTAGE = 0.14975m;
+        public const decimal ESTIMATED_SHIPPING_COST = 9.99m;
         public const string SHOPPING_CART_SESSION_KEY = "ShoppingCartId";
 
         // Nombre d'occurences

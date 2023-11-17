@@ -8,10 +8,6 @@ namespace BallsRUs.Entities
     {
         public Guid Id { get; set; }
         public int ProductsQuantity { get; set; }
-        public decimal ShippingCost { get; set; }
-        public decimal SubTotal { get; set; }
-        public decimal Taxes { get => SubTotal * Constants.TAXES_PERCENTAGE; }
-        public decimal Total { get => SubTotal + Taxes; }
         public DateTime CreationDate { get; set; }
         public DateTime? ModificationDate { get; set; }
 

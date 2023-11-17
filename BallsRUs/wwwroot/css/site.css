@@ -881,10 +881,57 @@ input[type=text], input[type=password], input[type=number], textarea {
     color: forestgreen;
 }
 
-#shopping-cart-index-title {
+.shopping-cart-index-title {
     font-weight: bold;
-    width: fit-content;
+    width: 100%;
     margin-top: 50px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: 50px;
+}
+
+.shopping-cart-index-products-card {
+    height: min(max(9.115vw, 100px), 175px);
+    width: 95%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+#shopping-cart-index-products-card-image {
+    width: auto;
+    height: max(9.115vw, 100px);
+}
+
+.shopping-cart-index-empty-text {
+    width: fit-content;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    justify-self: center;
+}
+
+.shopping-cart-index-empty-text a {
+    color: forestgreen;
+    text-decoration: none;
+}
+    .shopping-cart-index-empty-text a:hover {
+        text-decoration: underline;
+    }
+
+.shopping-cart-index-products-card-action-link {
+    text-decoration: none;
+    color: dimgrey;
+    font-style: italic;
+}
+    .shopping-cart-index-products-card-action-link:hover {
+        text-decoration: underline;
+        color: dimgrey;
+    }
+
+.shopping-cart-index-products-card-price-discounted {
+    color: #bd0b11;
+    text-decoration: line-through;
+}
+
+#shopping-cart-index-summary-card {
+    height: 400px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
