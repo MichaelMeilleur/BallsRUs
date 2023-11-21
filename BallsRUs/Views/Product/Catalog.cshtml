@@ -97,12 +97,14 @@
                 </div>
                 <input id="product-index-filter-apply-button" asp-route-category="@ViewBag.Category" asp-route-search="@ViewBag.Search"
                        asp-route-sorting="@ViewBag.SortingType" asp-route-discounted="@ViewBag.FilterDiscounted"
+                       asp-route-brands="@ViewBag.brandsSelectedCheckedBoxStringConcat"
                        asp-route-rangeprice="@ViewBag.PriceRange" asp-route-selectAllBrands="@ViewBag.selectAllBrands" type="submit" value="Appliquer" class="mb-4" />
             </div>
         </form>
     </div>
     <div class="col-12 col-md-9">
         <vc:product-list category="@ViewBag.Category" search="@ViewBag.Search"
+                         sorting-type="@ViewBag.SortingType"
                          price-high-to-low="@ViewBag.HighToLow" price-low-to-high="@ViewBag.LowToHigh"
                          brand-alphabetical="@ViewBag.BrandAlphabetical" new-to-old="@ViewBag.NewToOld"
                          discounted="@ViewBag.FilterDiscounted" checked-box-brand-filter-vc="checkedBoxBrandFilter"

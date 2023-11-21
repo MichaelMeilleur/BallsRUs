@@ -47,6 +47,7 @@ namespace BallsRUs.Controllers
             {
                 checkedBoxBrandFilter = ParseBrandFilter(brands);
                 ViewBag.checkedBoxBrandFilter = checkedBoxBrandFilter;
+                ViewBag.brandsSelectedCheckedBoxStringConcat = brands;
             }
             else
             {
@@ -62,6 +63,13 @@ namespace BallsRUs.Controllers
                     }
                 }
                 ViewBag.checkedBoxBrandFilter = checkedBoxBrandFilter;
+
+                string brandsSelectedCheckedBoxStringConcat = "";
+                foreach(var brand in checkedBoxBrandFilter)
+                {
+                    brandsSelectedCheckedBoxStringConcat += brand.Key.ToString() + ",";
+                }
+                ViewBag.brandsSelectedCheckedBoxStringConcat = brandsSelectedCheckedBoxStringConcat;
             }
 
             //Selection toutes les marques bouton
