@@ -93,6 +93,8 @@ namespace BallsRUs.Controllers
                 ViewBag.maxValue = 2000;
             }
 
+            ViewBag.PriceRange = ViewBag.minValue + "$ - " + ViewBag.maxValue + "$";
+
             return View();
         }
 

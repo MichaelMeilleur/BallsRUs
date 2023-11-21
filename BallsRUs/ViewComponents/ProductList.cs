@@ -94,8 +94,17 @@ namespace BallsRUs.ViewComponents
             // Filtrer les prix
             if(minValue is not null && minValue >= 0 && maxValue is not null && maxValue >= 0)
             {
-                products = products.Where(x => (x.RetailPrice >= minValue && x.RetailPrice <= maxValue) || 
-                                   (x.DiscountedPrice != null && x.DiscountedPrice >= minValue && x.DiscountedPrice <= maxValue));
+                //Filter produits avec discount
+                IQueryable<Product> productsDiscounted;
+                productsDiscounted = products.Where((p => p.DiscountedPrice.HasValue && p.DiscountedPrice >= minValue && p.DiscountedPrice <= maxValue));
+
+                //Filter produits sans discount
+                IQueryable<Product> productsWithoutDiscounted;
+                productsWithoutDiscounted = products.Where((p => p.DiscountedPrice == null && p.RetailPrice >= minValue && p.RetailPrice <= maxValue));
+
+                IQueryable<Product> mergedProductsRangePrice = productsDiscounted.Union(productsWithoutDiscounted);
+
+                products = mergedProductsRangePrice;
             }
 
             // Trier les produits

@@ -11,6 +11,7 @@
     int minValue = ViewBag.minValue;
     int maxValue = ViewBag.maxValue;
     bool selectAllBrands = ViewBag.SelectAllBrands;
+    string priceRange = ViewBag.PriceRange;
 }
 
 
@@ -67,7 +68,7 @@
                         <input id="product-index-filter-brands-checkall-checkbox-container" name="selectAllBrands" type="checkbox" style="font-size:14px"
                                @if (selectAllBrands == true)
                                {
-                                @Html.Raw("checked")
+                               @Html.Raw("checked")
                                }> Sélectionner toutes les marques
                         <input type="hidden" name="selectAllBrands" value="false" />
                         <p></p>
@@ -95,7 +96,8 @@
 
                 </div>
                 <input id="product-index-filter-apply-button" asp-route-category="@ViewBag.Category" asp-route-search="@ViewBag.Search"
-                       asp-route-sorting="@ViewBag.SortingType" asp-route-discounted="@ViewBag.FilterDiscounted" type="submit" value="Appliquer" class="mb-4" />
+                       asp-route-sorting="@ViewBag.SortingType" asp-route-discounted="@ViewBag.FilterDiscounted"
+                       asp-route-rangeprice="@ViewBag.PriceRange" asp-route-selectAllBrands="@ViewBag.selectAllBrands" type="submit" value="Appliquer" class="mb-4" />
             </div>
         </form>
     </div>
@@ -191,32 +193,32 @@
                 var countCheckBox = 0;
 
                 brandCheckboxes.forEach(function (checkbox) {
-                    if (checkbox.checked) {
+                if (checkbox.checked) {
 
-                        // Ajoutez la marque à la liste des marques sélectionnées
-                        selectedBrands.push(checkbox.name.split('[')[1].split(']')[0]);
-                        countCheckBox += 1;
-                    }
-                    else {
-                        var selectAllBrandsCheckbox = document.getElementById('product-index-filter-brands-checkall-checkbox-container');
-                        selectAllBrandsCheckbox.checked = false;
-                    }
+                    // Ajoutez la marque à la liste des marques sélectionnées
+                    selectedBrands.push(checkbox.name.split('[')[1].split(']')[0]);
+                    countCheckBox += 1;
+                }
+                else {
+                    var selectAllBrandsCheckbox = document.getElementById('product-index-filter-brands-checkall-checkbox-container');
+                    selectAllBrandsCheckbox.checked = false;
+                }
                 });
+
                 if (brandCheckboxes.length == countCheckBox) {
                     var selectAllBrandsCheckbox = document.getElementById('product-index-filter-brands-checkall-checkbox-container');
                     selectAllBrandsCheckbox.checked = true;
                 }
 
-                // Construisez l'URL avec les marques sélectionnées
-                var url = window.location.href.split('?')[0]; // URL de base sans les paramètres
+                var brandsParam = "brands=" + selectedBrands.join(',');
+
+                // Remplacez l'ancien paramètre 'brands' dans formAction par le nouveau
+                formAction = formAction.replace(/(\?|&)brands=[^&]*/, '');
+
                 if (selectedBrands.length > 0) {
-                    // Utilisez '?brands=' pour le premier paramètre et '&brands=' pour les suivants
-                    formAction = url + (url.includes('?') ? '&brands=' : '?brands=') + selectedBrands.join(',');
-                } else {
-                    formAction = url;  // Pas de marques sélectionnées, utilisez l'URL de base
+                    formAction += "&" + brandsParam;
                 }
 
-                console.log(formAction);
                 btnAppliquer.setAttribute("formaction", formAction);
             }
 
@@ -232,17 +234,24 @@
                 values: [@minValue, @maxValue],
                 slide: function (event, ui) {
                     $("#product-index-filter-price-input").val(ui.values[0] + "$ - " + ui.values[1] + "$");
+                    
                 },
-                change: function(event, ui) {
-
-                    // Ajoutez votre logique pour mettre à jour l'URL ou effectuer d'autres actions en fonction du changement de valeur du slider.
+                change: function (event, ui) {
+                    
                     var formattedValue = ui.values[0] + "$ - " + ui.values[1] + "$";
 
-                    var url = window.location.href.split('?')[0];
-                    formAction = url + (url.includes('?') ? '&rangePrice=' : '?rangePrice=') + formattedValue;
+                    if (formAction.indexOf("rangePrice=") === -1) 
+                    {
+                        formAction = formAction.replace(/(?:\?|&)rangePrice=[^&]+/i, ("&rangePrice=" + formattedValue));
+                    } 
+                    else 
+                    {
+                        formAction = formAction.replace(/(?:\?|&)rangePrice=[^&]+/i, "&rangePrice=" + formattedValue);
+                    }
                     btnAppliquer.setAttribute("formaction", formAction);
                 }
             });
+            
 
             $("#product-index-filter-price-input").val($("#product-index-filter-price-slider").slider("values", 0) + "$ - " + $("#product-index-filter-price-slider").slider("values", 1) + "$");
         });
@@ -258,7 +267,7 @@
 
             var selectAllBrandsCheckbox = document.getElementById('product-index-filter-brands-checkall-checkbox-container');
             var brandCheckboxes = document.querySelectorAll('.product-index-filter-brand-Checkbox');
-
+            
             selectAllBrandsCheckbox.addEventListener('change', function () {
                 var isChecked = selectAllBrandsCheckbox.checked;
 
@@ -267,14 +276,37 @@
                     checkbox.checked = isChecked;
                 });
 
-                var url = window.location.href.split('?')[0];
-                if (selectAllBrandsCheckbox.checked) 
+                if(isChecked)
                 {
-                    formAction = url + (url.includes('?') ? '&selectAllBrands=' : '?selectAllBrands=') + 'True';
-                } 
+                    var selectedBrands = [];
+
+                    brandCheckboxes.forEach(function (checkbox) {
+                        if (checkbox.checked) {
+
+                            // Ajoutez la marque à la liste des marques sélectionnées
+                            selectedBrands.push(checkbox.name.split('[')[1].split(']')[0]);
+                        }
+                    });
+
+                    var brandsParam = "brands=" + selectedBrands.join(',');
+
+                    // Remplacez l'ancien paramètre 'brands' dans formAction par le nouveau
+                    formAction = formAction.replace(/(\?|&)brands=[^&]*/, '');
+
+                    if (selectedBrands.length > 0) {
+                        formAction += "&" + brandsParam;
+                    }
+                }
                 else
                 {
-                    formAction = url + (url.includes('?') ? '&selectAllBrands=' : '?selectAllBrands=') + 'False';
+                    formAction = formAction.replace(/(\?|&)brands=[^&]*/, '');
+                }
+
+                if (selectAllBrandsCheckbox.checked) {
+                    formAction = formAction.replace("selectAllBrands=False", "selectAllBrands=True");
+                }
+                else {
+                    formAction = formAction.replace("selectAllBrands=True", "selectAllBrands=False");
                 }
 
                 btnAppliquer.setAttribute("formaction", formAction);
