@@ -47,13 +47,13 @@
                             <div class="d-flex align-items-center">
                                 <p class="header-nomuser-paragraphe mb-0 ml-2">Bonjour @User.Identity.Name</p>
                                 <img style="margin-right:10px" class="header-icon" src="~/img/user.svg" />
-                                <a class="header-icon-link" asp-controller="ShoppingCart"><img class="header-icon" src="~/img/shopping-cart.svg" /></a>
+                                <a class="header-icon-link" asp-controller="ShoppingCart" asp-action="Index"><img class="header-icon" src="~/img/shopping-cart.svg" /></a>
                             </div>
                         }
                         else
                         {
                             <a class="header-icon-link" asp-controller="Account" asp-action="LogIn"><img class="header-icon" src="~/img/user.svg" /></a>
-                            <a class="header-icon-link" asp-controller="ShoppingCart"><img class="header-icon" src="~/img/shopping-cart.svg" /></a>
+                            <a class="header-icon-link" asp-controller="ShoppingCart" asp-action="Index"><img class="header-icon" src="~/img/shopping-cart.svg" /></a>
                         }
                     </div>
                     <div id="header-hamburger-menu-container" class="col-12">

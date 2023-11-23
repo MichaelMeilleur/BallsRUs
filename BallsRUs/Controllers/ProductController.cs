@@ -51,6 +51,7 @@ namespace BallsRUs.Controllers
 
             var vm = new ProductDetailsVM()
             {
+                Id = productToShow.Id,
                 SKU = productToShow.SKU,
                 Name = productToShow.Name,
                 Brand = productToShow.Brand,

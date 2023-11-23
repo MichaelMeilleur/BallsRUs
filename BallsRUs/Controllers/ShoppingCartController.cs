@@ -122,7 +122,6 @@ namespace BallsRUs.Controllers
             else
             {
                 TempData["PassErrorToShoppingCart"] = "Le produit n'est actuellement pas disponible.";
-                return RedirectToAction(nameof(Index));
             }
 
             return RedirectToAction(nameof(Index));
@@ -137,21 +136,28 @@ namespace BallsRUs.Controllers
             if (item is null)
                 throw new ArgumentOutOfRangeException(nameof(itemId));
 
-            ShoppingCart? shoppingCart = _context.ShoppingCarts.Find(scId);
+            if (item.ShoppingCartId == scId)
+            {
+                ShoppingCart? shoppingCart = _context.ShoppingCarts.Find(scId);
 
-            if (shoppingCart is null)
-                throw new Exception("The shopping cart is not valid.");
+                if (shoppingCart is null)
+                    throw new Exception("The shopping cart is not valid.");
 
-            Product? product = _context.Products.Find(item.ProductId);
+                Product? product = _context.Products.Find(item.ProductId);
 
-            if (product is null)
-                throw new Exception("The product is not valid.");
+                if (product is null)
+                    throw new Exception("The product is not valid.");
 
-            product.Quantity += item.Quantity;
-            shoppingCart.ProductsQuantity -= item.Quantity;
+                product.Quantity += item.Quantity;
+                shoppingCart.ProductsQuantity -= item.Quantity;
 
-            _context.ShoppingCartItems.Remove(item);
-            _context.SaveChanges();
+                _context.ShoppingCartItems.Remove(item);
+                _context.SaveChanges();
+            }
+            else
+            {
+                TempData["PassErrorToShoppingCart"] = "L'item ne fait pas partie de votre panier d'achat.";
+            }
 
             return RedirectToAction(nameof(Index));
         }
