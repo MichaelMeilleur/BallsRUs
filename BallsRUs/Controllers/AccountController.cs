@@ -92,11 +92,11 @@ namespace BallsRUs.Controllers
                 {
                     var address = new Address()
                     {
-                        StateProvince = vm.StateProvince,
-                        Street = vm.Street,
-                        City = vm.City,
-                        Country = vm.Country,
-                        PostalCode = vm.PostalCode,
+                        StateProvince = vm.StateProvince!,
+                        Street = vm.Street!,
+                        City = vm.City!,
+                        Country = vm.Country!,
+                        PostalCode = vm.PostalCode!,
                         UserId = newUser.Id
                     };
                     _context.Addresses.Add(address);
