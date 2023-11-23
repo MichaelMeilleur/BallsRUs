@@ -11,9 +11,11 @@ namespace BallsRUs.Entities
         public string Country { get; set; }
         public string StateProvince { get; set; }
 
-        public Guid UserId { get; set; }
+        // Foreign keys
+        public Guid? UserId { get; set; }
 
+        // Navigation properties
         [ForeignKey(nameof(UserId))]
-        public virtual User user { get; set; }
+        public virtual User? User { get; set; }
     }
 }

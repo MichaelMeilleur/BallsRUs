@@ -9,6 +9,8 @@ namespace BallsRUs.Entities
 
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
+
+        // Navigation properties
         public virtual Address? Address { get; set; }
     }
 }
