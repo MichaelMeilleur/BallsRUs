@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="row justify-content-end align-self-end">
                                     <div class="col-9">
-                                        <a asp-controller="ShoppingCart" asp-action="RemoveProductFromCart" asp-route-id="@item.Id" class="shopping-cart-index-products-card-action-link">Retirer le produit</a>
+                                        <a asp-controller="ShoppingCart" asp-action="RemoveProductFromCart" asp-route-itemId="@item.Id" class="shopping-cart-index-products-card-action-link">Retirer le produit</a>
                                     </div>
                                     <div class="col-3 justify-content-end d-flex">
                                         <h6>@item.Quantity</h6>
