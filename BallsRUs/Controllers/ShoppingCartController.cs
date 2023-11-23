@@ -21,6 +21,11 @@ namespace BallsRUs.Controllers
         {
             Guid scId = GetShoppingCartId();
 
+            var errorPassedToShoppingCart = TempData["PassErrorToShoppingCart"];
+
+            if (errorPassedToShoppingCart is not null)
+                ModelState.AddModelError(string.Empty, errorPassedToShoppingCart.ToString()!);
+
             ShoppingCart? shoppingCart = _context.ShoppingCarts.FirstOrDefault(sc => sc.Id == scId);
 
             if (shoppingCart is null)
@@ -63,7 +68,7 @@ namespace BallsRUs.Controllers
                 Quantity = quantity,
                 ShippingCost = Constants.ESTIMATED_SHIPPING_COST,
                 ProductsCost = productsCost,
-                Items = productsVM 
+                Items = productsVM
             };
 
             return View(vm);
@@ -78,35 +83,75 @@ namespace BallsRUs.Controllers
             if (product is null)
                 throw new ArgumentOutOfRangeException(nameof(productId));
 
+            if (product.Quantity > 0)
+            {
+                ShoppingCart? shoppingCart = _context.ShoppingCarts.Find(scId);
+
+                if (shoppingCart is null)
+                    throw new Exception("The shopping cart is not valid.");
+
+                ShoppingCartItem? item = _context.ShoppingCartItems.FirstOrDefault(i => i.ShoppingCartId == scId && i.ProductId == product.Id);
+
+                if (item is null)
+                {
+                    ShoppingCartItem cartItem = new ShoppingCartItem
+                    {
+                        Quantity = 1,
+                        CreationDate = DateTime.Now,
+                        ShoppingCartId = scId,
+                        ProductId = product.Id
+                    };
+
+                    shoppingCart.ProductsQuantity++;
+
+                    product.Quantity--;
+
+                    _context.ShoppingCartItems.Add(cartItem);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    shoppingCart.ProductsQuantity++;
+                    item.Quantity++;
+
+                    product.Quantity--;
+
+                    _context.SaveChanges();
+                }
+            }
+            else
+            {
+                TempData["PassErrorToShoppingCart"] = "Le produit n'est actuellement pas disponible.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult RemoveProductFromCart(Guid itemId)
+        {
+            Guid scId = GetShoppingCartId();
+
+            ShoppingCartItem? item = _context.ShoppingCartItems.Find(itemId);
+
+            if (item is null)
+                throw new ArgumentOutOfRangeException(nameof(itemId));
+
             ShoppingCart? shoppingCart = _context.ShoppingCarts.Find(scId);
 
             if (shoppingCart is null)
                 throw new Exception("The shopping cart is not valid.");
 
-            ShoppingCartItem? item = _context.ShoppingCartItems.FirstOrDefault(i => i.ShoppingCartId == scId && i.ProductId == product.Id);
+            Product? product = _context.Products.Find(item.ProductId);
 
-            if (item is null)
-            {
-                ShoppingCartItem cartItem = new ShoppingCartItem
-                {
-                    Quantity = 1,
-                    CreationDate = DateTime.Now,
-                    ShoppingCartId = scId,
-                    ProductId = product.Id
-                };
+            if (product is null)
+                throw new Exception("The product is not valid.");
 
-                shoppingCart.ProductsQuantity++;
+            product.Quantity += item.Quantity;
+            shoppingCart.ProductsQuantity -= item.Quantity;
 
-                _context.ShoppingCartItems.Add(cartItem);
-                _context.SaveChanges();
-            }
-            else
-            {
-                shoppingCart.ProductsQuantity++;
-                item.Quantity++;
-
-                _context.SaveChanges();
-            }
+            _context.ShoppingCartItems.Remove(item);
+            _context.SaveChanges();
 
             return RedirectToAction(nameof(Index));
         }
