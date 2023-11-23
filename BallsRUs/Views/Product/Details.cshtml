@@ -31,7 +31,18 @@
             {
                 <p id="product-details-specs-low-stock-text">Actuellement indisponible.</p>
             }
-            <input id="product-details-specs-button" type="submit" value="Ajouter au panier" />
+            @if (Model.Quantity > 0)
+            {
+                <a id="product-details-add-cart-button" asp-controller="ShoppingCart" asp-action="AddProductToCart" asp-route-productId="@Model.Id">
+                    <span class="m-auto">Ajouter au panier</span>
+                </a>
+            }
+            else
+            {
+                <a id="product-details-add-cart-button-unavailable">
+                    <span class="m-auto">Ajouter au panier</span>
+                </a>
+            }
         </div>
     </div>
     <div id="product-details-info-container" class="row border">

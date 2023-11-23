@@ -5,6 +5,9 @@ namespace BallsRUs.Models.Product
 {
     public class ProductDetailsVM
     {
+        [Display(Name = "Id")]
+        public Guid? Id { get; set; }
+
         [Display(Name = "SKU")]
         public string? SKU { get; set; }
 

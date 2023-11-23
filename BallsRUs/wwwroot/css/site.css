@@ -747,9 +747,33 @@ input[type=text], input[type=password], input[type=number], textarea {
     color: #bd0b11;
 }
 
-#product-details-specs-button {
+#product-details-add-cart-button {
     margin-top: 40px;
-    display: initial;
+    display: flex;
+    background-color: forestgreen;
+    border: none;
+    color: white;
+    width: 200px;
+    height: 35px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+    #product-details-add-cart-button:hover {
+        text-decoration: none;
+        filter: brightness(1.10);
+    }
+
+#product-details-add-cart-button-unavailable {
+    margin-top: 40px;
+    display: flex;
+    background-color: darkgrey;
+    border: none;
+    color: white;
+    width: 200px;
+    height: 35px;
+    padding-left: 15px;
+    padding-right: 15px;
+    pointer-events: none;
 }
 
 #product-details-info-container {
@@ -799,7 +823,7 @@ input[type=text], input[type=password], input[type=number], textarea {
 }
 
 .vc-product-list-product-container:hover {
-    transform: scale(1.1);
+    transform: scale(1.03);
 }
 
 .vc-product-list-product-link {
@@ -913,6 +937,7 @@ input[type=text], input[type=password], input[type=number], textarea {
     text-decoration: none;
 }
     .shopping-cart-index-empty-text a:hover {
+        color: forestgreen;
         text-decoration: underline;
     }
 
