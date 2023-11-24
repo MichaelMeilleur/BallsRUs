@@ -7,6 +7,18 @@
 }
 
 <div id="product-details-container">
+    @if (ViewBag.IsMessage)
+    {
+        <div id="product-details-custom-message-summary">
+            <div asp-validation-summary="ModelOnly" class=""></div>
+        </div>
+    }
+    else
+    {
+        <div id="product-details-custom-validation-summary">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        </div>
+    }
     <div id="product-details-specs-container" class="row pb-5">
         <div class="col-12 col-sm-7 justify-content-center">
             <img id="product-details-specs-image" title="@Html.Raw(Model.Brand) @Html.Raw(Model.Model)" src="@Url.Content(Model.ImagePath)" />

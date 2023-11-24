@@ -704,6 +704,29 @@ input[type=text], input[type=password], input[type=number], textarea {
     margin-bottom: 100px;
 }
 
+#product-details-custom-message-summary ul {
+    margin-top: 0;
+    margin-bottom: 30px;
+    list-style-type: none;
+    padding: 15px;
+    text-align: left;
+    font-size: 14px;
+    color: black;
+    background-color: #dcffdc;
+    border: 1px solid #b3ffb3;
+}
+
+#product-details-custom-validation-summary ul {
+    margin-top: 30px;
+    list-style-type: none;
+    padding: 15px;
+    text-align: left;
+    font-size: 14px;
+    color: black;
+    background-color: #ffe3e0;
+    border: 1px solid #ffcdcc;
+}
+
 #product-details-specs-container {
     margin-bottom: 30px;
 }

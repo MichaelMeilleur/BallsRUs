@@ -42,6 +42,20 @@ namespace BallsRUs.Controllers
 
         public IActionResult Details(Guid productId)
         {
+            var messagePassedToPage = TempData["PassMessageToProductDetails"];
+            var errorPassedToPage = TempData["PassErrorToProductDetails"];
+            ViewBag.IsMessage = false;
+
+            if (messagePassedToPage is not null)
+            {
+                ModelState.AddModelError(string.Empty, messagePassedToPage.ToString()!);
+                ViewBag.isMessage = true;
+            }
+            else if (errorPassedToPage is not null)
+            {
+                ModelState.AddModelError(string.Empty, errorPassedToPage.ToString()!);
+            }
+
             var productToShow = _context.Products.Find(productId);
 
             if (productToShow is null)
