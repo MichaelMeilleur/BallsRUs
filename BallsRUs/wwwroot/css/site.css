@@ -956,6 +956,12 @@ input[type=text], input[type=password], input[type=number], textarea {
     text-decoration: line-through;
 }
 
+.shopping-cart-index-products-quantity-icon {
+    width: 16px;
+    height: 16px;
+    margin-bottom: 6px;
+}
+
 #shopping-cart-index-summary-card {
     height: 400px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);

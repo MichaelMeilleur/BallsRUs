@@ -162,6 +162,94 @@ namespace BallsRUs.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult IncrementItem(Guid itemId)
+        {
+            Guid scId = GetShoppingCartId();
+
+            ShoppingCartItem? item = _context.ShoppingCartItems.Find(itemId);
+
+            if (item is null)
+                throw new ArgumentOutOfRangeException(nameof(itemId));
+
+            if (item.ShoppingCartId == scId)
+            {
+                ShoppingCart? shoppingCart = _context.ShoppingCarts.Find(scId);
+
+                if (shoppingCart is null)
+                    throw new Exception("The shopping cart is not valid.");
+
+                Product? product = _context.Products.Find(item.ProductId);
+
+                if (product is null)
+                    throw new Exception("The product is not valid.");
+
+                if (product.Quantity > 0)
+                {
+                    product.Quantity--;
+                    item.Quantity++;
+                    shoppingCart.ProductsQuantity++;
+
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    TempData["PassErrorToShoppingCart"] = "Ce produit n'est plus en réserve. Votre panier contient déjà les derniers items de ce produit.";
+                }
+            }
+            else
+            {
+                TempData["PassErrorToShoppingCart"] = "L'item ne fait pas partie de votre panier d'achat.";
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult DecrementItem(Guid itemId)
+        {
+            Guid scId = GetShoppingCartId();
+
+            ShoppingCartItem? item = _context.ShoppingCartItems.Find(itemId);
+
+            if (item is null)
+                throw new ArgumentOutOfRangeException(nameof(itemId));
+
+            if (item.ShoppingCartId == scId)
+            {
+                ShoppingCart? shoppingCart = _context.ShoppingCarts.Find(scId);
+
+                if (shoppingCart is null)
+                    throw new Exception("The shopping cart is not valid.");
+
+                Product? product = _context.Products.Find(item.ProductId);
+
+                if (product is null)
+                    throw new Exception("The product is not valid.");
+
+                if (item.Quantity > 1)
+                {
+                    product.Quantity++;
+                    item.Quantity--;
+                    shoppingCart.ProductsQuantity--;
+
+                    _context.SaveChanges();
+                }
+                else if (item.Quantity == 1)
+                {
+                    product.Quantity++;
+                    shoppingCart.ProductsQuantity--;
+
+                    _context.ShoppingCartItems.Remove(item);
+                    _context.SaveChanges();
+                }
+            }
+            else
+            {
+                TempData["PassErrorToShoppingCart"] = "L'item ne fait pas partie de votre panier d'achat.";
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
         private Guid GetShoppingCartId()
         {
             if (User.Identity!.IsAuthenticated)

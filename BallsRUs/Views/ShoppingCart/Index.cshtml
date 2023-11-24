@@ -51,7 +51,13 @@
                                         <a asp-controller="ShoppingCart" asp-action="RemoveProductFromCart" asp-route-itemId="@item.Id" class="shopping-cart-index-products-card-action-link">Retirer le produit</a>
                                     </div>
                                     <div class="col-3 justify-content-end d-flex">
-                                        <h6>@item.Quantity</h6>
+                                        <a asp-controller="ShoppingCart" asp-action="DecrementItem" asp-route-itemId="@item.Id">
+                                            <img src="~/img/moins.svg" class="shopping-cart-index-products-quantity-icon" />
+                                        </a>
+                                        <h6 class="mx-3">@item.Quantity</h6>
+                                        <a asp-controller="ShoppingCart" asp-action="IncrementItem" asp-route-itemId="@item.Id">
+                                            <img src="~/img/plus.svg" class="shopping-cart-index-products-quantity-icon" />
+                                        </a>
                                     </div>
                                 </div>
                             </div>
