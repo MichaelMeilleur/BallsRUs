@@ -995,3 +995,14 @@ input[type=text], input[type=password], input[type=number], textarea {
         text-decoration: none;
         filter: brightness(1.10);
     }
+
+#shopping-cart-custom-validation-summary ul {
+    margin-top: 30px;
+    list-style-type: none;
+    padding: 15px;
+    text-align: left;
+    font-size: 14px;
+    color: black;
+    background-color: #ffe3e0;
+    border: 1px solid #ffcdcc;
+}
