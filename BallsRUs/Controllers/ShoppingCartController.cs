@@ -118,13 +118,15 @@ namespace BallsRUs.Controllers
 
                     _context.SaveChanges();
                 }
+
+                TempData["PassMessageToProductDetails"] = "Le produit a été ajouté à votre panier.";
             }
             else
             {
-                TempData["PassErrorToShoppingCart"] = "Le produit n'est actuellement pas disponible.";
+                TempData["PassErrorToProductDetails"] = "Le produit n'est actuellement pas disponible.";
             }
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "Product", new { productId = productId });
         }
 
         public IActionResult RemoveProductFromCart(Guid itemId)
