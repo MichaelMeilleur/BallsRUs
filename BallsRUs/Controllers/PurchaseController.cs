@@ -1,4 +1,5 @@
 ﻿using BallsRUs.Entities;
+using BallsRUs.Models.Account;
 using BallsRUs.Models.Purchase;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -52,5 +53,7 @@ namespace BallsRUs.Controllers
             // Ajoutez une action pour afficher la confirmation de la commande
             return View();
         }
+
+       
     }
 }

@@ -32,7 +32,7 @@ namespace BallsRUs.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> LogIn(LogInVM vm)
+        public async Task<IActionResult> LogIn(LogInVM vm, bool purchaseOrder)
         {
             if (!ModelState.IsValid)
                 return View(vm);

@@ -3,10 +3,10 @@
 @model ConnexionPurchaseVM
 
 <div class="modal-body">
-    @if (Model.estConnecte == false)
-    {
-        <h2>Identifiez vous afin d'ajouter une commande</h2>
 
+    <h2>Identifiez vous afin d'ajouter une commande</h2>
+
+    <form asp-action="LogIn" asp-controller="Home" class="account-login-signin-form-popup" method="post">
         <div class="form-group">
             <input asp-for="NomUtilisateur" class="form-control" placeholder="Courriel" />
             <span asp-validation-for="NomUtilisateur" class="text-danger"></span>
@@ -18,9 +18,12 @@
         <div class="form-group mt-4 mb-1 text-start">
             <input type="submit" value="Se connecter" />
         </div>
-    }
-    else
-    {
-        <p>Bienvenue @Model.NomUtilisateur !</p>
-    }
+    </form>
+
+    <a href="@Url.Action("PurchaseUserInfo", "Purchase")">Créer un compte</a>
+
+    <div class="form-group mt-4 mb-1 text-start">
+        <span>ou</span>
+        <a href="@Url.Action("PurchaseUserInfo", "Purchase")">Continuer en tant qu'invité</a>
+    </div>
 </div>
