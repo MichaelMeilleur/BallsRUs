@@ -1,0 +1,18 @@
+﻿@using BallsRUs.Models.Purchase
+
+@model PurchaseUserInfoVM
+
+<h2>Ajouter la commande</h2>
+<h3>Saisir les informations</h3>
+
+<form asp-action="PurchaseUserInfo" method="post">
+    <!-- Ajoutez des champs d'entrée pour les propriétés du modèle PurchaseUserInfoVM -->
+    <div class="form-group">
+        <label asp-for="FirstName">Prénom</label>
+        <input asp-for="FirstName" class="form-control" />
+    </div>
+
+    <!-- Ajoutez d'autres champs ici -->
+
+    <button type="submit" class="btn btn-primary">Ajouter la commande</button>
+</form>
