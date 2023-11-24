@@ -66,7 +66,7 @@ namespace BallsRUs.Controllers
             ShoppingCartListVM vm = new ShoppingCartListVM
             {
                 Quantity = quantity,
-                ShippingCost = Constants.ESTIMATED_SHIPPING_COST,
+                ShippingCost = quantity > 0 ? Constants.ESTIMATED_SHIPPING_COST : 0m,
                 ProductsCost = productsCost,
                 Items = productsVM
             };
