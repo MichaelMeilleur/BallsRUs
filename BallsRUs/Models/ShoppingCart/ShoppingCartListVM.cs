@@ -1,4 +1,5 @@
 ﻿using BallsRUs.Utilities;
+using System.Globalization;
 
 namespace BallsRUs.Models.ShoppingCart
 {
@@ -9,7 +10,7 @@ namespace BallsRUs.Models.ShoppingCart
         public decimal? ShippingCost { get; set; }
         public decimal? SubTotal { get => ProductsCost + ShippingCost; }
         public decimal? Taxes { get => SubTotal * Constants.TAXES_PERCENTAGE; }
-        public decimal? Total { get => SubTotal + Taxes; }
+        public string? Total { get => string.Format(new CultureInfo("fr-CA"), "{0:C}", SubTotal + Taxes); }
         public List<ShoppingCartProductVM>? Items { get; set; }
     }
 }
