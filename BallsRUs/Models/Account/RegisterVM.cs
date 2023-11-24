@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.Metrics;
+using System.IO;
 using FluentValidation;
 
 namespace BallsRUs.Models.Account
@@ -16,6 +18,18 @@ namespace BallsRUs.Models.Account
 
         [DataType(DataType.Password)]
         public string? PasswordConfirmation { get; set; }
+
+        public string? Street { get; set; }
+
+        public string? City { get; set; }
+
+        public string? PostalCode { get; set; }
+
+        public string? Country { get; set; }
+
+        public string? StateProvince { get; set; }
+
+        public bool addAddress { get; set; }
     }
     public class RegisterVMValidator : AbstractValidator<RegisterVM>
     {
@@ -40,6 +54,29 @@ namespace BallsRUs.Models.Account
                     .WithMessage("Veuillez confirmer votre mot de passe.")
                 .Equal(vm => vm.Password)
                     .WithMessage("Le mot de passe et le mot de passe de confirmation de correspondent pas.");
+
+            When(vm => vm.addAddress, () =>
+            {
+                RuleFor(vm => vm.Street)
+                    .NotEmpty()
+                        .WithMessage("Veuillez entrer une rue.");
+
+                RuleFor(vm => vm.City)
+                    .NotEmpty()
+                        .WithMessage("Veuillez entrer une ville.");
+
+                RuleFor(vm => vm.PostalCode)
+                    .NotEmpty()
+                        .WithMessage("Veuillez entrer un code postal.");
+
+                RuleFor(vm => vm.Country)
+                    .NotEmpty()
+                        .WithMessage("Veuillez entrer un pays.");
+
+                RuleFor(vm => vm.StateProvince)
+                    .NotEmpty()
+                        .WithMessage("Veuillez entrer une province ou un état.");
+            });
         }
     }
 }

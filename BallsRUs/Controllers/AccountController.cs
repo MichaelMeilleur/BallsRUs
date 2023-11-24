@@ -88,6 +88,21 @@ namespace BallsRUs.Controllers
 
                 var result = await _userManager.CreateAsync(newUser, vm.Password!);
 
+                if (vm.addAddress)
+                {
+                    var address = new Address()
+                    {
+                        StateProvince = vm.StateProvince!,
+                        Street = vm.Street!,
+                        City = vm.City!,
+                        Country = vm.Country!,
+                        PostalCode = vm.PostalCode!,
+                        UserId = newUser.Id
+                    };
+                    _context.Addresses.Add(address);
+                    _context.SaveChanges();
+                }
+
                 if (!result.Succeeded)
                 {
                     ModelState.AddModelError(string.Empty, "Impossible de créer le compte. Veuillez réessayer.");
