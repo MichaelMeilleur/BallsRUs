@@ -5,7 +5,6 @@ using BallsRUs.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BallsRUs.Controllers
 {
@@ -38,13 +37,70 @@ namespace BallsRUs.Controllers
 
             try
             {
-                var result = await _signInManager.PasswordSignInAsync(
-                    vm.NomUtilisateur!, vm.MotDePasse!, false, false);
+                string? anonymUserShoppingCartId = HttpContext.Session.GetString(Constants.SHOPPING_CART_SESSION_KEY);
+                Guid? anonymUserShoppingCartGuid = null;
+
+                if (!string.IsNullOrWhiteSpace(anonymUserShoppingCartId))
+                {
+                    if (Guid.TryParse(anonymUserShoppingCartId, out Guid sessionShoppingCartGuid))
+                        anonymUserShoppingCartGuid = sessionShoppingCartGuid;
+                    else
+                        throw new Exception("The ID of the user isn't valid.");
+                }
+
+                var result = await _signInManager.PasswordSignInAsync(vm.NomUtilisateur!, vm.MotDePasse!, false, false);
 
                 if (!result.Succeeded)
                 {
                     ModelState.AddModelError(string.Empty, "Le nom d'utilisateur et le mot de passe ne correspondent pas. Veuillez réessayer");
                     return View(vm);
+                }
+
+                if (anonymUserShoppingCartGuid is not null)
+                {
+                    if (vm.NomUtilisateur is not null)
+                    {
+                        var user = await _userManager.FindByNameAsync(vm.NomUtilisateur);
+
+                        if (user is null)
+                            throw new Exception("The user was not found.");
+
+                        Guid userGuid = user.Id;
+
+                        ShoppingCart? accountShoppingCart = _context.ShoppingCarts.FirstOrDefault(sc => sc.UserId == userGuid);
+                        ShoppingCart? anonymUserShoppingCart = _context.ShoppingCarts.FirstOrDefault(sc => sc.Id == anonymUserShoppingCartGuid);
+
+                        if (anonymUserShoppingCart is not null)
+                        {
+                            if (accountShoppingCart is null)
+                            {
+                                anonymUserShoppingCart.UserId = userGuid;
+                                _context.SaveChanges();
+                            }
+                            else
+                            {
+                                if (accountShoppingCart.ProductsQuantity == 0)
+                                {
+                                    anonymUserShoppingCart.UserId = userGuid;
+                                    DeleteShoppingCart(accountShoppingCart.Id);
+                                }
+                                else
+                                {
+                                    DeleteShoppingCart(anonymUserShoppingCart.Id);
+                                }
+                            }
+
+                            HttpContext.Session.Remove(Constants.SHOPPING_CART_SESSION_KEY);
+                        }
+                        else
+                        {
+                            throw new Exception("The ID of the anonym user's shopping cart isn't valid.");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("The ID of the user isn't valid.");
+                    }
                 }
             }
             catch
@@ -133,6 +189,38 @@ namespace BallsRUs.Controllers
             await _signInManager.SignOutAsync();
 
             return RedirectToAction("Index", "Home");
+        }
+
+        private void DeleteShoppingCart(Guid shoppingCartId)
+        {
+            ShoppingCart? shoppingCart = _context.ShoppingCarts.Find(shoppingCartId);
+
+            if (shoppingCart is null)
+                throw new ArgumentOutOfRangeException(nameof(shoppingCartId));
+
+            if (shoppingCart.ProductsQuantity == 0)
+            {
+                _context.ShoppingCarts.Remove(shoppingCart);
+                _context.SaveChanges();
+            }
+            else
+            {
+                IEnumerable<ShoppingCartItem> items = _context.ShoppingCartItems.Where(i => i.ShoppingCartId == shoppingCartId);
+                foreach (ShoppingCartItem item in items)
+                {
+                    Product? product = _context.Products.Find(item.ProductId);
+
+                    if (product is null)
+                        throw new Exception("The product of the item wasn't found.");
+
+                    product.Quantity += item.Quantity;
+
+                    _context.ShoppingCartItems.Remove(item);
+                }
+
+                _context.ShoppingCarts.Remove(shoppingCart);
+                _context.SaveChanges();
+            }
         }
     }
 }
