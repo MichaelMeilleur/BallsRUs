@@ -24,5 +24,10 @@
         public const int PRODUCT_MIN_FULL_DESC_LENGTH = 100;
         public const int PRODUCT_MAX_FULL_DESC_LENGTH = 1200;
         public const string PRODUCT_SKU_REGEX = "^[A-Z]{3}\\d{4}[A-Z]{3}$";
+
+        // Roles
+        public const string ROLE_UTILISATEUR = "Utilisateur";
+        public const string ROLE_ADMIN = "Administrateur";
+
     }
 }

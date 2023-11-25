@@ -1,6 +1,7 @@
 ﻿using BallsRUs.Context;
 using BallsRUs.Entities;
 using BallsRUs.Models.Account;
+using BallsRUs.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,30 +9,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BallsRUs.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole<Guid>> _roleManager;
         private readonly ApplicationDbContext _context;
 
-        public AccountController(SignInManager<User> signInManager,
-           UserManager<User> userManager, RoleManager<IdentityRole<Guid>>
-           roleManager, ApplicationDbContext context)
+        public AccountController(SignInManager<User> signInManager, UserManager<User> userManager, ApplicationDbContext context)
         {
-            this._signInManager = signInManager;
-            this._userManager = userManager;
-            this._roleManager = roleManager;
-            this._context = context;
+            _signInManager = signInManager;
+            _userManager = userManager;
+            _context = context;
         }
 
-        public IActionResult LogIn(string? returnUrl = "")
+        [AllowAnonymous]
+        public IActionResult LogIn()
         {
-            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> LogIn(LogInVM vm)
         {
             if (!ModelState.IsValid)
@@ -57,12 +56,14 @@ namespace BallsRUs.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterVM vm)
         {
             if (!ModelState.IsValid)
@@ -109,7 +110,7 @@ namespace BallsRUs.Controllers
                     return View(vm);
                 }
 
-                result = await _userManager.AddToRoleAsync(newUser, "Utilisateur");
+                result = await _userManager.AddToRoleAsync(newUser, Constants.ROLE_UTILISATEUR);
 
                 if (!result.Succeeded)
                 {
@@ -130,6 +131,7 @@ namespace BallsRUs.Controllers
         public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();
+
             return RedirectToAction("Index", "Home");
         }
     }
