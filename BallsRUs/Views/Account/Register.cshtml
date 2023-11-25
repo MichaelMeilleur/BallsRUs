@@ -6,7 +6,7 @@
 
 <div class="text-center">
     <div class="account-register-container col-md-8">
-        <h3 id="account-register-title" class="display-4">Créer un compte</h3>
+        <h1 id="account-register-title">Créer un compte</h1>
         <div class="row" style="margin-top:60px">
             <form asp-action="Register" asp-route-returnUrl="@ViewBag.ReturnUrl" class="account-register-form">
                 <div class="col-12">
@@ -32,7 +32,7 @@
                         <span asp-validation-for="PasswordConfirmation" class="text-danger"></span>
                     </div>
                     <div id="addAddress" style="display:none">
-                        <h4 style="margin-top:45px">Adresse</h4>
+                        <h3 style="margin-top:45px; color: forestgreen;">Adresse</h3>
                         <div class="form-group mb-4">
                             <input asp-for="Street" class="form-control" placeholder="Numéro civique et rue" />
                             <span asp-validation-for="Street" class="text-danger"></span>

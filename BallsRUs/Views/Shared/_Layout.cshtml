@@ -44,11 +44,13 @@
                     <div id="header-icons-container-right" class="d-flex row col-4 col-sm-3">
                         @if (User?.Identity?.IsAuthenticated ?? false)
                         {
-                            <div class="d-flex align-items-center">
-                                <p class="header-nomuser-paragraphe mb-0 ml-2">Bonjour @User.Identity.Name</p>
-                                <img style="margin-right:10px" class="header-icon" src="~/img/user.svg" />
-                                <a class="header-icon-link" asp-controller="ShoppingCart" asp-action="Index"><img class="header-icon" src="~/img/shopping-cart.svg" /></a>
-                            </div>
+                            <form asp-action="LogOut" asp-controller="Account" id="header-logout-form" method="post">
+                                <button type="submit" id="header-icons-logout-button">
+                                    <img class="header-icon" src="~/img/logout.svg" />
+                                </button>
+                            </form>
+                            <a class="header-icon-link" asp-controller="Account" asp-action="Details"><img class="header-icon" src="~/img/user.svg" /></a>
+                            <a class="header-icon-link" asp-controller="ShoppingCart" asp-action="Index"><img class="header-icon" src="~/img/shopping-cart.svg" /></a>
                         }
                         else
                         {

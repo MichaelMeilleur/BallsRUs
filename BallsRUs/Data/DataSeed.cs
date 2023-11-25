@@ -1,4 +1,5 @@
 ﻿using BallsRUs.Entities;
+using BallsRUs.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -12,11 +13,11 @@ namespace BallsRUs.Data
         public static void Seed(this ModelBuilder builder)
         {
             // Ajouter les rôles de base
-            var adminRole = AddRole(builder, "Administrateur");
-            _ = AddRole(builder, "Utilisateur");
+            var adminRole = AddRole(builder, Constants.ROLE_ADMIN);
+            _ = AddRole(builder, Constants.ROLE_UTILISATEUR);
 
             // Ajouter l'utilisateur admin
-            var adminUser = AddUser(builder, "admin@ballsrus.ca", "Toto123!","Admin","Admin");
+            var adminUser = AddUser(builder, "admin@ballsrus.ca", "Toto123!", "Admin", "Admin");
             AddUserToRole(builder, adminUser, adminRole);
 
             // Ajouter les catégories de produits.
