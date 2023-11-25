@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace BallsRUs.Controllers
 {
@@ -133,6 +134,25 @@ namespace BallsRUs.Controllers
             await _signInManager.SignOutAsync();
 
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult Details()
+        {
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userIdString != null)
+            {
+                var userId = Guid.Parse(userIdString);
+                var userToShow = _context.Users.Find(userId);
+
+                var vm = new AccountDetailsVM()
+                {
+                    FirstName = userToShow.FirstName,
+                    LastName = userToShow.LastName,
+                    Email = userToShow.Email
+                };
+            return View(vm);
+            }
+            return View();
         }
     }
 }
