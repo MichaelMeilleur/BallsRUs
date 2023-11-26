@@ -4,84 +4,71 @@
     ViewData["Title"] = "Details";
 }
 
-
-<div>
+<div class="container">
     <h3 id="account-details-title">Mon compte</h3>
-</div>
-<div>
-    <div class="row" style="margin-top:30px">
-        <div class="col col-md-6">
-            <div class="row">
-                <div class="col">
-                    <h4>Informations</h4>
-                </div>
-                <div class="col">
-                    <a asp-controller="Account" asp-action="Editinfo">
-                        <button class="account-details-modifier-button">Modifier</button>
-                    </a>
-                </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="mb-4">
+                <h4>Informations</h4>
             </div>
-            <div class="col-12" style="text-align:Left">
-                <div class="mb-4">
-                    <p><strong>Nom : </strong>@Model.FirstName @Model.LastName</p>
-                </div>
-                <div class="mb-4">
-                    <p><strong>Courriel : </strong>@Model.Email</p>
-                </div>
-                <div class="mb-4">
-                    <p><strong>Numéro de téléphone : </strong>@Model.PhoneNumber</p>
-                </div>
+            <div class="mb-4">
+                <p><strong>Nom : </strong>@Model.FirstName @Model.LastName</p>
+            </div>
+            <div class="mb-4">
+                <p><strong>Courriel : </strong>@Model.Email</p>
+            </div>
+            <div class="mb-4">
+                <p><strong>Numéro de téléphone : </strong>@Model.PhoneNumber</p>
+            </div>
+            <div class="mb-4">
+                <a asp-controller="Account" asp-action="Editinfo">
+                    <button class="account-details-modifier-button">Modifier</button>
+                </a>
             </div>
         </div>
-        @if (Model.Address == null)
-        {
-            <div class="col col-md-6" style="text-align:left">
-                <h4 style="text-align:center">Adresse</h4>
-                <div class="col-12">
-                    <div class="mb-4">
-                        <p style="text-align:center">Aucune adresse</p>
-                    </div>
+
+        <div class="col-md-6">
+            @if (Model.Address == null)
+            {
+                <div class="mb-4">
+                    <h4>Adresse</h4>
+                    <p>Aucune adresse</p>
                 </div>
-                <div class="form-group mt-4 mb-1 text-start">
+                <div class="form-group mt-4 text-start">
                     <a asp-controller="Account" asp-action="AddAddress">
                         <button class="account-details-modifier-button">Ajouter une adresse</button>
                     </a>
                 </div>
-            </div>
-        }
-        else
-        {
-            <div class="col col-md-6">
-                <div class="row">
-                    <div class="col">
-                        <h4>Adresse</h4>
-                    </div>
-                    <div class="col">
-                        <a asp-controller="Account" asp-action="EditAddress">
-                            <button class="account-details-modifier-button">Modifier</button>
-                        </a>
-                    </div>
+            }
+            else
+            {
+                <div class="mb-4">
+                    <h4>Adresse</h4>
                 </div>
-                <div class="col-12">
-                    <div class="mb-4">
-                        <p>@Model.Address.Street</p>
-                    </div>
-                    <div class="mb-4">
-                        <p>@Model.Address.City, @Model.Address.StateProvince, (@Model.Address.Country)</p>
-                    </div>
-                    <div class="mb-4">
-                        <p>@Model.Address.PostalCode</p>
-                    </div>
+                <div class="mb-4">
+                    <p>@Model.Address.Street</p>
                 </div>
-            </div>
-        }
-        <div class="row" style="margin-top:60px">
-            <div class="col-9">
-                <h4 style="text-align:left">Mes commandes</h4>
-            </div>
-            <div class="col">
-                <button class="account-details-button btn-sm">Voir tout</button>
-            </div>
+                <div class="mb-4">
+                    <p>@Model.Address.City, @Model.Address.StateProvince, (@Model.Address.Country)</p>
+                </div>
+                <div class="mb-4">
+                    <p>@Model.Address.PostalCode</p>
+                </div>
+                <div class="mb-4">
+                    <a asp-controller="Account" asp-action="EditAddress">
+                        <button class="account-details-modifier-button">Modifier</button>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-9">
+            <h4>Mes commandes</h4>
+        </div>
+        <div class="col">
+            <button class="account-details-modifier-button btn-sm">Voir tout</button>
         </div>
     </div>
 </div>

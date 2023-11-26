@@ -6,6 +6,12 @@
 
 
 <h3 id="account-details-title">Modifier vos informations</h3>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
 <div class="row" style="margin-top:30px">
     <div style="text-align:center">
         <form asp-action="EditInfo" class="account-register-form">

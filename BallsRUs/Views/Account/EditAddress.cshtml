@@ -8,6 +8,12 @@
 <div>
     <h3 id="account-details-title">Modifier votre adresse</h3>
 </div>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
 <div>
     <div class="row" style="margin-top:30px">
         <div style="text-align:center">
