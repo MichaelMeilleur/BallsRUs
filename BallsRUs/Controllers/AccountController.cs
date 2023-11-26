@@ -30,7 +30,7 @@ namespace BallsRUs.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> LogIn(LogInVM vm)
+        public async Task<IActionResult> LogIn(LogInVM vm, bool redirectToCheckout)
         {
             if (!ModelState.IsValid)
                 return View(vm);
@@ -109,7 +109,10 @@ namespace BallsRUs.Controllers
                 return View(vm);
             }
 
-            return RedirectToAction("Index", "Home");
+            if (redirectToCheckout)
+                return RedirectToAction("Index", "ShoppingCart");
+            else
+                return RedirectToAction("Index", "Home");
         }
 
         [AllowAnonymous]
