@@ -30,6 +30,10 @@ namespace BallsRUs.Models.Account
                 .NotEmpty().WithMessage("Veuillez entrer un nom.")
                 .Must(BeValidLetters).WithMessage("Le nom ne doit contenir que des lettres.");
 
+            RuleFor(vm => vm.PhoneNumber)
+              .NotEmpty().WithMessage("Veuillez entrer un numéro.")
+              .Must(BeNumbers).WithMessage("Le numéro ne doit contenir que des chiffres.");
+
             When(vm => vm.Address != null, () =>
             {
                 RuleFor(vm => vm.Address.City)
@@ -57,6 +61,15 @@ namespace BallsRUs.Models.Account
                 return true;
             }
             return value.All(char.IsLetter);
+        }
+
+        private bool BeNumbers(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return true;
+            }
+            return value.All(char.IsNumber);
         }
     }
 }

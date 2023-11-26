@@ -221,6 +221,13 @@ namespace BallsRUs.Controllers
                     }
                 }
 
+                if (string.IsNullOrWhiteSpace(vm.FirstName) || string.IsNullOrWhiteSpace(vm.LastName) || string.IsNullOrWhiteSpace(vm.Email) || string.IsNullOrWhiteSpace(vm.PhoneNumber))
+                {
+                    TempData["SuccessMessage"] = null;
+                }
+                else
+                    TempData["SuccessMessage"] = "Sauvegarde réussie";
+
                 _context.SaveChanges();
                 return View(vm);
             }
@@ -325,11 +332,20 @@ namespace BallsRUs.Controllers
                     addressToChange.PostalCode = vm.Address.PostalCode;
                 }
 
+                if (string.IsNullOrWhiteSpace(vm.Address.Street) || string.IsNullOrWhiteSpace(vm.Address.City) || string.IsNullOrWhiteSpace(vm.Address.StateProvince)
+                    || string.IsNullOrWhiteSpace(vm.Address.Country) || string.IsNullOrWhiteSpace(vm.Address.PostalCode))
+                {
+                    TempData["SuccessMessage"] = null;
+                }
+                else
+                TempData["SuccessMessage"] = "Sauvegarde réussie";
+
                 _context.SaveChanges();
                 return View(vm);
             }
             catch
             {
+                TempData["SuccessMessage"] = null;
                 ModelState.AddModelError(string.Empty, "Une erreur est survenue. Veuillez réessayer.");
                 return View(vm);
             }
