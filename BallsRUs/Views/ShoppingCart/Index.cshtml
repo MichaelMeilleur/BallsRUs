@@ -1,4 +1,5 @@
-﻿@using BallsRUs.Models.ShoppingCart;
+﻿@using BallsRUs.Models.Account;
+@using BallsRUs.Models.ShoppingCart;
 @using System.Globalization;
 
 @model ShoppingCartListVM
@@ -100,11 +101,36 @@
                     <div class="col-6 justify-content-end d-flex"><span style="font-weight: bold; font-size: 20px;">@Model.Total</span></div>
                 </div>
                 <div class="justify-content-center align-self-end">
-                    <a id="shopping-cart-index-summary-checkout-button" asp-controller="" asp-action="">
-                        <span class="m-auto">Passer la commande</span>
-                    </a>
+                    @if (Model.Quantity > 0)
+                    {
+                        @if (User!.Identity!.IsAuthenticated)
+                        {
+                            <a id="shopping-cart-index-summary-checkout-button" asp-controller="" asp-action="">
+                                <span class="m-auto">Passer la commande</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a id="shopping-cart-index-summary-checkout-button" data-toggle="modal" data-target="#shopping-cart-checkout-method-modal" style="cursor: pointer">
+                                <span class="m-auto">Passer la commande</span>
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <a id="shopping-cart-index-summary-checkout-button-unavailable">
+                            <span class="m-auto">Passer la commande</span>
+                        </a>
+                    }
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@{
+    if (!User!.Identity!.IsAuthenticated)
+    {
+        Html.RenderPartial("_CheckoutMethodPartial", new LogInVM());
+    }
+}
