@@ -187,22 +187,22 @@ namespace BallsRUs.Controllers
                 var userId = Guid.Parse(userIdString);
                 var userToChange = _context.Users.Find(userId);
 
-                if (userToChange.FirstName != vm.FirstName && vm.FirstName != null)
+                if (userToChange.FirstName != vm.FirstName && !string.IsNullOrWhiteSpace(vm.FirstName))
                 {
                     userToChange.FirstName = vm.FirstName;
                 }
 
-                if (userToChange.LastName != vm.LastName && vm.LastName != null)
+                if (userToChange.LastName != vm.LastName && !string.IsNullOrWhiteSpace(vm.LastName))
                 {
                     userToChange.LastName = vm.LastName;
                 }
 
-                if(userToChange.PhoneNumber != vm.PhoneNumber && vm.PhoneNumber != null) 
+                if(userToChange.PhoneNumber != vm.PhoneNumber && !string.IsNullOrWhiteSpace(vm.PhoneNumber)) 
                 {
                     userToChange.PhoneNumber = vm.PhoneNumber;
                 }
 
-                if (userToChange.Email != vm.Email && vm.Email != null)
+                if (userToChange.Email != vm.Email && !string.IsNullOrWhiteSpace(vm.Email))
                 {
                     bool userAlreadyExists = _context.Users.Any(u => u.UserName == vm.Email);
 
@@ -222,7 +222,7 @@ namespace BallsRUs.Controllers
                 }
 
                 _context.SaveChanges();
-                return RedirectToAction(nameof(Editinfo));
+                return View(vm);
             }
             catch
             {
@@ -262,7 +262,7 @@ namespace BallsRUs.Controllers
                 _context.Addresses.Add(address);
                 _context.SaveChanges();
 
-                return RedirectToAction(nameof(AddAddress));
+                return View(vm);
             }
             catch
             {
@@ -300,42 +300,33 @@ namespace BallsRUs.Controllers
                 var userToChange = _context.Users.Find(userId);
                 var addressToChange = _context.Addresses.FirstOrDefault(address => address.UserId == userId);
 
-                if (addressToChange.Street != vm.Address.Street && vm.FirstName != null)
+                if (addressToChange.Street != vm.Address.Street && !string.IsNullOrWhiteSpace(vm.Address.Street))
                 {
-                    userToChange.FirstName = vm.FirstName;
+                    addressToChange.Street = vm.Address.Street;
                 }
 
-                if (userToChange.LastName != vm.LastName && vm.LastName != null)
+                if (addressToChange.City != vm.Address.City && !string.IsNullOrWhiteSpace(vm.Address.City))
                 {
-                    userToChange.LastName = vm.LastName;
+                    addressToChange.City = vm.Address.City;
                 }
 
-                if (userToChange.PhoneNumber != vm.PhoneNumber && vm.PhoneNumber != null)
+                if (addressToChange.StateProvince != vm.Address.StateProvince && !string.IsNullOrWhiteSpace(vm.Address.StateProvince))
                 {
-                    userToChange.PhoneNumber = vm.PhoneNumber;
+                    addressToChange.StateProvince = vm.Address.StateProvince;
                 }
 
-                if (userToChange.Email != vm.Email && vm.Email != null)
+                if (addressToChange.Country != vm.Address.Country && !string.IsNullOrWhiteSpace(vm.Address.Country))
                 {
-                    bool userAlreadyExists = _context.Users.Any(u => u.UserName == vm.Email);
+                    addressToChange.Country = vm.Address.Country;
+                }
 
-                    if (userAlreadyExists)
-                    {
-                        ModelState.AddModelError(string.Empty, "Un utilisateur avec ce courriel existe déjà.");
-                        vm.Email = userToChange.Email!;
-                        return View(vm);
-                    }
-                    else
-                    {
-                        userToChange.Email = vm.Email;
-                        userToChange.UserName = vm.Email;
-                        userToChange.NormalizedUserName = vm.Email!.ToUpper();
-                        userToChange.NormalizedEmail = vm.Email!.ToUpper();
-                    }
+                if (addressToChange.PostalCode != vm.Address.PostalCode && !string.IsNullOrWhiteSpace(vm.Address.PostalCode))
+                {
+                    addressToChange.PostalCode = vm.Address.PostalCode;
                 }
 
                 _context.SaveChanges();
-                return RedirectToAction(nameof(Editinfo));
+                return View(vm);
             }
             catch
             {
