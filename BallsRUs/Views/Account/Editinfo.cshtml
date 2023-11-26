@@ -1,0 +1,48 @@
+﻿@using BallsRUs.Models.Account
+@model AccountDetailsVM
+@{
+    ViewData["Title"] = "Editinfo";
+}
+
+
+<div style="border-bottom:solid 1px black">
+    <h3 id="account-details-title">Modifier vos informations</h3>
+</div>
+<div style="border-bottom:solid 1px black;">
+    <div class="row" style="margin-top:30px">
+        <div style="text-align:center">
+            <h4 style="text-align:center">Données personnelles</h4>
+            <form asp-action="EditInfo" class="account-register-form">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group mb-4">
+                    <p style="font-weight:bold">Prénom</p>
+                    <input asp-for="FirstName" class="form-control" placeholder="Prénom" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <p style="font-weight:bold">Nom</p>
+                    <input asp-for="LastName" class="form-control" placeholder="Nom" />
+                    <span asp-validation-for="LastName" class=" text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <p style="font-weight:bold">Courriel</p>
+                    <input asp-for="Email" class="form-control" placeholder="Courriel" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <p style="font-weight:bold">Numéro de téléphone</p>
+                    <input asp-for="PhoneNumber" class="form-control" placeholder="Numéro de téléphone" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-4 mb-1 text-start">
+                    <input type="submit" value="Sauvegarder" />
+                </div>
+            </form>
+        </div>
+        <div style="margin-bottom:10px">
+            <a asp-controller="Account" asp-action="Details">
+                <button class="account-details-modifier-button">Annuler</button>
+            </a>
+        </div>
+    </div>
+</div>

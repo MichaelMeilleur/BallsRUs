@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Security.Claims;
 
 namespace BallsRUs.Controllers
@@ -148,11 +149,200 @@ namespace BallsRUs.Controllers
                 {
                     FirstName = userToShow.FirstName,
                     LastName = userToShow.LastName,
-                    Email = userToShow.Email
+                    Email = userToShow.Email,
+                    PhoneNumber = userToShow.PhoneNumber ?? "Aucun numéro",
+                    Address = _context.Addresses.FirstOrDefault(x => x.UserId == userId) ?? null
                 };
-            return View(vm);
+                return View(vm);
             }
             return View();
+        }
+
+        public IActionResult Editinfo()
+        {
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userIdString != null)
+            {
+                var userId = Guid.Parse(userIdString);
+                var userToShow = _context.Users.Find(userId);
+
+                var vm = new AccountDetailsVM()
+                {
+                    FirstName = userToShow.FirstName,
+                    LastName = userToShow.LastName,
+                    Email = userToShow.Email,
+                    PhoneNumber = userToShow.PhoneNumber ?? "Aucun numéro"
+                };
+                return View(vm);
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Editinfo(AccountDetailsVM vm)
+        {
+            try
+            {
+                var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var userId = Guid.Parse(userIdString);
+                var userToChange = _context.Users.Find(userId);
+
+                if (userToChange.FirstName != vm.FirstName && vm.FirstName != null)
+                {
+                    userToChange.FirstName = vm.FirstName;
+                }
+
+                if (userToChange.LastName != vm.LastName && vm.LastName != null)
+                {
+                    userToChange.LastName = vm.LastName;
+                }
+
+                if(userToChange.PhoneNumber != vm.PhoneNumber && vm.PhoneNumber != null) 
+                {
+                    userToChange.PhoneNumber = vm.PhoneNumber;
+                }
+
+                if (userToChange.Email != vm.Email && vm.Email != null)
+                {
+                    bool userAlreadyExists = _context.Users.Any(u => u.UserName == vm.Email);
+
+                    if (userAlreadyExists)
+                    {
+                        ModelState.AddModelError(string.Empty, "Un utilisateur avec ce courriel existe déjà.");
+                        vm.Email = userToChange.Email!;
+                        return View(vm);
+                    }
+                    else
+                    {
+                        userToChange.Email = vm.Email;
+                        userToChange.UserName = vm.Email;
+                        userToChange.NormalizedUserName = vm.Email!.ToUpper();
+                        userToChange.NormalizedEmail = vm.Email!.ToUpper();
+                    }
+                }
+
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Editinfo));
+            }
+            catch
+            {
+                ModelState.AddModelError(string.Empty, "Une erreur est survenue. Veuillez réessayer.");
+                return View(vm);
+            }
+
+        }
+
+        public IActionResult AddAddress()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddAddress(AccountDetailsVM vm)
+        {
+            try
+            {
+                var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var userId = Guid.Parse(userIdString);
+                var userToChange = _context.Users.Find(userId);
+
+                var address = new Address()
+                {
+                    Id = Guid.NewGuid(),
+                    StateProvince = vm.Address.StateProvince!,
+                    Street = vm.Address.Street!,
+                    City = vm.Address.City!,
+                    Country = vm.Address.Country!,
+                    PostalCode = vm.Address.PostalCode!,
+                    UserId = userId
+                };
+
+                userToChange.Address = address;
+
+                _context.Addresses.Add(address);
+                _context.SaveChanges();
+
+                return RedirectToAction(nameof(AddAddress));
+            }
+            catch
+            {
+                ModelState.AddModelError(string.Empty, "Une erreur est survenue. Veuillez réessayer.");
+                return View(vm);
+            }
+
+        }
+
+        public IActionResult EditAddress()
+        {
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userIdString != null)
+            {
+                var userId = Guid.Parse(userIdString);
+                var userToShow = _context.Users.Find(userId);
+                var adress = _context.Addresses.FirstOrDefault(a => a.UserId == userId);
+
+                var vm = new AccountDetailsVM()
+                {
+                    Address = adress
+                };
+                return View(vm);
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditAddress(AccountDetailsVM vm)
+        {
+            try
+            {
+                var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var userId = Guid.Parse(userIdString);
+                var userToChange = _context.Users.Find(userId);
+                var addressToChange = _context.Addresses.FirstOrDefault(address => address.UserId == userId);
+
+                if (addressToChange.Street != vm.Address.Street && vm.FirstName != null)
+                {
+                    userToChange.FirstName = vm.FirstName;
+                }
+
+                if (userToChange.LastName != vm.LastName && vm.LastName != null)
+                {
+                    userToChange.LastName = vm.LastName;
+                }
+
+                if (userToChange.PhoneNumber != vm.PhoneNumber && vm.PhoneNumber != null)
+                {
+                    userToChange.PhoneNumber = vm.PhoneNumber;
+                }
+
+                if (userToChange.Email != vm.Email && vm.Email != null)
+                {
+                    bool userAlreadyExists = _context.Users.Any(u => u.UserName == vm.Email);
+
+                    if (userAlreadyExists)
+                    {
+                        ModelState.AddModelError(string.Empty, "Un utilisateur avec ce courriel existe déjà.");
+                        vm.Email = userToChange.Email!;
+                        return View(vm);
+                    }
+                    else
+                    {
+                        userToChange.Email = vm.Email;
+                        userToChange.UserName = vm.Email;
+                        userToChange.NormalizedUserName = vm.Email!.ToUpper();
+                        userToChange.NormalizedEmail = vm.Email!.ToUpper();
+                    }
+                }
+
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Editinfo));
+            }
+            catch
+            {
+                ModelState.AddModelError(string.Empty, "Une erreur est survenue. Veuillez réessayer.");
+                return View(vm);
+            }
+
         }
     }
 }

@@ -1,10 +1,90 @@
 ﻿@using BallsRUs.Models.Account
 @model AccountDetailsVM
 @{
-    ViewData["Title"] = "LogIn";
+    ViewData["Title"] = "Details";
 }
 
-<div>
-    Bonjour @Model.FirstName @Model.LastName
-    Email : @Model.Email
+
+<div style="border-bottom:solid 1px black">
+    <h3 id="account-details-title">Votre compte</h3>
+</div>
+<div style="border-bottom:solid 1px black;">
+    <div class="row" style="margin-top:30px">
+        <div class="col col-md-4" style="text-align:center">
+            <h4 style="text-align:center">Données personnelles</h4>
+            <div class="col-12">
+                <div class="mb-4">
+                    <p><strong>Prénom : </strong>@Model.FirstName</p>
+                </div>
+                <div class="mb-4">
+                    <p><strong>Nom : </strong>@Model.LastName</p>
+                </div>
+                <div class="mb-4">
+                    <p><strong>Courriel : </strong>@Model.Email</p>
+                </div>
+                <div class="mb-4">
+                    <p><strong>Numéro de téléphone : </strong>@Model.PhoneNumber</p>
+                </div>
+            </div>
+            <div class="form-group mt-4 mb-1 text-start">
+                <a asp-controller="Account" asp-action="Editinfo">
+                    <button class="account-details-modifier-button">Modifier</button>
+                </a>
+            </div>
+        </div>
+        @if (Model.Address == null)
+        {
+            <div class="col col-md-4" style="text-align:center">
+                <h4 style="text-align:center">Adresse</h4>
+                <div class="col-12">
+                    <div class="mb-4">
+                        <p>Aucune adresse</p>
+                    </div>
+                </div>
+                <div class="form-group mt-4 mb-1 text-start">
+                    <a asp-controller="Account" asp-action="AddAddress">
+                        <button class="account-details-modifier-button">Ajouter une adresse</button>
+                    </a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="col col-md-4" style="text-align:center">
+                <h4 style="text-align:center">Adresse</h4>
+                <div class="col-12">
+                    <div class="mb-4">
+                        <p><strong>Rue : </strong>@Model.Address.Street</p>
+                    </div>
+                    <div class="mb-4">
+                        <p><strong>Ville : </strong>@Model.Address.City</p>
+                    </div>
+                    <div class="mb-4">
+                        <p><strong>Province/état : </strong>@Model.Address.StateProvince</p>
+                    </div>
+                    <div class="mb-4">
+                        <p><strong>Pays : </strong>@Model.Address.Country</p>
+                    </div>
+                    <div class="mb-4">
+                        <p><strong>Code postal : </strong>@Model.Address.PostalCode</p>
+                    </div>
+                </div>
+                <div class="form-group mt-4 mb-1 text-start">
+                    <a asp-controller="Account" asp-action="EditAddress">
+                        <button class="account-details-modifier-button">Modifier</button>
+                    </a>
+                </div>
+            </div>
+        }
+        <div class="col col-md-4" style="text-align:center">
+            <h4 style="text-align:center">Liens utiles</h4>
+            <div class="mb-2">
+                <button class="account-details-button btn-sm">Mes commandes</button>
+            </div>
+
+            <div class="mb-2">
+                <button class="account-details-button btn-sm">Mes factures</button>
+            </div>
+        </div>
+    </div>
 </div>
