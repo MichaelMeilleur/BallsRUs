@@ -33,7 +33,7 @@ body {
     }
 }
 
-input[type=submit], input[type=button] {
+input[type=submit], input[type=button]{
     background-color: forestgreen;
     border: none;
     color: white;
@@ -45,6 +45,22 @@ input[type=submit], input[type=button] {
     margin-top: 10px;
 }
     input[type=submit]:hover, input[type=button]:hover {
+        filter: brightness(1.10);
+    }
+
+input[type=reset], input[type=button] {
+    background-color: forestgreen;
+    border: none;
+    color: white;
+    width: 200px;
+    height: 35px;
+    display: block;
+    justify-self: center;
+    margin: auto;
+    margin-top: 10px;
+}
+
+    input[type=reset]:hover, input[type=button]:hover {
         filter: brightness(1.10);
     }
 
@@ -1068,4 +1084,43 @@ input[type=text], input[type=password], input[type=number], textarea {
     color: black;
     background-color: #ffe3e0;
     border: 1px solid #ffcdcc;
+}
+
+#account-details-title{
+    font-family: 'Poppins';
+    font-weight: bold;
+    width: fit-content;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.account-details-button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: forestgreen;
+    text-align: center;
+    cursor: pointer;
+    width: 30%;
+}
+
+.account-details-button:hover {
+    filter: brightness(1.10);
+    text-decoration: none;
+    color: white;
+}
+
+.account-details-modifier-button {
+    background-color: forestgreen;
+    border: none;
+    color: white;
+    width: 200px;
+    height: 35px;
+    display: block;
+    justify-self: center;
+    margin: auto;
+    margin-top: 10px;
 }
