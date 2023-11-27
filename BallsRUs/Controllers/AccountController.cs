@@ -147,26 +147,18 @@ namespace BallsRUs.Controllers
                 var userToShow = _context.Users.Find(userId);
                 var addressToShow = _context.Addresses.FirstOrDefault(x => x.UserId == userId) ?? null;
 
-                var vm = new AccountDetailsVM()
+                AccountDetailsVM vm = new AccountDetailsVM()
                 {
                     FirstName = userToShow.FirstName,
                     LastName = userToShow.LastName,
                     Email = userToShow.Email,
                     PhoneNumber = userToShow.PhoneNumber ?? "Aucun numéro",
-
+                    AddressCity = addressToShow is not null ? addressToShow.City : null,
+                    AddressCountry = addressToShow is not null ? addressToShow.Country : null,
+                    AddressPostalCode = addressToShow is not null ? addressToShow.PostalCode : null,
+                    AddressStateProvince = addressToShow is not null ? addressToShow.StateProvince : null,
+                    AddressStreet = addressToShow is not null ? addressToShow.Street : null,
                 };
-
-                if (addressToShow != null)
-                {
-                    vm = new AccountDetailsVM()
-                    {
-                        AddressCity = addressToShow.City,
-                        AddressCountry = addressToShow.Country,
-                        AddressPostalCode = addressToShow.PostalCode,
-                        AddressStateProvince = addressToShow.StateProvince,
-                        AddressStreet = addressToShow.Street
-                    };
-                }
                 return View(vm);
 
             }
