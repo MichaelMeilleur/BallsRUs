@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 
 namespace BallsRUs.Controllers
 {
@@ -144,6 +145,7 @@ namespace BallsRUs.Controllers
             {
                 var userId = Guid.Parse(userIdString);
                 var userToShow = _context.Users.Find(userId);
+                var addressToShow = _context.Addresses.FirstOrDefault(x => x.UserId == userId) ?? null;
 
                 var vm = new AccountDetailsVM()
                 {
@@ -151,9 +153,22 @@ namespace BallsRUs.Controllers
                     LastName = userToShow.LastName,
                     Email = userToShow.Email,
                     PhoneNumber = userToShow.PhoneNumber ?? "Aucun numéro",
-                    Address = _context.Addresses.FirstOrDefault(x => x.UserId == userId) ?? null
+
                 };
+
+                if (addressToShow != null)
+                {
+                    vm = new AccountDetailsVM()
+                    {
+                        AddressCity = addressToShow.City,
+                        AddressCountry = addressToShow.Country,
+                        AddressPostalCode = addressToShow.PostalCode,
+                        AddressStateProvince = addressToShow.StateProvince,
+                        AddressStreet = addressToShow.Street
+                    };
+                }
                 return View(vm);
+
             }
             return View();
         }
@@ -197,7 +212,7 @@ namespace BallsRUs.Controllers
                     userToChange.LastName = vm.LastName;
                 }
 
-                if(userToChange.PhoneNumber != vm.PhoneNumber && !string.IsNullOrWhiteSpace(vm.PhoneNumber)) 
+                if (userToChange.PhoneNumber != vm.PhoneNumber && !string.IsNullOrWhiteSpace(vm.PhoneNumber))
                 {
                     userToChange.PhoneNumber = vm.PhoneNumber;
                 }
@@ -253,26 +268,33 @@ namespace BallsRUs.Controllers
                 var userId = Guid.Parse(userIdString);
                 var userToChange = _context.Users.Find(userId);
 
-                var address = new Address()
+                if (!IsCanadianPostalCodeValid(vm.AddressPostalCode))
+                    TempData["SuccessMessage"] = null;
+                else
                 {
-                    Id = Guid.NewGuid(),
-                    StateProvince = vm.Address.StateProvince!,
-                    Street = vm.Address.Street!,
-                    City = vm.Address.City!,
-                    Country = vm.Address.Country!,
-                    PostalCode = vm.Address.PostalCode!,
-                    UserId = userId
-                };
+                    var address = new Address()
+                    {
+                        Id = Guid.NewGuid(),
+                        StateProvince = vm.AddressStateProvince!,
+                        Street = vm.AddressStreet!,
+                        City = vm.AddressCity!,
+                        Country = vm.AddressCountry!,
+                        PostalCode = vm.AddressPostalCode!,
+                        UserId = userId
+                    };
 
-                userToChange.Address = address;
+                    userToChange.Address = address;
+                    _context.Addresses.Add(address);
+                    _context.SaveChanges();
+                    TempData["SuccessMessage"] = "Sauvegarde réussie";
+                }
 
-                _context.Addresses.Add(address);
-                _context.SaveChanges();
 
                 return View(vm);
             }
             catch
             {
+                TempData["SuccessMessage"] = null;
                 ModelState.AddModelError(string.Empty, "Une erreur est survenue. Veuillez réessayer.");
                 return View(vm);
             }
@@ -290,7 +312,11 @@ namespace BallsRUs.Controllers
 
                 var vm = new AccountDetailsVM()
                 {
-                    Address = adress
+                    AddressStreet = adress.Street,
+                    AddressCity = adress.City,
+                    AddressCountry = adress.Country,
+                    AddressStateProvince = adress.StateProvince,
+                    AddressPostalCode = adress.PostalCode
                 };
                 return View(vm);
             }
@@ -307,38 +333,41 @@ namespace BallsRUs.Controllers
                 var userToChange = _context.Users.Find(userId);
                 var addressToChange = _context.Addresses.FirstOrDefault(address => address.UserId == userId);
 
-                if (addressToChange.Street != vm.Address.Street && !string.IsNullOrWhiteSpace(vm.Address.Street))
+                if (addressToChange.Street != vm.AddressStreet && !string.IsNullOrWhiteSpace(vm.AddressStreet))
                 {
-                    addressToChange.Street = vm.Address.Street;
+                    addressToChange.Street = vm.AddressStreet;
                 }
 
-                if (addressToChange.City != vm.Address.City && !string.IsNullOrWhiteSpace(vm.Address.City))
+                if (addressToChange.City != vm.AddressCity && !string.IsNullOrWhiteSpace(vm.AddressCity))
                 {
-                    addressToChange.City = vm.Address.City;
+                    addressToChange.City = vm.AddressCity;
                 }
 
-                if (addressToChange.StateProvince != vm.Address.StateProvince && !string.IsNullOrWhiteSpace(vm.Address.StateProvince))
+                if (addressToChange.StateProvince != vm.AddressStateProvince && !string.IsNullOrWhiteSpace(vm.AddressStateProvince))
                 {
-                    addressToChange.StateProvince = vm.Address.StateProvince;
+                    addressToChange.StateProvince = vm.AddressStateProvince;
                 }
 
-                if (addressToChange.Country != vm.Address.Country && !string.IsNullOrWhiteSpace(vm.Address.Country))
+                if (addressToChange.Country != vm.AddressCountry && !string.IsNullOrWhiteSpace(vm.AddressCountry))
                 {
-                    addressToChange.Country = vm.Address.Country;
+                    addressToChange.Country = vm.AddressCountry;
                 }
 
-                if (addressToChange.PostalCode != vm.Address.PostalCode && !string.IsNullOrWhiteSpace(vm.Address.PostalCode))
+                if (addressToChange.PostalCode != vm.AddressPostalCode && !string.IsNullOrWhiteSpace(vm.AddressPostalCode))
                 {
-                    addressToChange.PostalCode = vm.Address.PostalCode;
+                    addressToChange.PostalCode = vm.AddressPostalCode;
                 }
 
-                if (string.IsNullOrWhiteSpace(vm.Address.Street) || string.IsNullOrWhiteSpace(vm.Address.City) || string.IsNullOrWhiteSpace(vm.Address.StateProvince)
-                    || string.IsNullOrWhiteSpace(vm.Address.Country) || string.IsNullOrWhiteSpace(vm.Address.PostalCode))
+                if (string.IsNullOrWhiteSpace(vm.AddressStreet) || string.IsNullOrWhiteSpace(vm.AddressCity) || string.IsNullOrWhiteSpace(vm.AddressStateProvince)
+                    || string.IsNullOrWhiteSpace(vm.AddressCountry) || string.IsNullOrWhiteSpace(vm.AddressPostalCode))
                 {
                     TempData["SuccessMessage"] = null;
                 }
                 else
-                TempData["SuccessMessage"] = "Sauvegarde réussie";
+                    TempData["SuccessMessage"] = "Sauvegarde réussie";
+
+                if (!IsCanadianPostalCodeValid(vm.AddressPostalCode))
+                    TempData["SuccessMessage"] = null;
 
                 _context.SaveChanges();
                 return View(vm);
@@ -350,6 +379,12 @@ namespace BallsRUs.Controllers
                 return View(vm);
             }
 
+        }
+
+        private bool IsCanadianPostalCodeValid(string postalCode)
+        {
+            var canadianPostalCodeRegex = new Regex(@"^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$");
+            return !string.IsNullOrEmpty(postalCode) && canadianPostalCodeRegex.IsMatch(postalCode);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Metrics;
 using System.IO;
+using System.Text.RegularExpressions;
 using FluentValidation;
 
 namespace BallsRUs.Models.Account
@@ -66,8 +67,10 @@ namespace BallsRUs.Models.Account
                         .WithMessage("Veuillez entrer une ville.");
 
                 RuleFor(vm => vm.PostalCode)
-                    .NotEmpty()
-                        .WithMessage("Veuillez entrer un code postal.");
+     .NotEmpty()
+         .WithMessage("Veuillez entrer un code postal.")
+     .Must(BeAValidCanadianPostalCode)
+         .WithMessage("Le code postal doit être au format canadien (ex. A1A 1A1).");
 
                 RuleFor(vm => vm.Country)
                     .NotEmpty()
@@ -77,6 +80,13 @@ namespace BallsRUs.Models.Account
                     .NotEmpty()
                         .WithMessage("Veuillez entrer une province ou un état.");
             });
+        }
+
+        private bool BeAValidCanadianPostalCode(string postalCode)
+        {
+            var canadianPostalCodeRegex = new Regex(@"^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$");
+
+            return !string.IsNullOrEmpty(postalCode) && canadianPostalCodeRegex.IsMatch(postalCode);
         }
     }
 }

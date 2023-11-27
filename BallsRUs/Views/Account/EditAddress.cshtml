@@ -21,28 +21,28 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group mb-4">
                     <p style="font-weight:bold">Rue et numéro civique</p>
-                    <input asp-for="Address.Street" class="form-control" placeholder="Rue et numéro civique" />
-                    <span asp-validation-for="Address.Street" class="text-danger"></span>
+                    <input asp-for="AddressStreet" class="form-control" placeholder="Rue et numéro civique" />
+                    <span asp-validation-for="AddressStreet" class="text-danger"></span>
                 </div>
                 <div class="form-group mb-4">
                     <p style="font-weight:bold">Ville</p>
-                    <input asp-for="Address.City" class="form-control" placeholder="Ville" />
-                    <span asp-validation-for="Address.City" class=" text-danger"></span>
+                    <input asp-for="AddressCity" class="form-control" placeholder="Ville" />
+                    <span asp-validation-for="AddressCity" class=" text-danger"></span>
                 </div>
                 <div class="form-group mb-4">
                     <p style="font-weight:bold">Pronvinc ou état</p>
-                    <input asp-for="Address.StateProvince" class="form-control" placeholder="Province" />
-                    <span asp-validation-for="Address.StateProvince" class="text-danger"></span>
+                    <input asp-for="AddressStateProvince" class="form-control" placeholder="Province" />
+                    <span asp-validation-for="AddressStateProvince" class="text-danger"></span>
                 </div>
                 <div class="form-group mb-4">
                     <p style="font-weight:bold">Pays</p>
-                    <input asp-for="Address.Country" class="form-control" placeholder="Pays" />
-                    <span asp-validation-for="Address.Country" class="text-danger"></span>
+                    <input asp-for="AddressCountry" class="form-control" placeholder="Pays" />
+                    <span asp-validation-for="AddressCountry" class="text-danger"></span>
                 </div>
                 <div class="form-group mb-4">
                     <p style="font-weight:bold">Code Postal</p>
-                    <input asp-for="Address.PostalCode" class="form-control" placeholder="Code postal" />
-                    <span asp-validation-for="Address.PostalCode" class="text-danger"></span>
+                    <input asp-for="AddressPostalCode" class="form-control" placeholder="Code postal" />
+                    <span asp-validation-for="AddressPostalCode" class="text-danger"></span>
                 </div>
                 <div class="form-group mt-4 mb-1 text-start">
                     <input type="submit" value="Sauvegarder" />
