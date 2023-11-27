@@ -105,7 +105,7 @@
                     {
                         @if (User!.Identity!.IsAuthenticated)
                         {
-                            <a id="shopping-cart-index-summary-checkout-button" asp-controller="" asp-action="">
+                            <a id="shopping-cart-index-summary-checkout-button" asp-controller="Checkout" asp-action="Information">
                                 <span class="m-auto">Passer la commande</span>
                             </a>
                         }
