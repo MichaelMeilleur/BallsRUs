@@ -272,8 +272,6 @@ namespace BallsRUs.Controllers
 
         public IActionResult Confirmation(Guid orderId)
         {
-            ViewBag.orderId = orderId;
-
             Order? order = _context.Order.Find(orderId);
 
             if (order is null)
@@ -305,10 +303,8 @@ namespace BallsRUs.Controllers
                 AddressPostalCode = address.PostalCode
             };
 
-            ViewBag.OrderAlreadyConfirmed = false;
-
             if (order.Status != OrderStatus.Opened)
-                ViewBag.OrderAlreadyConfirmed = true;
+                vm.OrderAlreadyConfirmed = true;
 
             return View(vm);
         }
@@ -316,15 +312,38 @@ namespace BallsRUs.Controllers
         [HttpPost]
         public IActionResult Confirmation(CheckoutConfirmationVM vm, Guid orderId)
         {
-            ViewBag.orderId = orderId;
-
-            if (!ModelState.IsValid)
-                return View(vm);
-
             Order? order = _context.Order.Find(orderId);
 
             if (order is null)
                 throw new ArgumentOutOfRangeException(nameof(orderId));
+
+            if (!ModelState.IsValid)
+            {
+                Address? address = _context.Addresses.Find(order.AddressId);
+
+                if (address is null)
+                    throw new Exception("The address wasn't found.");
+
+                vm.Id = orderId;
+                vm.Number = order.Number;
+                vm.FirstName = order.FirstName;
+                vm.LastName = order.LastName;
+                vm.EmailAddress = order.EmailAddress;
+                vm.PhoneNumber = order.PhoneNumber;
+                vm.ProductQuantity = order.ProductQuantity;
+                vm.ProductCost = order.ProductsCost;
+                vm.ShippingCost = order.ShippingCost;
+                vm.SubTotal = order.SubTotal;
+                vm.Taxes = order.Taxes;
+                vm.Total = order.Total;
+                vm.AddressStreet = address.Street;
+                vm.AddressCity = address.City;
+                vm.AddressStateProvince = address.StateProvince;
+                vm.AddressCountry = address.Country;
+                vm.AddressPostalCode = address.PostalCode;
+
+                return View(vm);
+            }
 
             order.Status = OrderStatus.Confirmed;
 

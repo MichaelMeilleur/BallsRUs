@@ -7,7 +7,7 @@
 }
 
 <div id="checkout-confirmation-container">
-    @if (ViewBag.OrderAlreadyConfirmed == false)
+    @if (Model.OrderAlreadyConfirmed == false)
     {
         <h3>Confirmer la commande #@Model.Number</h3>
         <div>

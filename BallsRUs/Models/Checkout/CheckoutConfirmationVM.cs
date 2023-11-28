@@ -23,6 +23,7 @@ namespace BallsRUs.Models.Checkout
         public string? AddressCountry { get; set; }
         public string? AddressPostalCode { get; set; }
         public bool ConfirmInformation { get; set; } = false;
+        public bool OrderAlreadyConfirmed { get; set; } = false;
     }
 
     public class CheckoutConfirmationValidator : AbstractValidator<CheckoutConfirmationVM>
