@@ -4,6 +4,7 @@ using BallsRUs.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.EnvironmentVariables;
+using X.PagedList;
 
 namespace BallsRUs.ViewComponents
 {
@@ -17,8 +18,9 @@ namespace BallsRUs.ViewComponents
         }
 
         public async Task<IViewComponentResult> InvokeAsync(bool isHomepageShowcase = false, string? category = null, string? search = null,
-            string? sortingType = null, bool discounted = false)
+            string? sortingType = null, bool discounted = false, int? page = 1)
         {
+           
             ViewBag.IsHomePageShowcase = false;
             IQueryable<Product> products;
 
@@ -94,7 +96,13 @@ namespace BallsRUs.ViewComponents
                 }
             }
 
-            return View(products);
+            int pageNumber = page ?? 1;
+            IPagedList<Product> pagedProducts = await products.ToPagedListAsync(pageNumber, 12);
+
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.PageSize = 12;
+            ViewBag.TotalProducts = products.Count();
+            return View(pagedProducts);
         }
 
         List<Category> GetCategoryAndChildren(IEnumerable<Category> allCategories, Category parentCategory)

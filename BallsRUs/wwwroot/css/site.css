@@ -892,6 +892,28 @@ input[type=text], input[type=password], input[type=number], textarea {
     margin-right: auto;
     margin-top: 40px;
 }
+#vc-product-list-numeros-page{
+    display: flex;
+    justify-content:flex-end;
+    letter-spacing : 10px;
+    font-weight : bold;
+    color:forestgreen !important;
+
+}
+#vc-product-list-numeros-page li a {
+    color:black;
+    font-weight: normal;
+   
+}
+
+#vc-product-list-numeros-page li {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#vc-product-list-numeros-page :hover {
+    text-decoration: none !important;
+}
+
 
 .account-login-container {
     display: inline-block;

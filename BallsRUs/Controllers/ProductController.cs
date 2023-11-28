@@ -16,8 +16,11 @@ namespace BallsRUs.Controllers
             _context = context;
         }
 
-        public IActionResult Catalog(string? category = null, string? search = null, bool discounted = false, string? sorting = null)
+        public IActionResult Catalog(string? category = null, string? search = null, bool discounted = false, string? sortingType = null, int? page = 1)
         {
+            //Applique le numéro de page actuel.
+            ViewBag.Page = page;
+
             if (!string.IsNullOrWhiteSpace(search))
                 ViewBag.Search = search;
 
@@ -25,15 +28,17 @@ namespace BallsRUs.Controllers
                 ViewBag.Category = category;
 
             // Appliquer le tri
-            if (sorting is not null && sorting.ToLower() == Constants.PRICE_HIGH_TO_LOW)
+            if (sortingType is not null && sortingType.ToLower() == Constants.PRICE_HIGH_TO_LOW)
                 ViewBag.SortingType = Constants.PRICE_HIGH_TO_LOW;
-            else if (sorting is not null && sorting.ToLower() == Constants.PRICE_LOW_TO_HIGH)
+            else if (sortingType is not null && sortingType.ToLower() == Constants.PRICE_LOW_TO_HIGH)
                 ViewBag.SortingType = Constants.PRICE_LOW_TO_HIGH;
-            else if (sorting is not null && sorting.ToLower() == Constants.BRAND_ALPHABETICAL)
+            else if (sortingType is not null && sortingType.ToLower() == Constants.BRAND_ALPHABETICAL)
                 ViewBag.SortingType = Constants.BRAND_ALPHABETICAL;
-            else if (sorting is not null && sorting.ToLower() == Constants.RELEASE_NEW_TO_OLD)
+            else if (sortingType is not null && sortingType.ToLower() == Constants.RELEASE_NEW_TO_OLD)
                 ViewBag.SortingType = Constants.RELEASE_NEW_TO_OLD;
-
+                
+            
+       
             // Appliquer les filtres
             ViewBag.FilterDiscounted = discounted;
 

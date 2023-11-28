@@ -37,7 +37,7 @@
             <div class="row">
                 <div class="col-6 col-md-12 justify-content-center">
                     <h4>Trier</h4>
-                    <select id="product-index-filter-sort-dropdown" name="sorting">
+                    <select id="product-index-filter-sort-dropdown" name="sortingType">
                         <option id="empty-selected-sort" value="empty">-- Aucun --</option>
                         <option id="lowtohigh-selected-sort" value="@Constants.PRICE_LOW_TO_HIGH">Prix : Croissant</option>
                         <option id="hightolow-selected-sort" value="@Constants.PRICE_HIGH_TO_LOW">Prix : Décroissant</option>
@@ -54,12 +54,14 @@
                     } /> Produits en rabais
                 </div>
                 <input id="product-index-filter-apply-button" asp-route-category="@ViewBag.Category" asp-route-search="@ViewBag.Search"
-                       asp-route-sorting="@ViewBag.SortingType" asp-route-discounted="@ViewBag.FilterDiscounted" type="submit" value="Appliquer" class="mb-4" />
+                       asp-route-sortingType="@ViewBag.SortingType" asp-route-discounted="@ViewBag.FilterDiscounted" asp-route-page = "@ViewBag.Page" type="submit" value="Appliquer" class="mb-4" />
             </div>
         </form>
     </div>
     <div class="col-12 col-md-9">
-        <vc:product-list search="@ViewBag.Search" sorting-type="@ViewBag.SortingType" category="@ViewBag.Category" discounted="@ViewBag.FilterDiscounted"></vc:product-list>
+      
+            <vc:product-list search="@ViewBag.Search" sorting-type="@ViewBag.SortingType" category="@ViewBag.Category" discounted="@ViewBag.FilterDiscounted" page="@ViewBag.Page"></vc:product-list>
+    
     </div>
 </div>
 
@@ -115,15 +117,15 @@
             var sortingValue = selectedOption.value;
 
             if (sortingValue === "empty") {
-                formAction = formAction.replace(/[\?&]sorting=[^&]+/, "");
+                formAction = formAction.replace(/[\?&]sortingType=[^&]+/, "");
                 if (formAction.includes("Catalog&")) {
                     formAction = formAction.replace("Catalog&", "Catalog?");
                 }
             } else {
-                if (formAction.indexOf("sorting=") === -1) {
-                    formAction += (formAction.includes("?") ? "&" : "?") + "sorting=" + sortingValue;
+                if (formAction.indexOf("sortingType=") === -1) {
+                    formAction += (formAction.includes("?") ? "&" : "?") + "sortingType=" + sortingValue;
                 } else {
-                    formAction = formAction.replace(/sorting=[^&]+/, "sorting=" + sortingValue);
+                    formAction = formAction.replace(/sortingType=[^&]+/, "sortingType=" + sortingValue);
                 }
             }
 
