@@ -52,34 +52,34 @@
                         @foreach (var item in Model.OrderItems)
                         {
                             <tr>
-                                <td class="checkout-confirmation-table-left-data">@item.ProductName</td>
-                                <td class="checkout-confirmation-table-right-data">@item.TotalCost</td>
+                                <td class="checkout-confirmation-table-left-data" style="padding-left:20px; padding-right:10px; font-weight:normal!important; color:#635f5f;">@item.ProductName</td>
+                                <td class="checkout-confirmation-table-right-data">@item.TotalCost$</td>
                             </tr>
                             <tr>
-                                <td class="checkout-confirmation-table-left-data"></td>
+                                <td class="checkout-confirmation-table-left-data" style="padding-left:20px;"></td>
                                 <td class="checkout-confirmation-table-right-data">@item.Quantity</td>
                             </tr>
                         }
                     }
                     <tr>
                         <td class="checkout-confirmation-table-left-data">Total des produits</td>
-                        <td class="checkout-confirmation-table-right-data">@Model.ProductCost</td>
+                        <td class="checkout-confirmation-table-right-data">@Model.ProductCost$</td>
                     </tr>
                     <tr>
                         <td class="checkout-confirmation-table-left-data">Coût de livraison</td>
-                        <td class="checkout-confirmation-table-right-data">@Model.ShippingCost</td>
+                        <td class="checkout-confirmation-table-right-data">@Model.ShippingCost$</td>
                     </tr>
                     <tr>
                         <td class="checkout-confirmation-table-left-data">Sous-Total</td>
-                        <td class="checkout-confirmation-table-right-data">@Model.SubTotal</td>
+                        <td class="checkout-confirmation-table-right-data">@Model.SubTotal$</td>
                     </tr>
                     <tr>
                         <td class="checkout-confirmation-table-left-data">Taxes</td>
-                        <td class="checkout-confirmation-table-right-data">@Model.Taxes</td>
+                        <td class="checkout-confirmation-table-right-data">@Model.Taxes$</td>
                     </tr>
                     <tr>
                         <td class="checkout-confirmation-table-left-data">Total</td>
-                        <td class="checkout-confirmation-table-right-data">@Model.Total</td>
+                        <td class="checkout-confirmation-table-right-data">@Model.Total$</td>
                     </tr>
                 </tbody>
             </table>
