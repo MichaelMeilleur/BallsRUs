@@ -1,0 +1,11 @@
+﻿@using BallsRUs.Models.Order
+@model OrderDetailsVM
+@{
+    ViewData["Title"] = "Commande# " + ViewBag.OrderId;
+}
+
+<div id="order-orderdetails-container">
+    <h3>Commande# @Model.Number</h3>
+</div>
+
+@Html.ActionLink("Annuler ma commande","DeleteOrder",new{OrderId= Model.Id})
