@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Primitives;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
 
@@ -58,7 +59,7 @@ namespace BallsRUs.Controllers
         {
             AdminCreateProductVM vm = new AdminCreateProductVM
             {
-                Categories = _context.Categories.Select(c => c.Name).ToList()
+                Categories = _context.Categories.Select(c => c.Name).ToList()!
             };
 
             return View(vm);
@@ -67,7 +68,7 @@ namespace BallsRUs.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProduct(AdminCreateProductVM vm)
         {
-            vm.Categories = _context.Categories.Select(c => c.Name).ToList();
+            vm.Categories = _context.Categories.Select(c => c.Name).ToList()!;
 
             if (!ModelState.IsValid)
                 return View(vm);
@@ -282,6 +283,125 @@ namespace BallsRUs.Controllers
                 System.IO.File.Delete(filePath);
 
             return RedirectToAction(nameof(ManageProduct));
+        }
+
+        public IActionResult ManageOrder()
+        {
+            var vm = _context.Orders.Select(order => new AdminManageOrderVM
+            {
+                Id = order.Id,
+                Number = order.Number,
+                Status = order.Status,
+                FirstName = order.FirstName,
+                LastName = order.LastName,
+                EmailAddress = order.EmailAddress,
+                PhoneNumber = order.PhoneNumber,
+                ProductQuantity = order.ProductQuantity,
+                SubTotal = string.Format(new CultureInfo("fr-CA"), "{0:C}", order.SubTotal),
+                Total = string.Format(new CultureInfo("fr-CA"), "{0:C}", order.Total),
+                CreationDate = string.Format("{0:dd/MM/yyyy}", order.CreationDate)
+            });
+
+            return View(vm);
+        }
+
+        public IActionResult CancelOrder(Guid id)
+        {
+            Order? orderToCancel = _context.Orders.Find(id);
+
+            if (orderToCancel is null)
+                throw new ArgumentOutOfRangeException(nameof(id));
+
+            if (orderToCancel.Status != OrderStatus.Canceled)
+            {
+                List<OrderItem> orderToCancelItems = _context.OrderItems.Where(oi => oi.OrderId == orderToCancel.Id).ToList();
+
+                if (orderToCancel.UserId is not null)
+                {
+                    ShoppingCart? shoppingCart = _context.ShoppingCarts.FirstOrDefault(sc => sc.UserId == orderToCancel.UserId);
+
+                    if (shoppingCart is not null)
+                    {
+                        foreach (OrderItem item in orderToCancelItems)
+                        {
+                            Product? product = _context.Products.Find(item.ProductId);
+
+                            if (product is not null)
+                            {
+                                product.Quantity += item.Quantity;
+
+                                ShoppingCartItem? sci = _context.ShoppingCartItems
+                                    .FirstOrDefault(i => i.ShoppingCartId == shoppingCart.Id && i.ProductId == product.Id);
+
+                                if (sci is not null)
+                                {
+                                    sci.Quantity += item.Quantity;
+                                }
+                                else
+                                {
+                                    ShoppingCartItem? newSci = new ShoppingCartItem()
+                                    {
+                                        Quantity = item.Quantity,
+                                        CreationDate = DateTime.UtcNow,
+                                        ShoppingCartId = shoppingCart.Id,
+                                        ProductId = product.Id
+                                    };
+
+                                    _context.ShoppingCartItems.Add(newSci);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ShoppingCart newSC = new ShoppingCart
+                        {
+                            Id = Guid.NewGuid(),
+                            ProductsQuantity = 0,
+                            CreationDate = DateTime.UtcNow,
+                            UserId = orderToCancel.UserId
+                        };
+
+                        _context.ShoppingCarts.Add(newSC);
+
+                        foreach (var item in orderToCancelItems)
+                        {
+                            Product? product = _context.Products.Find(item.ProductId);
+
+                            if (product is not null)
+                            {
+                                product.Quantity += item.Quantity;
+
+                                ShoppingCartItem? newSci = new ShoppingCartItem()
+                                {
+                                    Quantity = item.Quantity,
+                                    CreationDate = DateTime.UtcNow,
+                                    ShoppingCartId = newSC.Id,
+                                    ProductId = product.Id
+                                };
+
+                                _context.ShoppingCartItems.Add(newSci);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    // Ajouter les items au stock, mais ne pas les remettre dans un panier (car utilisateur est anonyme)
+                    foreach (OrderItem item in orderToCancelItems)
+                    {
+                        Product? product = _context.Products.Find(item.ProductId);
+
+                        if (product is not null)
+                            product.Quantity += item.Quantity;
+                    }
+                }
+
+                orderToCancel.Status = OrderStatus.Canceled;
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction(nameof(ManageOrder));
         }
     }
 }
