@@ -1303,3 +1303,15 @@ input[type=text], input[type=password], input[type=number], textarea {
         background-repeat: no-repeat;
         background-size: cover;
     }
+
+.account-ordershistory-container {
+    margin-top: 30px;
+    margin-bottom:180px;
+}   
+.account-ordershistory-title{
+    margin-top : 35px;
+}
+#order-orderdetails-container{
+    margin-top:50px;
+    margin-bottom:150px;
+}
