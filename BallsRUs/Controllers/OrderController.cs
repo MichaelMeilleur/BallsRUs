@@ -50,17 +50,89 @@ namespace BallsRUs.Controllers
             }
             return View(vm);
         }
-        public IActionResult DeleteOrder(Guid OrderId)
+        public IActionResult CancelOrder(Guid OrderId)
         {
-            Order order = _context.Orders.FirstOrDefault(x => x.Id == OrderId);
-            if (order != null)
+            Order? orderToCancel = _context.Orders.Find(OrderId);
+
+            if (orderToCancel is null)
+                throw new ArgumentOutOfRangeException(nameof(OrderId));
+
+            if (orderToCancel.Status != OrderStatus.Canceled)
             {
-                _context.Orders.Remove(order);
+                List<OrderItem> orderToCancelItems = _context.OrderItems.Where(oi => oi.OrderId == orderToCancel.Id).ToList();
+
+                ShoppingCart? shoppingCart = _context.ShoppingCarts.FirstOrDefault(sc => sc.UserId == orderToCancel.UserId);
+
+                if (shoppingCart is not null)
+                {
+                    foreach (OrderItem item in orderToCancelItems)
+                    {
+                        Product? product = _context.Products.Find(item.ProductId);
+
+                        if (product is not null)
+                        {
+                            product.Quantity += item.Quantity;
+
+                            ShoppingCartItem? sci = _context.ShoppingCartItems
+                                .FirstOrDefault(i => i.ShoppingCartId == shoppingCart.Id && i.ProductId == product.Id);
+
+                            if (sci is not null)
+                            {
+                                sci.Quantity += item.Quantity;
+                            }
+                            else
+                            {
+                                ShoppingCartItem? newSci = new ShoppingCartItem()
+                                {
+                                    Quantity = item.Quantity,
+                                    CreationDate = DateTime.UtcNow,
+                                    ShoppingCartId = shoppingCart.Id,
+                                    ProductId = product.Id
+                                };
+
+                                _context.ShoppingCartItems.Add(newSci);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    ShoppingCart newSC = new ShoppingCart
+                    {
+                        Id = Guid.NewGuid(),
+                        ProductsQuantity = 0,
+                        CreationDate = DateTime.UtcNow,
+                        UserId = orderToCancel.UserId
+                    };
+
+                    _context.ShoppingCarts.Add(newSC);
+
+                    foreach (var item in orderToCancelItems)
+                    {
+                        Product? product = _context.Products.Find(item.ProductId);
+
+                        if (product is not null)
+                        {
+                            product.Quantity += item.Quantity;
+
+                            ShoppingCartItem? newSci = new ShoppingCartItem()
+                            {
+                                Quantity = item.Quantity,
+                                CreationDate = DateTime.UtcNow,
+                                ShoppingCartId = newSC.Id,
+                                ProductId = product.Id
+                            };
+
+                            _context.ShoppingCartItems.Add(newSci);
+                        }
+                    }
+                }
+
+                orderToCancel.Status = OrderStatus.Canceled;
                 _context.SaveChanges();
             }
-            return RedirectToAction("OrdersHistory","Account");
+
+            return RedirectToAction("OrdersHistory", "Account");
         }
-        //Méthode qui renvoie le Id de l'utilisateur authentifié actuellement
-       
     }
 }
