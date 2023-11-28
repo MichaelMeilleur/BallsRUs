@@ -20,6 +20,9 @@ namespace BallsRUs.Data
             var adminUser = AddUser(builder, "admin@ballsrus.ca", "Toto123!", "Admin", "Admin", "1234567890");
             AddUserToRole(builder, adminUser, adminRole);
 
+            // Ajouter l'admin à une addresse
+            var address = AddAddressToUser(builder, adminUser, "123 rue du Hamburger", "Saint-Amable", "Québec", "Canada", "H3D 8H4");
+
             // Ajouter les catégories de produits.
             #region Catégories
             var batons = AddCategory(builder, "Bâtons", "Découvrez notre sélection de bâtons de golf de qualité supérieure, conçus pour améliorer votre jeu sur le parcours. Trouvez l'équipement parfait pour affiner votre swing et optimiser votre précision. Faites le choix de l'excellence sur le green.", "~/img/categories/batons.jpg", DateTime.Now.AddDays(-365));
@@ -133,6 +136,13 @@ namespace BallsRUs.Data
             AddProductToCategory(builder, gps, AGP9842GAR);
             AddProductToCategory(builder, gps, AGP5432SKY);
             #endregion
+
+            // Ajouter les commandes
+            AddOrder(builder, address, adminUser, new List<Product> { BBD3845TMD, SSP2323NIK }, "AH83HDKV73HFMV82", "Admin", "Admin", OrderStatus.Confirmed, "admin@ballsrus.ca", "1234567890", 123.99m);
+            AddOrder(builder, address, adminUser, new List<Product> { ATE7832BUS, AGP5432SKY }, "JHSDHFJH2U98EFHJ", "Admin", "Admin", OrderStatus.Confirmed, "admin@ballsrus.ca", "1234567890", 143.99m);
+            AddOrder(builder, address, adminUser, new List<Product> { SSP8981CAL, VCH1873UND }, "KJHMZXHHJHDFS823", "Admin", "Admin", OrderStatus.Confirmed, "admin@ballsrus.ca", "1234567890", 436.99m);
+            AddOrder(builder, address, adminUser, new List<Product> { VCH1873UND, VCH1873UND }, "MXBJSAJ128B7NN22", "Admin", "Admin", OrderStatus.Confirmed, "admin@ballsrus.ca", "1234567890", 752.99m);
+            AddOrder(builder, address, adminUser, new List<Product> { VPA1989PUM, AGP3890SHS }, "KJ3H328UYDHS2RFS", "Admin", "Admin", OrderStatus.Confirmed, "admin@ballsrus.ca", "1234567890", 126.99m);
         }
 
         #region Methods
@@ -276,6 +286,69 @@ namespace BallsRUs.Data
                 ProductId = product.Id,
                 CategoryId = category.Id
             });
+        }
+
+        private static Address AddAddressToUser(ModelBuilder builder, User user, string street, string city, string provinceState,
+            string country, string postalCode)
+        {
+            Address address = new Address()
+            {
+                Id = Guid.NewGuid(),
+                UserId = user.Id,
+                Street = street,
+                City = city,
+                StateProvince = provinceState,
+                Country = country,
+                PostalCode = postalCode
+            };
+
+            builder.Entity<Address>().HasData(address);
+
+            return address;
+        }
+
+        private static void AddOrder(ModelBuilder builder, Address address, User user, List<Product> products, string number, string firstName,
+            string lastName, OrderStatus status, string email, string phone, decimal price)
+        {
+            Guid orderId = Guid.NewGuid();
+
+            Order order = new Order()
+            {
+                UserId = user.Id,
+                AddressId = address.Id,
+                Id = orderId,
+                Status = status,
+                Number = number,
+                FirstName = firstName,
+                LastName = lastName,
+                EmailAddress = email,
+                PhoneNumber = phone,
+                ProductQuantity = products.Count(),
+                ProductsCost = price,
+                ShippingCost = 9.99m,
+                SubTotal = price + 9.99m,
+                Taxes = (price + 9.99m) * Constants.TAXES_PERCENTAGE,
+                Total = (price + 9.99m) * 1.14975m,
+                CreationDate = DateTime.UtcNow
+            };
+
+            builder.Entity<Order>().HasData(order);
+
+            foreach (Product p in products)
+            {
+                OrderItem oi = new OrderItem()
+                {
+                    Id = Guid.NewGuid(),
+                    Quantity = 1,
+                    UnitaryPrice = (decimal)p.RetailPrice!,
+                    TotalCost = (decimal)p.RetailPrice!,
+                    CreationDate = DateTime.UtcNow,
+                    OrderId = orderId,
+                    ProductId = p.Id
+                };
+
+                builder.Entity<OrderItem>().HasData(oi);
+            }
         }
         #endregion
     }
