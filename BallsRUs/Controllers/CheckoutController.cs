@@ -327,10 +327,10 @@ namespace BallsRUs.Controllers
                 throw new ArgumentOutOfRangeException(nameof(orderId));
 
             order.Status = OrderStatus.Confirmed;
-
+            order.ConfirmationDate = DateTime.Now;
             _context.SaveChanges();
 
-            return RedirectToAction("Details", "Account");
+            return RedirectToAction("OrdersList", "Order");
         }
 
         private string GenerateRandomOrderNumber()
