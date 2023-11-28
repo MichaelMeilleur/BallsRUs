@@ -13,5 +13,6 @@ namespace BallsRUs.Models.ShoppingCart
         public string? ItemTotalDiscountedPrice { get => DiscountedPrice is not null ? string.Format(new CultureInfo("fr-CA"), "{0:C}", DiscountedPrice * Quantity) : null; }
         public string? ImagePath { get; set; }
         public int? Quantity { get; set; }
+        public bool IsAvailable { get; set; }
     }
 }

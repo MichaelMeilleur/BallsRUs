@@ -37,6 +37,8 @@ namespace BallsRUs.Controllers
             int quantity = 0;
             decimal? productsCost = 0m;
 
+            ViewBag.AllProductsAreAvailable = true;
+
             if (items.Any())
             {
                 foreach (ShoppingCartItem item in items)
@@ -56,6 +58,17 @@ namespace BallsRUs.Controllers
                         ImagePath = product.ImagePath,
                         Quantity = item.Quantity
                     };
+
+                    if (product.Quantity < item.Quantity)
+                    {
+                        ViewBag.AllProductsAreAvailable = false;
+                        p.IsAvailable = false;
+                    }
+                    else
+                    {
+                        p.IsAvailable = true;
+                    }
+
                     productsVM.Add(p);
 
                     quantity += item.Quantity;
@@ -104,8 +117,6 @@ namespace BallsRUs.Controllers
 
                     shoppingCart.ProductsQuantity++;
 
-                    product.Quantity--;
-
                     _context.ShoppingCartItems.Add(cartItem);
                     _context.SaveChanges();
                 }
@@ -113,8 +124,6 @@ namespace BallsRUs.Controllers
                 {
                     shoppingCart.ProductsQuantity++;
                     item.Quantity++;
-
-                    product.Quantity--;
 
                     _context.SaveChanges();
                 }
@@ -145,12 +154,6 @@ namespace BallsRUs.Controllers
                 if (shoppingCart is null)
                     throw new Exception("The shopping cart is not valid.");
 
-                Product? product = _context.Products.Find(item.ProductId);
-
-                if (product is null)
-                    throw new Exception("The product is not valid.");
-
-                product.Quantity += item.Quantity;
                 shoppingCart.ProductsQuantity -= item.Quantity;
 
                 _context.ShoppingCartItems.Remove(item);
@@ -185,9 +188,8 @@ namespace BallsRUs.Controllers
                 if (product is null)
                     throw new Exception("The product is not valid.");
 
-                if (product.Quantity > 0)
+                if (product.Quantity - item.Quantity > 0)
                 {
-                    product.Quantity--;
                     item.Quantity++;
                     shoppingCart.ProductsQuantity++;
 
@@ -222,14 +224,8 @@ namespace BallsRUs.Controllers
                 if (shoppingCart is null)
                     throw new Exception("The shopping cart is not valid.");
 
-                Product? product = _context.Products.Find(item.ProductId);
-
-                if (product is null)
-                    throw new Exception("The product is not valid.");
-
                 if (item.Quantity > 1)
                 {
-                    product.Quantity++;
                     item.Quantity--;
                     shoppingCart.ProductsQuantity--;
 
@@ -237,7 +233,6 @@ namespace BallsRUs.Controllers
                 }
                 else if (item.Quantity == 1)
                 {
-                    product.Quantity++;
                     shoppingCart.ProductsQuantity--;
 
                     _context.ShoppingCartItems.Remove(item);

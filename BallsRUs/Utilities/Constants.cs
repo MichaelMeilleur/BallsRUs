@@ -5,6 +5,8 @@
         // Shopping Cart
         public const decimal TAXES_PERCENTAGE = 0.14975m;
         public const decimal ESTIMATED_SHIPPING_COST = 9.99m;
+
+        // Session keys
         public const string SHOPPING_CART_SESSION_KEY = "ShoppingCartId";
 
         // Nombre d'occurences
@@ -25,9 +27,13 @@
         public const int PRODUCT_MAX_FULL_DESC_LENGTH = 1200;
         public const string PRODUCT_SKU_REGEX = "^[A-Z]{3}\\d{4}[A-Z]{3}$";
 
+        // Pour les ViewModels des commandes
+        public const string ORDER_PHONE_REGEX = "^[0-9]+$";
+        public const string ORDER_POSTAL_CODE_REGEX = "^[A-Za-z]\\d[A-Za-z] \\d[A-Za-z]\\d$|^[A-Za-z]\\d[A-Za-z]\\d[A-Za-z]\\d$";
+
+
         // Roles
         public const string ROLE_UTILISATEUR = "Utilisateur";
         public const string ROLE_ADMIN = "Administrateur";
-
     }
 }

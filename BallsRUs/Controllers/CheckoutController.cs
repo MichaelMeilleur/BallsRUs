@@ -2,8 +2,10 @@
 using BallsRUs.Entities;
 using BallsRUs.Models.Checkout;
 using BallsRUs.Utilities;
+using BallsRUs.ViewComponents;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 
@@ -77,6 +79,8 @@ namespace BallsRUs.Controllers
             if (!ModelState.IsValid)
                 return View(vm);
 
+            Guid orderGuid;
+
             if (User.Identity!.IsAuthenticated)
             {
                 string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -99,6 +103,7 @@ namespace BallsRUs.Controllers
                     {
                         address = new Address()
                         {
+                            Id = Guid.NewGuid(),
                             Street = vm.AddressStreet!,
                             City = vm.AddressCity!,
                             StateProvince = vm.AddressStateProvince!,
@@ -108,10 +113,15 @@ namespace BallsRUs.Controllers
 
                         if (vm.SaveAddress)
                             address.UserId = userGuid;
+
+                        _context.Addresses.Add(address);
                     }
+
+                    orderGuid = Guid.NewGuid();
 
                     Order order = new Order()
                     {
+                        Id = orderGuid,
                         Number = GenerateRandomOrderNumber(),
                         FirstName = vm.FirstName,
                         LastName = vm.LastName,
@@ -140,11 +150,19 @@ namespace BallsRUs.Controllers
                         if (product is null)
                             throw new Exception("The product of the item wasn't found.");
 
+                        if (product.Quantity < item.Quantity)
+                        {
+                            TempData["PassErrorToShoppingCart"] = "Un item de votre panier n'est plus en stock. Veuillez le retirer avant de compléter votre commande.";
+                            return RedirectToAction("Index", "ShoppingCart");
+                        }
+
                         productCost += product.DiscountedPrice is not null
                                         ? (decimal)(product.DiscountedPrice! * item.Quantity!)
                                         : (decimal)(product.RetailPrice! * item.Quantity!);
 
                         productQuantity += item.Quantity;
+
+                        product.Quantity -= item.Quantity;
 
                         _context.ShoppingCartItems.Remove(item);
                     }
@@ -176,8 +194,11 @@ namespace BallsRUs.Controllers
                     PostalCode = vm.AddressPostalCode!
                 };
 
+                orderGuid = Guid.NewGuid();
+
                 Order order = new Order()
                 {
+                    Id = orderGuid,
                     Number = GenerateRandomOrderNumber(),
                     FirstName = vm.FirstName,
                     LastName = vm.LastName,
@@ -212,11 +233,19 @@ namespace BallsRUs.Controllers
                         if (product is null)
                             throw new Exception("The product of the item wasn't found.");
 
+                        if (product.Quantity < item.Quantity)
+                        {
+                            TempData["PassErrorToShoppingCart"] = "Un item de votre panier n'est plus en stock. Veuillez le retirer avant de compléter votre commande.";
+                            return RedirectToAction("Index", "ShoppingCart");
+                        }
+
                         productCost += product.DiscountedPrice is not null
                                         ? (decimal)(product.DiscountedPrice! * item.Quantity!)
                                         : (decimal)(product.RetailPrice! * item.Quantity!);
 
                         productQuantity += item.Quantity;
+
+                        product.Quantity -= item.Quantity;
 
                         _context.ShoppingCartItems.Remove(item);
                     }
@@ -238,18 +267,70 @@ namespace BallsRUs.Controllers
                 }
             }
 
-            return RedirectToAction(nameof(Confirmation)); // Rediriger à la page de confirmation (trouver une façon de rediriger les clients anonymes).
+            return RedirectToAction(nameof(Confirmation), new { orderId = orderGuid });
         }
 
-        public IActionResult Confirmation()
+        public IActionResult Confirmation(Guid orderId)
         {
-            return View();
+            ViewBag.orderId = orderId;
+
+            Order? order = _context.Order.Find(orderId);
+
+            if (order is null)
+                throw new ArgumentOutOfRangeException(nameof(orderId));
+
+            Address? address = _context.Addresses.Find(order.AddressId);
+
+            if (address is null)
+                throw new Exception("The address wasn't found.");
+
+            CheckoutConfirmationVM vm = new CheckoutConfirmationVM()
+            {
+                Id = orderId,
+                Number = order.Number,
+                FirstName = order.FirstName,
+                LastName = order.LastName,
+                EmailAddress = order.EmailAddress,
+                PhoneNumber = order.PhoneNumber,
+                ProductQuantity = order.ProductQuantity,
+                ProductCost = order.ProductsCost,
+                ShippingCost = order.ShippingCost,
+                SubTotal = order.SubTotal,
+                Taxes = order.Taxes,
+                Total = order.Total,
+                AddressStreet = address.Street,
+                AddressCity = address.City,
+                AddressStateProvince = address.StateProvince,
+                AddressCountry = address.Country,
+                AddressPostalCode = address.PostalCode
+            };
+
+            ViewBag.OrderAlreadyConfirmed = false;
+
+            if (order.Status != OrderStatus.Opened)
+                ViewBag.OrderAlreadyConfirmed = true;
+
+            return View(vm);
         }
 
         [HttpPost]
-        public IActionResult Confirmation(bool MettreLeViewModelIci)
+        public IActionResult Confirmation(CheckoutConfirmationVM vm, Guid orderId)
         {
-            return View();
+            ViewBag.orderId = orderId;
+
+            if (!ModelState.IsValid)
+                return View(vm);
+
+            Order? order = _context.Order.Find(orderId);
+
+            if (order is null)
+                throw new ArgumentOutOfRangeException(nameof(orderId));
+
+            order.Status = OrderStatus.Confirmed;
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Details", "Account");
         }
 
         private string GenerateRandomOrderNumber()
