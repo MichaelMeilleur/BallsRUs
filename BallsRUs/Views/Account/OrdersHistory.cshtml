@@ -1,0 +1,47 @@
+﻿@using BallsRUs.Models.Account
+@model IEnumerable<OrderManageVM>
+
+@{
+    ViewData["Title"] = "Liste des commandes";
+}
+<div class="order-orderslist-container">
+    @if (Model.Count() > 0)
+    {
+
+        <table class="table">
+            <thead class="order-orderslist-table">
+                <tr>
+                    <th scope="col">Commande #</th>
+                    <th scope="col">Date d'achat</th>
+                    <th scope="col">Facturé à</th>
+                    <th scope="col">Sous-Total</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var order in Model)
+                    {
+                        <text>
+                        <tr>
+                            <th scope="row">@order.Number</th>
+                            <td>@order.ConfirmationDate</td>
+                            <td>@order.LastName @order.FirstName</td>
+                            <td>@order.SubTotal$</td>
+                            <td>@order.Status</td>
+                            <td>@Html.ActionLink("Détails","OrderDetails", new{orderId = order.Id}, new{ @class=" btn btn-primary" })</td>
+                        </tr>
+                        </text>
+                    }
+                }
+
+
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h4>Vous n'avez aucune commande</h4>
+    }
+</div>
