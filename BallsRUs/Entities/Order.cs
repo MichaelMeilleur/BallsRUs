@@ -26,7 +26,7 @@ namespace BallsRUs.Entities
         public DateTime? ModificationDate { get; set; }
 
         // Foreign keys
-        public Guid UserId { get; set; }
+        public Guid? UserId { get; set; }
         public Guid AddressId { get; set; }
 
         // Navigation properties

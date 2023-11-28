@@ -156,6 +156,20 @@ namespace BallsRUs.Controllers
                             return RedirectToAction("Index", "ShoppingCart");
                         }
 
+                        OrderItem oi = new OrderItem()
+                        {
+                            Quantity = item.Quantity,
+                            UnitaryPrice = product.DiscountedPrice is not null ? (decimal)product.DiscountedPrice! : (decimal)product.RetailPrice!,
+                            TotalCost = product.DiscountedPrice is not null
+                                        ? (decimal)(product.DiscountedPrice! * item.Quantity!)
+                                        : (decimal)(product.RetailPrice! * item.Quantity!),
+                            CreationDate = DateTime.UtcNow,
+                            OrderId = orderGuid,
+                            ProductId = product.Id
+                        };
+
+                        _context.OrderItems.Add(oi);
+
                         productCost += product.DiscountedPrice is not null
                                         ? (decimal)(product.DiscountedPrice! * item.Quantity!)
                                         : (decimal)(product.RetailPrice! * item.Quantity!);
@@ -175,7 +189,7 @@ namespace BallsRUs.Controllers
                     order.Taxes = order.SubTotal * Constants.TAXES_PERCENTAGE;
                     order.Total = order.SubTotal + order.Taxes;
 
-                    _context.Order.Add(order);
+                    _context.Orders.Add(order);
                     _context.SaveChanges();
                 }
                 else
@@ -239,6 +253,20 @@ namespace BallsRUs.Controllers
                             return RedirectToAction("Index", "ShoppingCart");
                         }
 
+                        OrderItem oi = new OrderItem()
+                        {
+                            Quantity = item.Quantity,
+                            UnitaryPrice = product.DiscountedPrice is not null ? (decimal)product.DiscountedPrice! : (decimal)product.RetailPrice!,
+                            TotalCost = product.DiscountedPrice is not null
+                                        ? (decimal)(product.DiscountedPrice! * item.Quantity!)
+                                        : (decimal)(product.RetailPrice! * item.Quantity!),
+                            CreationDate = DateTime.UtcNow,
+                            OrderId = orderGuid,
+                            ProductId = product.Id
+                        };
+
+                        _context.OrderItems.Add(oi);
+
                         productCost += product.DiscountedPrice is not null
                                         ? (decimal)(product.DiscountedPrice! * item.Quantity!)
                                         : (decimal)(product.RetailPrice! * item.Quantity!);
@@ -258,7 +286,7 @@ namespace BallsRUs.Controllers
                     order.Taxes = order.SubTotal * Constants.TAXES_PERCENTAGE;
                     order.Total = order.SubTotal + order.Taxes;
 
-                    _context.Order.Add(order);
+                    _context.Orders.Add(order);
                     _context.SaveChanges();
                 }
                 else
@@ -272,7 +300,7 @@ namespace BallsRUs.Controllers
 
         public IActionResult Confirmation(Guid orderId)
         {
-            Order? order = _context.Order.Find(orderId);
+            Order? order = _context.Orders.Find(orderId);
 
             if (order is null)
                 throw new ArgumentOutOfRangeException(nameof(orderId));
@@ -312,7 +340,7 @@ namespace BallsRUs.Controllers
         [HttpPost]
         public IActionResult Confirmation(CheckoutConfirmationVM vm, Guid orderId)
         {
-            Order? order = _context.Order.Find(orderId);
+            Order? order = _context.Orders.Find(orderId);
 
             if (order is null)
                 throw new ArgumentOutOfRangeException(nameof(orderId));
