@@ -46,6 +46,7 @@
         </div>
         <div>
             @Html.ActionLink("Annuler ma commande","CancelOrder","Order",new{OrderId= Model.Id}, new{ @class=" btn btn-danger" })
+            @Html.ActionLink("Back","OrdersHistory","Account",null, new{ @class=" btn btn-primary" })
         </div>
 
     </div>
