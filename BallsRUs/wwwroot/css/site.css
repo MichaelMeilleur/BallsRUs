@@ -1178,3 +1178,89 @@ input[type=text], input[type=password], input[type=number], textarea {
         background-repeat: no-repeat;
         background-size: cover;
     }
+
+#checkout-confirmation-container {
+    justify-content: center;
+}
+
+#checkout-confirmation-title {
+    width: fit-content;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#checkout-confirmation-title {
+    width: fit-content;
+    margin-top: 40px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#checkout-confirmation-sub-title {
+    width: fit-content;
+    margin-bottom: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#checkout-confirmation-information-container {
+    width: max(70%, 350px);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#checkout-confirmation-instructions-text {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 25px;
+}
+
+#checkout-confirmation-user-information-table {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#checkout-confirmation-order-summary-table {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.checkout-confirmation-table-left-data {
+    font-weight: bold;
+}
+
+#checkout-confirmation-form {
+    width: max(70%, 350px);
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#checkout-confirmation-form .form-group {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#checkout-information-confirm-information-checkbox {
+    -webkit-appearance: none;
+    background-color: white;
+    border: 1px solid #cacece;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    padding: 7px;
+    width: 15px;
+    height: 15px;
+    border-radius: 0px;
+}
+    #checkout-information-confirm-information-checkbox:checked {
+        background-color: forestgreen;
+        background-image: url("/img/crochet.svg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
