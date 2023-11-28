@@ -433,6 +433,39 @@ namespace BallsRUs.Controllers
 
         }
 
+        public IActionResult OrdersHistory()
+        {
+            Guid userId = GetCurrentUserId();
+            IEnumerable<OrderManageVM> orders = _context.Orders.Where(x => x.UserId == userId).Select(order => new OrderManageVM
+            {
+                Id = order.Id,
+                ConfirmationDate = order.ConfirmationDate,
+                CreationDate = order.CreationDate,
+                EmailAddress = order.EmailAddress,
+                FirstName = order.FirstName,
+                LastName = order.LastName,
+                ModificationDate = order.ModificationDate,
+                Number = order.Number,
+                PaymentDate = order.PaymentDate,
+                PhoneNumber = order.PhoneNumber,
+                ProductQuantity = order.ProductQuantity,
+                ProductsCost = order.ProductsCost,
+                ShippingCost = order.ShippingCost,
+                Status = order.Status,
+                SubTotal = order.SubTotal,
+                Taxes = order.Taxes,
+                Total = order.Total,
+                User = order.User
+            });
+
+            return View(orders);
+        }
+
+        private Guid GetCurrentUserId()
+        {
+            return (Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
+        }
+
         private bool IsCanadianPostalCodeValid(string postalCode)
         {
             var canadianPostalCodeRegex = new Regex(@"^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$");
@@ -470,5 +503,7 @@ namespace BallsRUs.Controllers
                 _context.SaveChanges();
             }
         }
+
+
     }
 }

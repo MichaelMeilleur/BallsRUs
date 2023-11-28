@@ -374,7 +374,7 @@ namespace BallsRUs.Controllers
             }
 
             order.Status = OrderStatus.Confirmed;
-
+            order.ConfirmationDate = DateTime.Now;
             _context.SaveChanges();
 
             return RedirectToAction("Details", "Account");
