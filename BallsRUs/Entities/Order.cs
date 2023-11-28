@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace BallsRUs.Entities
 {
-    public enum OrderStatus { Opened, Validated, Payed, Refunded, Canceled }
+    public enum OrderStatus { Opened, Confirmed, Payed, Refunded, Canceled }
 
     public class Order
     {
@@ -21,8 +21,9 @@ namespace BallsRUs.Entities
         public decimal? Taxes { get; set; }
         public decimal? Total { get; set; }
         public DateTime CreationDate { get; set; }
-        public DateTime PaymentDate { get; set; }
-        public DateTime ModificationDate { get; set; }
+        public DateTime? ConfirmationDate { get; set; }
+        public DateTime? PaymentDate { get; set; }
+        public DateTime? ModificationDate { get; set; }
 
         // Foreign keys
         public Guid UserId { get; set; }

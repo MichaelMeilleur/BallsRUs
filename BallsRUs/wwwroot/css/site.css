@@ -1138,3 +1138,43 @@ input[type=text], input[type=password], input[type=number], textarea {
     #shopping-cart-checkout-method-modal-cancel-button:hover {
         filter: brightness(1.10);
     }
+
+#checkout-information-container {
+    width: max(350px, 40%);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#checkout-information-title {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: bold;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+#checkout-information-existing-address-container {
+    margin-top: 45px;
+}
+
+#checkout-information-existing-address-container p {
+    font-weight: bold;
+}
+
+.checkout-information-checkbox {
+    -webkit-appearance: none;
+    background-color: white;
+    border: 1px solid #cacece;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    padding: 7px;
+    width: 15px;
+    height: 15px;
+    border-radius: 0px;
+}
+    .checkout-information-checkbox:checked {
+        background-color: forestgreen;
+        background-image: url("/img/crochet.svg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }

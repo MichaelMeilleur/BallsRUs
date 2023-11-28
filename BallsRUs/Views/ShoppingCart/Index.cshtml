@@ -56,13 +56,13 @@
                                     </div>
                                     <div class="col-3 justify-content-end d-flex">
                                         <a asp-controller="ShoppingCart" asp-action="DecrementItem" asp-route-itemId="@item.Id">
-                                            <img src="~/img/moins.svg" class="shopping-cart-index-products-quantity-icon" />
+                                            <img src="~/img/moins.svg" class="shopping-cart-index-products-quantity-icon" style="@if(!item.IsAvailable){@Html.Raw("filter: opacity(40%);")}" />
                                         </a>
-                                        <h6 class="mx-3">@item.Quantity</h6>
+                                        <h6 class="mx-3" style="@if(!item.IsAvailable){@Html.Raw("color: #bd0b11;")}">@item.Quantity</h6>
                                         <a asp-controller="ShoppingCart" asp-action="IncrementItem" asp-route-itemId="@item.Id">
                                             <img src="~/img/plus.svg" class="shopping-cart-index-products-quantity-icon" />
                                         </a>
-                                    </div>
+                                    </div>  
                                 </div>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
                     <div class="col-6 justify-content-end d-flex"><span style="font-weight: bold; font-size: 20px;">@Model.Total</span></div>
                 </div>
                 <div class="justify-content-center align-self-end">
-                    @if (Model.Quantity > 0)
+                    @if (Model.Quantity > 0 && ViewBag.AllProductsAreAvailable == true)
                     {
                         @if (User!.Identity!.IsAuthenticated)
                         {
@@ -129,7 +129,7 @@
 </div>
 
 @{
-    if (!User!.Identity!.IsAuthenticated)
+    if (!User!.Identity!.IsAuthenticated && Model.Quantity > 0 && ViewBag.AllProductsAreAvailable == true)
     {
         Html.RenderPartial("_CheckoutMethodPartial", new LogInVM());
     }

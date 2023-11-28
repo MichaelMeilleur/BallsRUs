@@ -1,0 +1,85 @@
+﻿@using BallsRUs.Models.Checkout;
+
+@model CheckoutConfirmationVM
+
+@{
+    ViewData["Title"] = "Confirmer votre commande";
+}
+
+<div id="checkout-confirmation-container">
+    @if (ViewBag.OrderAlreadyConfirmed == false)
+    {
+        <h3>Confirmer la commande #@Model.Number</h3>
+        <div>
+            <p>Veuillez vérifier que les information suivantes sont exactes.</p>
+            
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Prénom</td>
+                        <td>@Model.FirstName</td>
+                    </tr>
+                    <tr>
+                        <td>Nom</td>
+                        <td>@Model.LastName</td>
+                    </tr>
+                    <tr>
+                        <td>Adresse courriel</td>
+                        <td>@Model.EmailAddress</td>
+                    </tr>
+                    <tr>
+                        <td>Téléphone</td>
+                        <td>@Model.PhoneNumber</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <h5>Adresse</h5>
+                <p>@Model.AddressStreet</p>
+                <p>@Model.AddressCity, @Model.AddressStateProvince (@Model.AddressCountry)</p>
+                <p>@Model.AddressPostalCode</p>
+            </div>
+            <div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Total des produits</td>
+                            <td>@Model.ProductCost</td>
+                        </tr>
+                        <tr>
+                            <td>Coût de livraison</td>
+                            <td>@Model.ShippingCost</td>
+                        </tr>
+                        <tr>
+                            <td>Sous-Total</td>
+                            <td>@Model.SubTotal</td>
+                        </tr>
+                        <tr>
+                            <td>Taxes</td>
+                            <td>@Model.Taxes</td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td>@Model.Total</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <form asp-controller="Checkout" asp-action="Confirmation" asp-route-orderId="@Model.Id" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input id="checkout-information-confirm-information-checkbox" type="checkbox" asp-for="ConfirmInformation"> Je confirme que mes informations sont exactes
+                <span asp-validation-for="ConfirmInformation" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-4 mb-1 text-start">
+                <input type="submit" value="Confirmer la commande" />
+            </div>
+        </form>
+    }
+    else
+    {
+        <h3>Aucune commande à confirmer</h3>
+        <p>La commande que vous voulez atteindre est déjà confirmée.</p>
+    }
+</div>
