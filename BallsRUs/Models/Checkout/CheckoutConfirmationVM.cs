@@ -1,4 +1,5 @@
-﻿using BallsRUs.Models.Admin;
+﻿using BallsRUs.Entities;
+using BallsRUs.Models.Admin;
 using FluentValidation;
 
 namespace BallsRUs.Models.Checkout
@@ -24,6 +25,7 @@ namespace BallsRUs.Models.Checkout
         public string? AddressPostalCode { get; set; }
         public bool ConfirmInformation { get; set; } = false;
         public bool OrderAlreadyConfirmed { get; set; } = false;
+        public List<CheckoutConfirmationItemVM>? OrderItems { get; set; }
     }
 
     public class CheckoutConfirmationValidator : AbstractValidator<CheckoutConfirmationVM>

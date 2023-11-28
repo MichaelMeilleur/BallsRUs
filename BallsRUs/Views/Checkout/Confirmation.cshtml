@@ -43,6 +43,24 @@
                         <td class="checkout-confirmation-table-left-data"></td>
                         <td class="checkout-confirmation-table-right-data">@Model.AddressPostalCode</td>
                     </tr>
+                    @if (Model.OrderItems is not null && Model.OrderItems.Count > 0)
+                    {
+                        <tr>
+                            <td class="checkout-confirmation-table-left-data">Produits commandés</td>
+                            <td class="checkout-confirmation-table-right-data">@Model.ProductQuantity</td>
+                        </tr>
+                        @foreach (var item in Model.OrderItems)
+                        {
+                            <tr>
+                                <td class="checkout-confirmation-table-left-data">@item.ProductName</td>
+                                <td class="checkout-confirmation-table-right-data">@item.TotalCost</td>
+                            </tr>
+                            <tr>
+                                <td class="checkout-confirmation-table-left-data"></td>
+                                <td class="checkout-confirmation-table-right-data">@item.Quantity</td>
+                            </tr>
+                        }
+                    }
                     <tr>
                         <td class="checkout-confirmation-table-left-data">Total des produits</td>
                         <td class="checkout-confirmation-table-right-data">@Model.ProductCost</td>

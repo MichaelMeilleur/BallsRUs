@@ -2,6 +2,8 @@
 {
     public static class Constants
     {
+        public const string NA = "N/A";
+
         // Shopping Cart
         public const decimal TAXES_PERCENTAGE = 0.14975m;
         public const decimal ESTIMATED_SHIPPING_COST = 9.99m;

@@ -310,6 +310,25 @@ namespace BallsRUs.Controllers
             if (address is null)
                 throw new Exception("The address wasn't found.");
 
+            List<OrderItem> items = _context.OrderItems.Where(oi => oi.OrderId == orderId).ToList();
+
+            List<CheckoutConfirmationItemVM> itemListVM = new List<CheckoutConfirmationItemVM>();
+
+            foreach (OrderItem item in items)
+            {
+                Product? itemProduct = _context.Products.Find(item.ProductId);
+
+                CheckoutConfirmationItemVM itemVM = new CheckoutConfirmationItemVM()
+                {
+                    Id = item.Id,
+                    Quantity = item.Quantity,
+                    TotalCost = item.TotalCost,
+                    ProductName = itemProduct is not null ? itemProduct.Name : Constants.NA
+                };
+
+                itemListVM.Add(itemVM);
+            }
+
             CheckoutConfirmationVM vm = new CheckoutConfirmationVM()
             {
                 Id = orderId,
@@ -328,7 +347,8 @@ namespace BallsRUs.Controllers
                 AddressCity = address.City,
                 AddressStateProvince = address.StateProvince,
                 AddressCountry = address.Country,
-                AddressPostalCode = address.PostalCode
+                AddressPostalCode = address.PostalCode,
+                OrderItems = itemListVM
             };
 
             if (order.Status != OrderStatus.Opened)
@@ -352,6 +372,25 @@ namespace BallsRUs.Controllers
                 if (address is null)
                     throw new Exception("The address wasn't found.");
 
+                List<OrderItem> items = _context.OrderItems.Where(oi => oi.OrderId == orderId).ToList();
+
+                List<CheckoutConfirmationItemVM> itemListVM = new List<CheckoutConfirmationItemVM>();
+
+                foreach (OrderItem item in items)
+                {
+                    Product? itemProduct = _context.Products.Find(item.ProductId);
+
+                    CheckoutConfirmationItemVM itemVM = new CheckoutConfirmationItemVM()
+                    {
+                        Id = item.Id,
+                        Quantity = item.Quantity,
+                        TotalCost = item.TotalCost,
+                        ProductName = itemProduct is not null ? itemProduct.Name : Constants.NA
+                    };
+
+                    itemListVM.Add(itemVM);
+                }
+
                 vm.Id = orderId;
                 vm.Number = order.Number;
                 vm.FirstName = order.FirstName;
@@ -369,6 +408,7 @@ namespace BallsRUs.Controllers
                 vm.AddressStateProvince = address.StateProvince;
                 vm.AddressCountry = address.Country;
                 vm.AddressPostalCode = address.PostalCode;
+                vm.OrderItems = itemListVM;
 
                 return View(vm);
             }
