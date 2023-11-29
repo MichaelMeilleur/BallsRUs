@@ -142,12 +142,13 @@ namespace BallsRUs.Controllers
 
             try
             {
-                var newUser = new User(vm.UserName!)
+                User newUser = new User(vm.UserName!)
                 {
                     FirstName = vm.FirstName,
                     LastName = vm.LastName,
                     Email = vm.UserName,
-                    NormalizedEmail = vm.UserName!.ToUpper()
+                    NormalizedEmail = vm.UserName!.ToUpper(),
+                    PhoneNumber = vm.PhoneNumber
                 };
 
                 var result = await _userManager.CreateAsync(newUser, vm.Password!);
@@ -200,8 +201,9 @@ namespace BallsRUs.Controllers
 
         public IActionResult Details()
         {
-            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userIdString != null)
+            string userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
+            if (userIdString is not null)
             {
                 var userId = Guid.Parse(userIdString);
                 var userToShow = _context.Users.Find(userId);
@@ -228,48 +230,48 @@ namespace BallsRUs.Controllers
         public IActionResult Editinfo()
         {
             var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userIdString != null)
-            {
-                var userId = Guid.Parse(userIdString);
-                var userToShow = _context.Users.Find(userId);
 
-                var vm = new AccountDetailsVM()
-                {
-                    FirstName = userToShow.FirstName,
-                    LastName = userToShow.LastName,
-                    Email = userToShow.Email,
-                    PhoneNumber = userToShow.PhoneNumber ?? "Aucun numéro"
-                };
-                return View(vm);
-            }
-            return View();
+            if (userIdString is null)
+                throw new Exception("The id of the user doesn't exist.");
+
+            var userId = Guid.Parse(userIdString);
+            var userToShow = _context.Users.Find(userId);
+
+            if (userToShow is null)
+                throw new Exception("The user wasn't found.");
+
+            var vm = new AccountDetailsVM()
+            {
+                FirstName = userToShow.FirstName,
+                LastName = userToShow.LastName,
+                Email = userToShow.Email,
+                PhoneNumber = userToShow.PhoneNumber
+            };
+
+            return View(vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Editinfo(AccountDetailsVM vm)
+        public IActionResult Editinfo(AccountDetailsVM vm)
         {
             try
             {
                 var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                if (userIdString is null)
+                    throw new Exception("The id of the user doesn't exist.");
+
                 var userId = Guid.Parse(userIdString);
                 var userToChange = _context.Users.Find(userId);
 
-                if (userToChange.FirstName != vm.FirstName && !string.IsNullOrWhiteSpace(vm.FirstName))
-                {
-                    userToChange.FirstName = vm.FirstName;
-                }
+                if (userToChange is null)
+                    throw new Exception("The user wasn't found.");
 
-                if (userToChange.LastName != vm.LastName && !string.IsNullOrWhiteSpace(vm.LastName))
-                {
-                    userToChange.LastName = vm.LastName;
-                }
+                userToChange.FirstName = vm.FirstName;
+                userToChange.LastName = vm.LastName;
+                userToChange.PhoneNumber = vm.PhoneNumber;
 
-                if (userToChange.PhoneNumber != vm.PhoneNumber && !string.IsNullOrWhiteSpace(vm.PhoneNumber))
-                {
-                    userToChange.PhoneNumber = vm.PhoneNumber;
-                }
-
-                if (userToChange.Email != vm.Email && !string.IsNullOrWhiteSpace(vm.Email))
+                if (userToChange.Email != vm.Email)
                 {
                     bool userAlreadyExists = _context.Users.Any(u => u.UserName == vm.Email);
 
@@ -287,15 +289,10 @@ namespace BallsRUs.Controllers
                         userToChange.NormalizedEmail = vm.Email!.ToUpper();
                     }
                 }
-
-                if (string.IsNullOrWhiteSpace(vm.FirstName) || string.IsNullOrWhiteSpace(vm.LastName) || string.IsNullOrWhiteSpace(vm.Email) || string.IsNullOrWhiteSpace(vm.PhoneNumber))
-                {
-                    TempData["SuccessMessage"] = null;
-                }
-                else
-                    TempData["SuccessMessage"] = "Sauvegarde réussie";
-
+                
+                TempData["SuccessMessage"] = "Sauvegarde réussie";
                 _context.SaveChanges();
+
                 return View(vm);
             }
             catch
@@ -320,27 +317,21 @@ namespace BallsRUs.Controllers
                 var userId = Guid.Parse(userIdString);
                 var userToChange = _context.Users.Find(userId);
 
-                if (!IsCanadianPostalCodeValid(vm.AddressPostalCode))
-                    TempData["SuccessMessage"] = null;
-                else
+                var address = new Address()
                 {
-                    var address = new Address()
-                    {
-                        Id = Guid.NewGuid(),
-                        StateProvince = vm.AddressStateProvince!,
-                        Street = vm.AddressStreet!,
-                        City = vm.AddressCity!,
-                        Country = vm.AddressCountry!,
-                        PostalCode = vm.AddressPostalCode!,
-                        UserId = userId
-                    };
+                    Id = Guid.NewGuid(),
+                    StateProvince = vm.AddressStateProvince!,
+                    Street = vm.AddressStreet!,
+                    City = vm.AddressCity!,
+                    Country = vm.AddressCountry!,
+                    PostalCode = vm.AddressPostalCode!,
+                    UserId = userId
+                };
 
-                    userToChange.Address = address;
-                    _context.Addresses.Add(address);
-                    _context.SaveChanges();
-                    TempData["SuccessMessage"] = "Sauvegarde réussie";
-                }
-
+                userToChange.Address = address;
+                _context.Addresses.Add(address);
+                _context.SaveChanges();
+                TempData["SuccessMessage"] = "Sauvegarde réussie";
 
                 return View(vm);
             }
@@ -418,9 +409,6 @@ namespace BallsRUs.Controllers
                 else
                     TempData["SuccessMessage"] = "Sauvegarde réussie";
 
-                if (!IsCanadianPostalCodeValid(vm.AddressPostalCode))
-                    TempData["SuccessMessage"] = null;
-
                 _context.SaveChanges();
                 return View(vm);
             }
@@ -435,7 +423,9 @@ namespace BallsRUs.Controllers
 
         public IActionResult OrdersHistory()
         {
-            Guid userId = GetCurrentUserId();
+            string userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Guid userId = Guid.Parse(userIdString);
+
             IEnumerable<OrderManageVM> orders = _context.Orders.Where(x => x.UserId == userId).Select(order => new OrderManageVM
             {
                 Id = order.Id,
@@ -464,12 +454,6 @@ namespace BallsRUs.Controllers
         private Guid GetCurrentUserId()
         {
             return (Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value));
-        }
-
-        private bool IsCanadianPostalCodeValid(string postalCode)
-        {
-            var canadianPostalCodeRegex = new Regex(@"^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$");
-            return !string.IsNullOrEmpty(postalCode) && canadianPostalCodeRegex.IsMatch(postalCode);
         }
 
         private void DeleteShoppingCart(Guid shoppingCartId)

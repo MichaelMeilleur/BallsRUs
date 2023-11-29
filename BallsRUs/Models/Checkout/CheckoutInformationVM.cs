@@ -57,10 +57,12 @@ namespace BallsRUs.Models.Checkout
             RuleFor(vm => vm.PhoneNumber)
                 .NotEmpty()
                     .WithMessage("Veuillez entrer votre numéro de téléphone")
-                .MinimumLength(5)
+                .Matches(Constants.PHONE_NUMBER_REGEX)
+                    .WithMessage("Entrez seulement les chiffres de votre numéro de téléphone.")
+                .MinimumLength(10)
                     .WithMessage("Entrez un numéro de téléphone valide.")
-                .Matches(Constants.ORDER_PHONE_REGEX)
-                    .WithMessage("Entrez seulement les chiffres de votre numéro de téléphone.");
+                .MaximumLength(11)
+                    .WithMessage("Entrez un numéro de téléphone valide.");
 
             When(vm => !vm.UseExistingAddress, () =>
             {
@@ -79,7 +81,7 @@ namespace BallsRUs.Models.Checkout
                 RuleFor(vm => vm.AddressPostalCode)
                     .NotEmpty()
                         .WithMessage("Veuillez entrer le code postal de l'adresse de livraison")
-                    .Matches(Constants.ORDER_POSTAL_CODE_REGEX)
+                    .Matches(Constants.POSTAL_CODE_REGEX)
                         .WithMessage("Veuillez entrer un code postal valide. (Formats attendus: A1A 1A1 ou A1A1A1)");
             });
 

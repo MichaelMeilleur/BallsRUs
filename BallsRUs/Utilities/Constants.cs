@@ -20,19 +20,16 @@
         public const string BRAND_ALPHABETICAL = "brand-alphabetical";
         public const string RELEASE_NEW_TO_OLD = "new-to-old";
 
-        // Pour les ViewModels des produits
+        // Pour les ViewModels
         public const int PRODUCT_MIN_NAME_LENGTH = 5;
         public const int PRODUCT_MAX_NAME_LENGTH = 100;
         public const int PRODUCT_MIN_SHORT_DESC_LENGTH = 20;
         public const int PRODUCT_MAX_SHORT_DESC_LENGTH = 200;
         public const int PRODUCT_MIN_FULL_DESC_LENGTH = 100;
         public const int PRODUCT_MAX_FULL_DESC_LENGTH = 1200;
+        public const string POSTAL_CODE_REGEX = "^[A-Za-z]\\d[A-Za-z] \\d[A-Za-z]\\d$|^[A-Za-z]\\d[A-Za-z]\\d[A-Za-z]\\d$";
         public const string PRODUCT_SKU_REGEX = "^[A-Z]{3}\\d{4}[A-Z]{3}$";
-
-        // Pour les ViewModels des commandes
-        public const string ORDER_PHONE_REGEX = "^[0-9]+$";
-        public const string ORDER_POSTAL_CODE_REGEX = "^[A-Za-z]\\d[A-Za-z] \\d[A-Za-z]\\d$|^[A-Za-z]\\d[A-Za-z]\\d[A-Za-z]\\d$";
-
+        public const string PHONE_NUMBER_REGEX = "^[0-9]+$";
 
         // Roles
         public const string ROLE_UTILISATEUR = "Utilisateur";
