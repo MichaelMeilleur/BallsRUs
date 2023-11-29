@@ -201,12 +201,15 @@ namespace BallsRUs.Controllers
             {
                 Address address = new Address()
                 {
+                    Id = Guid.NewGuid(),
                     Street = vm.AddressStreet!,
                     City = vm.AddressCity!,
                     StateProvince = vm.AddressStateProvince!,
                     Country = vm.AddressCountry!,
                     PostalCode = vm.AddressPostalCode!
                 };
+
+                _context.Addresses.Add(address);
 
                 orderGuid = Guid.NewGuid();
 
