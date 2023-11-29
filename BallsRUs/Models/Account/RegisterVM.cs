@@ -2,6 +2,7 @@
 using System.Diagnostics.Metrics;
 using System.IO;
 using System.Text.RegularExpressions;
+using BallsRUs.Utilities;
 using FluentValidation;
 
 namespace BallsRUs.Models.Account
@@ -13,6 +14,8 @@ namespace BallsRUs.Models.Account
         public string? LastName { get; set; }
 
         public string? UserName { get; set; }
+
+        public string? PhoneNumber { get; set; }
 
         [DataType(DataType.Password)]
         public string? Password { get; set; }
@@ -47,6 +50,15 @@ namespace BallsRUs.Models.Account
             RuleFor(vm => vm.LastName)
                 .NotEmpty()
                     .WithMessage("Veuillez entrer un nom.");
+            RuleFor(vm => vm.PhoneNumber)
+                .NotEmpty()
+                    .WithMessage("Veuillez entrer votre numéro de téléphone")
+                .Matches(Constants.PHONE_NUMBER_REGEX)
+                    .WithMessage("Entrez seulement les chiffres de votre numéro de téléphone.")
+                .MinimumLength(10)
+                    .WithMessage("Entrez un numéro de téléphone valide.")
+                .MaximumLength(11)
+                    .WithMessage("Entrez un numéro de téléphone valide.");
             RuleFor(vm => vm.Password)
                 .NotEmpty()
                     .WithMessage("Veuillez entrer un mot de passe");
@@ -61,32 +73,21 @@ namespace BallsRUs.Models.Account
                 RuleFor(vm => vm.Street)
                     .NotEmpty()
                         .WithMessage("Veuillez entrer une rue.");
-
                 RuleFor(vm => vm.City)
                     .NotEmpty()
                         .WithMessage("Veuillez entrer une ville.");
-
                 RuleFor(vm => vm.PostalCode)
-     .NotEmpty()
-         .WithMessage("Veuillez entrer un code postal.")
-     .Must(BeAValidCanadianPostalCode)
-         .WithMessage("Le code postal doit être au format canadien (ex. A1A 1A1).");
-
+                    .NotEmpty()
+                        .WithMessage("Veuillez entrer un code postal.")
+                    .Matches(Constants.POSTAL_CODE_REGEX)
+                        .WithMessage("Veuillez entrer un code postal valide. (Formats attendus: A1A 1A1 ou A1A1A1)");
                 RuleFor(vm => vm.Country)
                     .NotEmpty()
                         .WithMessage("Veuillez entrer un pays.");
-
                 RuleFor(vm => vm.StateProvince)
                     .NotEmpty()
                         .WithMessage("Veuillez entrer une province ou un état.");
             });
-        }
-
-        private bool BeAValidCanadianPostalCode(string postalCode)
-        {
-            var canadianPostalCodeRegex = new Regex(@"^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$");
-
-            return !string.IsNullOrEmpty(postalCode) && canadianPostalCodeRegex.IsMatch(postalCode);
         }
     }
 }
