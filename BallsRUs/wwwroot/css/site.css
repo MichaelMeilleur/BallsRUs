@@ -1007,6 +1007,43 @@ input[type=text], input[type=password], input[type=number], textarea {
     margin-top: 10px;
 }
 
+#account-address-container {
+    width: 375px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#account-details-title {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+#account-address-cancel-button-container {
+    margin-top: 10px;
+    margin-bottom: 50px;
+    justify-content: center;
+    display: flex;
+}
+
+#account-address-cancel-button {
+    background-color: #6c757d;
+    color: white;
+    width: 200px;
+    height: 35px;
+    justify-self: center;
+    justify-content: center;
+    align-content: center;
+    display: grid;
+}
+    #account-address-cancel-button:hover {
+        filter: brightness(1.10);
+        text-decoration: none;
+    }
+
+.account-address-form-label {
+    font-weight: bold;
+}
+
 .shopping-cart-index-title {
     font-weight: bold;
     width: 100%;
