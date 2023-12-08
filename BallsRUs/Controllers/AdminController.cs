@@ -2,13 +2,7 @@
 using BallsRUs.Entities;
 using BallsRUs.Models.Admin;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.StaticFiles;
-using Microsoft.Extensions.Hosting.Internal;
-using Microsoft.Extensions.Primitives;
-using System;
-using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
 
@@ -316,85 +310,12 @@ namespace BallsRUs.Controllers
             {
                 List<OrderItem> orderToCancelItems = _context.OrderItems.Where(oi => oi.OrderId == orderToCancel.Id).ToList();
 
-                if (orderToCancel.UserId is not null)
+                foreach (OrderItem item in orderToCancelItems)
                 {
-                    ShoppingCart? shoppingCart = _context.ShoppingCarts.FirstOrDefault(sc => sc.UserId == orderToCancel.UserId);
+                    Product? product = _context.Products.Find(item.ProductId);
 
-                    if (shoppingCart is not null)
-                    {
-                        foreach (OrderItem item in orderToCancelItems)
-                        {
-                            Product? product = _context.Products.Find(item.ProductId);
-
-                            if (product is not null)
-                            {
-                                product.Quantity += item.Quantity;
-
-                                ShoppingCartItem? sci = _context.ShoppingCartItems
-                                    .FirstOrDefault(i => i.ShoppingCartId == shoppingCart.Id && i.ProductId == product.Id);
-
-                                if (sci is not null)
-                                {
-                                    sci.Quantity += item.Quantity;
-                                }
-                                else
-                                {
-                                    ShoppingCartItem? newSci = new ShoppingCartItem()
-                                    {
-                                        Quantity = item.Quantity,
-                                        CreationDate = DateTime.UtcNow,
-                                        ShoppingCartId = shoppingCart.Id,
-                                        ProductId = product.Id
-                                    };
-
-                                    _context.ShoppingCartItems.Add(newSci);
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        ShoppingCart newSC = new ShoppingCart
-                        {
-                            Id = Guid.NewGuid(),
-                            ProductsQuantity = 0,
-                            CreationDate = DateTime.UtcNow,
-                            UserId = orderToCancel.UserId
-                        };
-
-                        _context.ShoppingCarts.Add(newSC);
-
-                        foreach (var item in orderToCancelItems)
-                        {
-                            Product? product = _context.Products.Find(item.ProductId);
-
-                            if (product is not null)
-                            {
-                                product.Quantity += item.Quantity;
-
-                                ShoppingCartItem? newSci = new ShoppingCartItem()
-                                {
-                                    Quantity = item.Quantity,
-                                    CreationDate = DateTime.UtcNow,
-                                    ShoppingCartId = newSC.Id,
-                                    ProductId = product.Id
-                                };
-
-                                _context.ShoppingCartItems.Add(newSci);
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    // Ajouter les items au stock, mais ne pas les remettre dans un panier (car utilisateur est anonyme)
-                    foreach (OrderItem item in orderToCancelItems)
-                    {
-                        Product? product = _context.Products.Find(item.ProductId);
-
-                        if (product is not null)
-                            product.Quantity += item.Quantity;
-                    }
+                    if (product is not null)
+                        product.Quantity += item.Quantity;
                 }
 
                 orderToCancel.Status = OrderStatus.Canceled;
