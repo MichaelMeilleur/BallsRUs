@@ -28,25 +28,29 @@
                 {
                     @foreach (var item in Model.Items)
                     {
+                        string filterIsAvailable = !item.IsAvailable ? "filter: opacity(30%);" : "";
+
                         <div class="shopping-cart-index-products-card row">
                             <div class="col-3">
                                 <a asp-controller="Product" asp-action="Details" asp-route-productId="@item.ProductId">
-                                    <img id="shopping-cart-index-products-card-image" title="@Html.Raw(item.Name)" src="@Url.Content(item.ImagePath)" />
+                                    <img id="shopping-cart-index-products-card-image" title="@Html.Raw(item.Name)" src="@Url.Content(item.ImagePath)" style="@Html.Raw(filterIsAvailable)" />
                                 </a>
                             </div>
                             <div class="col-9 py-3 d-grid">
                                 <div class="row">
                                     <div class="col-8">
-                                        <h6>@item.Name</h6>
+                                        <a asp-controller="Product" asp-action="Details" asp-route-productId="@item.ProductId" class="shopping-cart-index-products-card-title-link">
+                                            <h6 style="width: fit-content; @Html.Raw(filterIsAvailable)">@item.Name</h6>
+                                        </a>
                                     </div>
                                     <div class="col-4 justify-content-end d-flex">
                                         @if (item.ItemTotalDiscountedPrice is not null)
                                         {
-                                            <h6>@item.ItemTotalDiscountedPrice <span class="shopping-cart-index-products-card-price-discounted">@item.ItemTotalRetailPrice</span></h6>
+                                            <h6 style="@Html.Raw(filterIsAvailable)">@item.ItemTotalDiscountedPrice <span class="shopping-cart-index-products-card-price-discounted">@item.ItemTotalRetailPrice</span></h6>
                                         }
                                         else
                                         {
-                                            <h6>@item.ItemTotalRetailPrice</h6>
+                                            <h6 style="@Html.Raw(filterIsAvailable)">@item.ItemTotalRetailPrice</h6>
                                         }
                                     </div>
                                 </div>
@@ -56,11 +60,11 @@
                                     </div>
                                     <div class="col-3 justify-content-end d-flex">
                                         <a asp-controller="ShoppingCart" asp-action="DecrementItem" asp-route-itemId="@item.Id">
-                                            <img src="~/img/moins.svg" class="shopping-cart-index-products-quantity-icon" style="@if(!item.IsAvailable){@Html.Raw("filter: opacity(40%);")}" />
+                                            <img src="~/img/moins.svg" class="shopping-cart-index-products-quantity-icon" />
                                         </a>
-                                        <h6 class="mx-3" style="@if(!item.IsAvailable){@Html.Raw("color: #bd0b11;")}">@item.Quantity</h6>
+                                        <h6 class="mx-3" style="@if(!item.IsAvailable){@Html.Raw("color: #bd0b11; font-weight: bolder;")}">@item.Quantity</h6>
                                         <a asp-controller="ShoppingCart" asp-action="IncrementItem" asp-route-itemId="@item.Id">
-                                            <img src="~/img/plus.svg" class="shopping-cart-index-products-quantity-icon" />
+                                            <img src="~/img/plus.svg" class="shopping-cart-index-products-quantity-icon" style="@Html.Raw(filterIsAvailable)" />
                                         </a>
                                     </div>  
                                 </div>

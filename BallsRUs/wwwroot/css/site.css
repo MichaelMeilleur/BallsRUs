@@ -1080,6 +1080,17 @@ input[type=text], input[type=password], input[type=number], textarea {
         text-decoration: underline;
     }
 
+.shopping-cart-index-products-card-title-link {
+    text-decoration: none;
+    color: black;
+    width: fit-content;
+    display: flex;
+}
+    .shopping-cart-index-products-card-title-link:hover {
+        text-decoration: none;
+        color: black;
+    }
+
 .shopping-cart-index-products-card-action-link {
     text-decoration: none;
     color: dimgrey;
