@@ -117,18 +117,27 @@ namespace BallsRUs.Controllers
 
                     shoppingCart.ProductsQuantity++;
 
+                    TempData["PassMessageToProductDetails"] = "Le produit a été ajouté à votre panier.";
+
                     _context.ShoppingCartItems.Add(cartItem);
                     _context.SaveChanges();
                 }
                 else
                 {
-                    shoppingCart.ProductsQuantity++;
-                    item.Quantity++;
+                    if (product.Quantity - (item.Quantity + 1) >= 0)
+                    {
+                        shoppingCart.ProductsQuantity++;
+                        item.Quantity++;
 
-                    _context.SaveChanges();
+                        TempData["PassMessageToProductDetails"] = "Le produit a été ajouté à votre panier.";
+
+                        _context.SaveChanges();
+                    }
+                    else
+                    {
+                        TempData["PassErrorToProductDetails"] = "Ce produit n'est plus en réserve. Votre panier contient déjà les derniers items de ce produit.";
+                    }
                 }
-
-                TempData["PassMessageToProductDetails"] = "Le produit a été ajouté à votre panier.";
             }
             else
             {
