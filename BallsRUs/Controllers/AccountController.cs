@@ -245,7 +245,7 @@ namespace BallsRUs.Controllers
             if (userToShow is null)
                 throw new Exception("The user wasn't found.");
 
-            AccountDetailsVM vm = new AccountDetailsVM()
+            AccountEditInfoVM vm = new AccountEditInfoVM()
             {
                 FirstName = userToShow.FirstName,
                 LastName = userToShow.LastName,
@@ -257,7 +257,7 @@ namespace BallsRUs.Controllers
         }
 
         [HttpPost]
-        public IActionResult Editinfo(AccountDetailsVM vm)
+        public IActionResult Editinfo(AccountEditInfoVM vm)
         {
             try
             {
@@ -294,17 +294,15 @@ namespace BallsRUs.Controllers
                     }
                 }
                 
-                TempData["SuccessMessage"] = "Sauvegarde réussie";
                 _context.SaveChanges();
 
-                return View(vm);
+                return RedirectToAction(nameof(Details));
             }
             catch
             {
                 ModelState.AddModelError(string.Empty, "Une erreur est survenue. Veuillez réessayer.");
                 return View(vm);
             }
-
         }
 
         public IActionResult Address()

@@ -1,11 +1,13 @@
 ﻿@using BallsRUs.Models.Order
+
 @model OrderDetailsVM
+
 @{
-    ViewData["Title"] = "Commande# " + ViewBag.OrderId;
+    ViewData["Title"] = "Commande #" + Model.Number;
 }
 
 <div id="order-orderdetails-container">
-    <h3>Détails de votre Commande #@Model.Number</h3>
+    <h3>Détails de la Commande #@Model.Number</h3>
     <div class="row mt-4">
         <div class="col-md-6">
             <div class="mb-4">
@@ -45,10 +47,9 @@
             </div>
         </div>
         <div>
-            @Html.ActionLink("Annuler ma commande","CancelOrder","Order",new{OrderId= Model.Id}, new{ @class=" btn btn-danger" })
-            @Html.ActionLink("Back","OrdersHistory","Account",null, new{ @class=" btn btn-primary" })
+            @Html.ActionLink("Retour", "OrdersHistory", "Account", new { }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Annuler ma commande", "CancelOrder", "Order", new{ OrderId = Model.Id }, new{ @class = "btn btn-danger" })
         </div>
-
     </div>
 </div>
 

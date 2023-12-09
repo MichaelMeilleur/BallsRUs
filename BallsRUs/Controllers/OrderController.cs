@@ -20,34 +20,32 @@ namespace BallsRUs.Controllers
 
         public IActionResult OrderDetails(Guid orderId)
         {
-            ViewBag.OrderId = orderId;
-            Order order = _context.Orders.FirstOrDefault(x => x.Id == orderId);
-            OrderDetailsVM vm = null;
+            Order? order = _context.Orders.FirstOrDefault(x => x.Id == orderId);
 
-            if (order is not null)
+            if (order is null)
+                throw new ArgumentOutOfRangeException(nameof(orderId));
+
+            OrderDetailsVM vm = new()
             {
-                vm = new()
-                {
-                    Id = order.Id,
-                    ConfirmationDate = order.ConfirmationDate,
-                    CreationDate = order.CreationDate,
-                    EmailAddress = order.EmailAddress,
-                    FirstName = order.FirstName,
-                    LastName = order.LastName,
-                    ModificationDate = order.ModificationDate,
-                    Number = order.Number,
-                    PaymentDate = order.PaymentDate,
-                    PhoneNumber = order.PhoneNumber,
-                    ProductQuantity = order.ProductQuantity,
-                    ProductsCost = order.ProductsCost,
-                    ShippingCost = order.ShippingCost,
-                    Status = order.Status,
-                    SubTotal = order.SubTotal,
-                    Taxes = order.Taxes,
-                    Total = order.Total,
-                };
+                Id = order.Id,
+                ConfirmationDate = order.ConfirmationDate,
+                CreationDate = order.CreationDate,
+                EmailAddress = order.EmailAddress,
+                FirstName = order.FirstName,
+                LastName = order.LastName,
+                ModificationDate = order.ModificationDate,
+                Number = order.Number,
+                PaymentDate = order.PaymentDate,
+                PhoneNumber = order.PhoneNumber,
+                ProductQuantity = order.ProductQuantity,
+                ProductsCost = order.ProductsCost,
+                ShippingCost = order.ShippingCost,
+                Status = order.Status,
+                SubTotal = order.SubTotal,
+                Taxes = order.Taxes,
+                Total = order.Total,
+            };
 
-            }
             return View(vm);
         }
         public IActionResult CancelOrder(Guid OrderId)

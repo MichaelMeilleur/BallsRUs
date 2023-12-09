@@ -1013,9 +1013,62 @@ input[type=text], input[type=password], input[type=number], textarea {
     margin-right: auto;
 }
 
-#account-details-title {
+#account-edit-info-title {
+    width: fit-content;
+    font-family: 'Poppins';
+    font-weight: bold;
     margin-top: 50px;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#account-edit-info-form {
+    width: 375px;
+    margin: auto;
+}
+
+.account-edit-info-form-label {
+    font-weight: bold;
+    font-family: 'Poppins';
+}
+
+#account-edit-info-cancel-button-container {
+    margin-top: 10px;
     margin-bottom: 50px;
+}
+
+#account-edit-info-cancel-button {
+    display: flex;
+    background-color: #6c757d;
+    color: white;
+    width: 200px;
+    height: 35px;
+    margin-top: 10px;
+    justify-content: center;
+    align-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+    #account-edit-info-cancel-button:hover {
+        text-decoration: none;
+        filter: brightness(1.10);
+    }
+
+#account-edit-info-cancel-button-text {
+    height: fit-content;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+#account-address-title {
+    font-family: 'Poppins';
+    font-weight: bold;
+    width: fit-content;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #account-address-cancel-button-container {
@@ -1042,6 +1095,7 @@ input[type=text], input[type=password], input[type=number], textarea {
 
 .account-address-form-label {
     font-weight: bold;
+    font-family: 'Poppins';
 }
 
 .shopping-cart-index-title {

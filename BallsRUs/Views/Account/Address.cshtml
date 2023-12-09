@@ -9,11 +9,11 @@
 <div id="account-address-container">
     @if (!Model.HasExistingAddress)
     {
-        <h3 id="account-details-title">Ajouter une adresse</h3>
+        <h3 id="account-address-title">Ajouter une adresse</h3>
     }
     else
     {
-        <h3 id="account-details-title">Modifier une adresse</h3>
+        <h3 id="account-address-title">Modifier une adresse</h3>
     }
     <form asp-controller="Account" asp-action="Address" id="account-address-form">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
