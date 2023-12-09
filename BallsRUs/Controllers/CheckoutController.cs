@@ -56,6 +56,7 @@ namespace BallsRUs.Controllers
                         vm.AddressCountry = address.Country;
                         vm.AddressPostalCode = address.PostalCode;
                         vm.HasExistingAddress = true;
+                        vm.UseExistingAddress = true;
                     }
                     else
                     {

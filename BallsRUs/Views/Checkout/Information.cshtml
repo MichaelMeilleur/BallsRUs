@@ -62,11 +62,11 @@
         @if (User!.Identity!.IsAuthenticated && Model.HasExistingAddress)
         {
             <div id="checkout-information-existing-address-container">
-                @* <div id="checkout-information-existing-address-info">
+                <div id="checkout-information-existing-address-info">
                     <p>@Model.AddressStreet</p>
                     <p>@Model.AddressCity, @Model.AddressStateProvince (@Model.AddressCountry)</p>
-                    <p>@Model.AddressPostalCode</p>
-                </div> *@
+                    <p class="m-0">@Model.AddressPostalCode</p>
+                </div>
                 <div class="mb-4">
                     <input id="checkout-information-use-existing-address-checkbox" type="checkbox" asp-for="UseExistingAddress" class="checkout-information-checkbox"> Utiliser l'addresse existante
                 </div>
@@ -89,36 +89,32 @@
     </form>
 </div>
 
-@* @section Scripts {
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var useExistingAddressCheckbox = document.getElementById('checkout-information-use-existing-address-checkbox');
-            var addressContainer = document.getElementById('checkout-information-address-container');
+@section Scripts {
+    @if (User!.Identity!.IsAuthenticated && Model.HasExistingAddress)
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var useExistingAddressCheckbox = document.getElementById('checkout-information-use-existing-address-checkbox');
+                var existingAddressInfoContainer = document.getElementById('checkout-information-existing-address-info');
 
-            function updateAddressSectionVisibility() {
-                var isAuthenticated = @User.Identity.IsAuthenticated.ToString().ToLower();
-                var hasExistingAddress = @Model.HasExistingAddress.ToString().ToLower();
+                var addressContainer = document.getElementById('checkout-information-address-container');
 
-                console.log("isAuthenticated:", isAuthenticated);
-                console.log("hasExistingAddress:", hasExistingAddress);
-
-                if (useExistingAddressCheckbox.checked && isAuthenticated === 'true' && hasExistingAddress === 'true') {
-                    addressContainer.style.display = 'none';
-                } else {
-                    addressContainer.style.display = 'block';
+                function toggleAddressDisplay() {
+                    if (useExistingAddressCheckbox.checked) {
+                        existingAddressInfoContainer.style.display = 'block';
+                        addressContainer.style.display = 'none';
+                    } else {
+                        existingAddressInfoContainer.style.display = 'none';
+                        addressContainer.style.display = 'block';
+                    }
                 }
-            }
 
-            var hasExistingAddress = @Model.HasExistingAddress.ToString().ToLower();
-            if (hasExistingAddress === 'true') {
-                useExistingAddressCheckbox.checked = true;
-            }
+                toggleAddressDisplay();
 
-            updateAddressSectionVisibility();
-
-            useExistingAddressCheckbox.addEventListener('change', function () {
-                updateAddressSectionVisibility();
+                useExistingAddressCheckbox.addEventListener('change', function () {
+                    toggleAddressDisplay();
+                });
             });
-        });
-    </script>
-} *@
+        </script>
+    }
+}
