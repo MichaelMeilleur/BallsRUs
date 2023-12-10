@@ -100,10 +100,25 @@
                 <td>
                     @if (item.Status != BallsRUs.Entities.OrderStatus.Canceled)
                     {
-                        @Html.ActionLink("Annuler", "CancelOrder", new { id = item.Id }, new { @class = "btn btn-danger" })
+                        @Html.ActionLink("Annuler", "CancelOrder", new { id = item.Id }, new { @class = "btn btn-danger admin-manage-order-cancel-button" })
                     }
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('.admin-manage-order-cancel-button').click(function (event) {
+                const message = `Êtes-vous sûr de vouloir annuler cette commande? Cette action est irréversible.`;
+
+                if (!confirm(message)) {
+                    event.stopPropagation();
+                    return false;
+                }
+            });
+        });
+    </script>
+}

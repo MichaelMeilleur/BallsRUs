@@ -148,14 +148,39 @@
                     @if (item.IsArchived)
                     {
                         @Html.ActionLink("Désarchiver", "ArchiveProduct", new { id = item.Id }, new { @class = "btn btn-secondary" })
-                        @Html.ActionLink("Supprimer", "DeleteProduct", new { id = item.Id }, new { @class = "btn btn-danger" })
+                        @Html.ActionLink("Supprimer", "DeleteProduct", new { id = item.Id }, new { @class = "btn btn-danger admin-manage-product-delete-button" })
                     }
                     else
                     {
-                        @Html.ActionLink("Archiver", "ArchiveProduct", new { id = item.Id }, new { @class = "btn btn-danger" })
+                        @Html.ActionLink("Archiver", "ArchiveProduct", new { id = item.Id }, new { @class = "btn btn-danger admin-manage-product-archive-button" })
                     }
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('.admin-manage-product-archive-button').click(function (event) {
+                const message = `Êtes-vous sûr de vouloir archiver ce produit?`;
+
+                if (!confirm(message)) {
+                    event.stopPropagation();
+                    return false;
+                }
+            });
+        });
+        $(function () {
+            $('.admin-manage-product-delete-button').click(function (event) {
+                const message = `Êtes-vous sûr de vouloir supprimer ce produit? Cette action est irréversible.`;
+
+                if (!confirm(message)) {
+                    event.stopPropagation();
+                    return false;
+                }
+            });
+        });
+    </script>
+}
