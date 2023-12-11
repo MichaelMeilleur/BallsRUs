@@ -58,7 +58,10 @@
                 <input asp-for="AddressPostalCode" class="form-control" />
                 <span asp-validation-for="AddressPostalCode" class="text-danger"></span>
             </div>
-            @Html.HiddenFor(vm => vm.HasExistingAddress)
+            @if (User!.Identity!.IsAuthenticated)
+            {
+                @Html.HiddenFor(vm => vm.HasExistingAddress)
+            }
         </div>
         @if (User!.Identity!.IsAuthenticated && Model.HasExistingAddress)
         {

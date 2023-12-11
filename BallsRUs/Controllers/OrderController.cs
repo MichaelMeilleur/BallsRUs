@@ -16,7 +16,7 @@ namespace BallsRUs.Controllers
             _context = context;
         }
 
-        public IActionResult OrderDetails(Guid orderId)
+        public IActionResult Details(Guid orderId)
         {
             Order? order = _context.Orders.FirstOrDefault(x => x.Id == orderId);
 
@@ -45,6 +45,7 @@ namespace BallsRUs.Controllers
 
             return View(vm);
         }
+
         public IActionResult CancelOrder(Guid OrderId)
         {
             Order? orderToCancel = _context.Orders.Find(OrderId);

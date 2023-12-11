@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Stripe;
+using System.Globalization;
 using System.Security.Claims;
 using System.Text;
 
@@ -501,7 +502,11 @@ namespace BallsRUs.Controllers
                     Id = Guid.NewGuid(),
                     Name = paymentData.Name,
                     Digits = paymentData.Digits,
+                    Email = paymentData.Email,
                     Phone = paymentData.Phone,
+                    Street = paymentData.Street,
+                    City = paymentData.City,
+                    StateProvince = paymentData.StateProvince,
                     Country = paymentData.Country,
                     PostalCode = paymentData.PostalCode,
                     PaymentDate = DateTime.UtcNow,
@@ -511,8 +516,8 @@ namespace BallsRUs.Controllers
                 order.Status = OrderStatus.Payed;
                 order.PaymentId = payment.Id;
 
-                //_context.Payments.Add(payment);
-                //_context.SaveChanges();
+                _context.Payments.Add(payment);
+                _context.SaveChanges();
 
                 return Ok(charge.ToJson());
             }
@@ -534,9 +539,30 @@ namespace BallsRUs.Controllers
             if (address is null)
                 throw new Exception("The address wasn't found.");
 
-            // TODO: vm qui va faire afficher tous les détails de la commande.
+            Payment? payment = _context.Payments.Find(order.PaymentId);
 
-            return View();
+            if (payment is null)
+                throw new Exception("The payment wasn't found.");
+
+            CheckoutReceiptVM vm = new CheckoutReceiptVM()
+            {
+                Id = orderId,
+                OrderNumber = order.Number,
+                OrderFullName = order.FirstName + " " + order.LastName,
+                OrderEmailAddress = order.EmailAddress,
+                OrderPhoneNumber = order.PhoneNumber,
+                OrderTotal = string.Format(new CultureInfo("fr-CA"), "{0:C}", order.Total),
+                PaymentFullName = payment.Name,
+                PaymentLast4 = payment.Digits,
+                PaymentDate = string.Format("{0:dd/MM/yyyy}", payment.PaymentDate),
+                AddressStreet = address.Street,
+                AddressCity = address.City,
+                AddressStateProvince = address.StateProvince,
+                AddressCountry = address.Country,
+                AddressPostalCode = address.PostalCode
+            };
+
+            return View(vm);
         }
 
         private string GenerateRandomOrderNumber()
