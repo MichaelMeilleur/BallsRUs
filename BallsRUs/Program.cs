@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using BallsRUs.Context;
 using BallsRUs.Entities;
+using BallsRUs.Utilities;
 
 namespace BallsRUs
 {
@@ -25,6 +26,8 @@ namespace BallsRUs
 
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
+            builder.Services.Configure<StripeOptions>(options => builder.Configuration.GetSection("StripeOptions").Bind(options));
 
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddSession();

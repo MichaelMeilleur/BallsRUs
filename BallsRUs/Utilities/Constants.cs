@@ -14,6 +14,9 @@
         // Nombre d'occurences
         public const int NB_OF_SHOWCASED_PRODUCTS = 4;
 
+        // Génération des numéros de commande
+        public const string CHARACTERS_BANK = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
         // Types de tri
         public const string PRICE_HIGH_TO_LOW = "high-to-low";
         public const string PRICE_LOW_TO_HIGH = "low-to-high";
