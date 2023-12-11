@@ -488,7 +488,8 @@ namespace BallsRUs.Controllers
                         { "address_zip", paymentData.PostalCode! },
                         { "address_state", paymentData.StateProvince! },
                         { "phone", paymentData.Phone! },
-                        { "name", paymentData.Name! }
+                        { "name", paymentData.Name! },
+                        { "email", paymentData.Email! }
                     }
                 };
 

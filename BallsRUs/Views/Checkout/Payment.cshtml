@@ -24,6 +24,11 @@
             <div id="checkout-payment-phone-input-validation" role="alert" class="text-danger"></div>
         </div>
         <div class="mb-4">
+            <label for="phone" class="form-label checkout-payment-form-label">Courriel</label>
+            <input asp-for="EmailAddress" type="text" class="form-control" id="checkout-payment-email-input" placeholder="Courriel" />
+            <div id="checkout-payment-email-input-validation" role="alert" class="text-danger"></div>
+        </div>
+        <div class="mb-4">
             <label for="credit-card" class="form-label checkout-payment-form-label">Information de la carte</label>
             <div type="text" class="form-control" id="checkout-payment-credit-card-input" placeholder="Numéro de la carte"></div>
             <div id="checkout-payment-card-errors" role="alert" class="text-danger"></div>
@@ -77,6 +82,7 @@
             const paymentForm = $("#checkout-payment-form");
             const nameInput = $("#checkout-payment-name-input");
             const phoneInput = $("#checkout-payment-phone-input");
+            const emailInput = $("#checkout-payment-email-input");
             const countryInput = $("#checkout-payment-country-input");
             const postalCodeInput = $("#checkout-payment-postal-code-input");
             const streetInput = $("#checkout-payment-street-input");
@@ -120,6 +126,19 @@
                 return true;
             };
 
+            const validateEmail = () => {
+                const email = emailInput.val().trim();
+                var emailRegex = /^[a-zA-Z0-9]([\w\-\.\+\']*)@@([\w\-\.]*)(\.[a-zA-Z]{2,20}(\.[a-zA-Z]{2}){0,2})$/;
+
+                if (!emailRegex.test(email)) {
+                    showError(emailInput, "Veuillez entrer une adresse courriel valide."); // Rien ne s'affiche et ça n'envoie pas, qu'il soit bon ou non...
+                    return false;
+                }
+
+                hideError(emailInput);
+                return true;
+            };
+
             const validatePhone = () => {
                 const phone = phoneInput.val().trim();
                 if (!/^\d+$/.test(phone)) {
@@ -160,7 +179,7 @@
             };
 
             const validateForm = () => {
-                return validateName() && validatePhone() &&
+                return validateName() && validatePhone() && validateEmail() &&
                     validateNotEmpty(streetInput, "Rue") &&
                     validateNotEmpty(countryInput, "Pays") &&
                     validateNotEmpty(cityInput, "Ville") &&
@@ -172,6 +191,7 @@
             // Gestion des événements
             card.on("change", event => handleCardChange(event));
             nameInput.on("input", validateName);
+            emailInput.on("input", validateEmail);
             phoneInput.on("input", validatePhone);
             streetInput.on("input", () => validateNotEmpty(streetInput, "Rue"));
             countryInput.on("input", () => validateNotEmpty(countryInput, "Pays"));
@@ -196,6 +216,7 @@
 
                     const tokenResult = await stripe.createToken(card, {
                         name: nameInput.val(),
+                        email: emailInput.val(),
                         phone: "+1" + phoneInput.val(),
                         address_country: countryInput.val(),
                         address_zip: postalCodeInput.val(),
@@ -220,6 +241,7 @@
                 try {
                     const paymentData = {
                         Name: nameInput.val(),
+                        Email: emailInput.val(),
                         Phone: "+1" + phoneInput.val(),
                         Street: streetInput.val(),
                         Country: countryInput.val(),
