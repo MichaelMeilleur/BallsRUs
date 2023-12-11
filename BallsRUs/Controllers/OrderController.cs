@@ -1,8 +1,11 @@
 ﻿using BallsRUs.Context;
 using BallsRUs.Entities;
+using BallsRUs.Models.Checkout;
 using BallsRUs.Models.Order;
+using BallsRUs.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 using System.Security.Claims;
 
 namespace BallsRUs.Controllers
@@ -18,30 +21,66 @@ namespace BallsRUs.Controllers
 
         public IActionResult Details(Guid orderId)
         {
-            Order? order = _context.Orders.FirstOrDefault(x => x.Id == orderId);
+            Order? order = _context.Orders.Find(orderId);
 
             if (order is null)
                 throw new ArgumentOutOfRangeException(nameof(orderId));
 
-            OrderDetailsVM vm = new()
+            Address? address = _context.Addresses.Find(order.AddressId);
+
+            if (address is null)
+                throw new ArgumentOutOfRangeException(nameof(address));
+
+            Payment? payment = _context.Payments.Find(order.PaymentId);
+
+            List<OrderItem> items = _context.OrderItems.Where(oi => oi.OrderId == orderId).ToList();
+
+            List<OrderDetailsItemVM> itemListVM = new List<OrderDetailsItemVM>();
+
+            foreach (OrderItem item in items)
+            {
+                Entities.Product? itemProduct = _context.Products.Find(item.ProductId);
+
+                OrderDetailsItemVM itemVM = new OrderDetailsItemVM()
+                {
+                    Id = item.Id,
+                    Quantity = item.Quantity,
+                    TotalCost = string.Format(new CultureInfo("fr-CA"), "{0:C}", item.TotalCost),
+                    ProductName = itemProduct is not null ? itemProduct.Name : Constants.NA
+                };
+
+                itemListVM.Add(itemVM);
+            }
+
+            OrderDetailsVM vm = new OrderDetailsVM()
             {
                 Id = order.Id,
-                ConfirmationDate = order.ConfirmationDate,
-                CreationDate = order.CreationDate,
+                ConfirmationDate = string.Format("{0:dd/MM/yyyy}", order.ConfirmationDate),
+                CreationDate = string.Format("{0:dd/MM/yyyy}", order.CreationDate),
                 EmailAddress = order.EmailAddress,
                 FirstName = order.FirstName,
                 LastName = order.LastName,
-                ModificationDate = order.ModificationDate,
+                ModificationDate = string.Format("{0:dd/MM/yyyy}", order.ModificationDate),
                 Number = order.Number,
                 PhoneNumber = order.PhoneNumber,
                 ProductQuantity = order.ProductQuantity,
-                ProductsCost = order.ProductsCost,
-                ShippingCost = order.ShippingCost,
+                ProductsCost = string.Format(new CultureInfo("fr-CA"), "{0:C}", order.ProductsCost),
+                ShippingCost = string.Format(new CultureInfo("fr-CA"), "{0:C}", order.ShippingCost),
+                SubTotal = string.Format(new CultureInfo("fr-CA"), "{0:C}", order.SubTotal),
+                Taxes = string.Format(new CultureInfo("fr-CA"), "{0:C}", order.Taxes),
+                Total = string.Format(new CultureInfo("fr-CA"), "{0:C}", order.Total),
+                AddressStreet = address.Street,
+                AddressCity = address.City,
+                AddressStateProvince = address.StateProvince,
+                AddressCountry = address.Country,
+                AddressPostalCode = address.PostalCode,
+                IsPayed = false,
                 Status = order.Status,
-                SubTotal = order.SubTotal,
-                Taxes = order.Taxes,
-                Total = order.Total,
+                OrderItems = itemListVM
             };
+
+            if (payment is not null)
+                vm.IsPayed = true;
 
             return View(vm);
         }

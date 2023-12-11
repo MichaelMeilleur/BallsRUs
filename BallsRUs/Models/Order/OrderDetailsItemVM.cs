@@ -1,6 +1,6 @@
-﻿namespace BallsRUs.Models.Checkout
+﻿namespace BallsRUs.Models.Order
 {
-    public class CheckoutConfirmationItemVM
+    public class OrderDetailsItemVM
     {
         public Guid? Id { get; set; }
         public int? Quantity { get; set; }

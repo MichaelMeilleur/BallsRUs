@@ -13,11 +13,11 @@ namespace BallsRUs.Models.Checkout
         public string? EmailAddress { get; set; }
         public string? PhoneNumber { get; set; }
         public int? ProductQuantity { get; set; }
-        public decimal? ProductCost { get; set; }
-        public decimal? ShippingCost { get; set; }
-        public decimal? SubTotal { get; set; }
-        public decimal? Taxes { get; set; }
-        public decimal? Total { get; set; }
+        public string? ProductCost { get; set; }
+        public string? ShippingCost { get; set; }
+        public string? SubTotal { get; set; }
+        public string? Taxes { get; set; }
+        public string? Total { get; set; }
         public string? AddressStreet { get; set; }
         public string? AddressCity { get; set; }
         public string? AddressStateProvince { get; set; }
