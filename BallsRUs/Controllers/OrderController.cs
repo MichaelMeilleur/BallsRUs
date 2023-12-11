@@ -9,12 +9,10 @@ namespace BallsRUs.Controllers
 {
     public class OrderController : Controller
     {
-        private readonly UserManager<User> _userManager;
         private readonly ApplicationDbContext _context;
 
-        public OrderController(UserManager<User> userManager, ApplicationDbContext context)
+        public OrderController(ApplicationDbContext context)
         {
-            _userManager = userManager;
             _context = context;
         }
 
@@ -35,7 +33,6 @@ namespace BallsRUs.Controllers
                 LastName = order.LastName,
                 ModificationDate = order.ModificationDate,
                 Number = order.Number,
-                PaymentDate = order.PaymentDate,
                 PhoneNumber = order.PhoneNumber,
                 ProductQuantity = order.ProductQuantity,
                 ProductsCost = order.ProductsCost,
@@ -68,6 +65,7 @@ namespace BallsRUs.Controllers
                 }
 
                 orderToCancel.Status = OrderStatus.Canceled;
+                orderToCancel.ModificationDate = DateTime.UtcNow;
                 _context.SaveChanges();
             }
 

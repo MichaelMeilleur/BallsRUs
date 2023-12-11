@@ -415,7 +415,6 @@ namespace BallsRUs.Controllers
                 LastName = order.LastName,
                 ModificationDate = order.ModificationDate,
                 Number = order.Number,
-                PaymentDate = order.PaymentDate,
                 PhoneNumber = order.PhoneNumber,
                 ProductQuantity = order.ProductQuantity,
                 ProductsCost = order.ProductsCost,

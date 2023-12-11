@@ -2,10 +2,10 @@
 using BallsRUs.Entities;
 using BallsRUs.Models.Checkout;
 using BallsRUs.Utilities;
-using BallsRUs.ViewComponents;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
+using Microsoft.Extensions.Options;
+using Stripe;
 using System.Security.Claims;
 using System.Text;
 
@@ -13,13 +13,15 @@ namespace BallsRUs.Controllers
 {
     public class CheckoutController : Controller
     {
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
+        private readonly IOptions<StripeOptions> _stripeOptions;
 
-        public CheckoutController(ApplicationDbContext context, UserManager<User> userManager)
+        public CheckoutController(ApplicationDbContext context, UserManager<User> userManager, IOptions<StripeOptions> stripeOptions)
         {
             _context = context;
             _userManager = userManager;
+            _stripeOptions = stripeOptions;
         }
 
         public async Task<IActionResult> Information()
@@ -46,7 +48,7 @@ namespace BallsRUs.Controllers
                         PhoneNumber = user.PhoneNumber
                     };
 
-                    Address? address = _context.Addresses.FirstOrDefault(a => a.UserId == userGuid);
+                    Entities.Address? address = _context.Addresses.FirstOrDefault(a => a.UserId == userGuid);
 
                     if (address is not null)
                     {
@@ -91,7 +93,7 @@ namespace BallsRUs.Controllers
 
                 if (Guid.TryParse(userId, out Guid userGuid))
                 {
-                    Address? address;
+                    Entities.Address? address;
 
                     if (vm.HasExistingAddress && vm.UseExistingAddress)
                     {
@@ -102,7 +104,7 @@ namespace BallsRUs.Controllers
                     }
                     else
                     {
-                        address = new Address()
+                        address = new Entities.Address()
                         {
                             Id = Guid.NewGuid(),
                             Street = vm.AddressStreet!,
@@ -146,7 +148,7 @@ namespace BallsRUs.Controllers
 
                     foreach (var item in shoppingCartItems)
                     {
-                        Product? product = _context.Products.Find(item.ProductId);
+                        Entities.Product? product = _context.Products.Find(item.ProductId);
 
                         if (product is null)
                             throw new Exception("The product of the item wasn't found.");
@@ -200,7 +202,7 @@ namespace BallsRUs.Controllers
             }
             else
             {
-                Address address = new Address()
+                Entities.Address address = new Entities.Address()
                 {
                     Id = Guid.NewGuid(),
                     Street = vm.AddressStreet!,
@@ -246,7 +248,7 @@ namespace BallsRUs.Controllers
 
                     foreach (var item in shoppingCartItems)
                     {
-                        Product? product = _context.Products.Find(item.ProductId);
+                        Entities.Product? product = _context.Products.Find(item.ProductId);
 
                         if (product is null)
                             throw new Exception("The product of the item wasn't found.");
@@ -309,7 +311,7 @@ namespace BallsRUs.Controllers
             if (order is null)
                 throw new ArgumentOutOfRangeException(nameof(orderId));
 
-            Address? address = _context.Addresses.Find(order.AddressId);
+            Entities.Address? address = _context.Addresses.Find(order.AddressId);
 
             if (address is null)
                 throw new Exception("The address wasn't found.");
@@ -320,7 +322,7 @@ namespace BallsRUs.Controllers
 
             foreach (OrderItem item in items)
             {
-                Product? itemProduct = _context.Products.Find(item.ProductId);
+                Entities.Product? itemProduct = _context.Products.Find(item.ProductId);
 
                 CheckoutConfirmationItemVM itemVM = new CheckoutConfirmationItemVM()
                 {
@@ -371,7 +373,7 @@ namespace BallsRUs.Controllers
 
             if (!ModelState.IsValid)
             {
-                Address? address = _context.Addresses.Find(order.AddressId);
+                Entities.Address? address = _context.Addresses.Find(order.AddressId);
 
                 if (address is null)
                     throw new Exception("The address wasn't found.");
@@ -382,7 +384,7 @@ namespace BallsRUs.Controllers
 
                 foreach (OrderItem item in items)
                 {
-                    Product? itemProduct = _context.Products.Find(item.ProductId);
+                    Entities.Product? itemProduct = _context.Products.Find(item.ProductId);
 
                     CheckoutConfirmationItemVM itemVM = new CheckoutConfirmationItemVM()
                     {
@@ -421,19 +423,130 @@ namespace BallsRUs.Controllers
             order.ConfirmationDate = DateTime.Now;
             _context.SaveChanges();
 
-            return RedirectToAction("Details", "Account");
+            return RedirectToAction(nameof(Payment), new { orderId = orderId });
+        }
+
+        public IActionResult Payment(Guid orderId)
+        {
+            Order? order = _context.Orders.Find(orderId);
+
+            if (order is null)
+                throw new ArgumentOutOfRangeException(nameof(orderId));
+
+            if (order.Status == OrderStatus.Confirmed)
+            {
+                ViewBag.IsPayed = false;
+                Entities.Address? address = _context.Addresses.Find(order.AddressId);
+
+                if (address is null)
+                    throw new Exception("The address wasn't found.");
+
+                CheckoutPaymentVM vm = new CheckoutPaymentVM()
+                {
+                    Id = orderId,
+                    FullName = order.FirstName + " " + order.LastName,
+                    EmailAddress = order.EmailAddress,
+                    PhoneNumber = order.PhoneNumber,
+                    Total = order.Total,
+                    AddressStreet = address.Street,
+                    AddressCity = address.City,
+                    AddressStateProvince = address.StateProvince,
+                    AddressCountry = address.Country,
+                    AddressPostalCode = address.PostalCode
+                };
+
+                return View(vm);
+            }
+            else
+            {
+                ViewBag.IsPayed = true;
+                return View();
+            }
+        }
+
+        public IActionResult Charge(Guid orderId, [FromBody] PaymentData paymentData)
+        {
+            Order? order = _context.Orders.Find(orderId);
+
+            if (order is null)
+                throw new ArgumentOutOfRangeException(nameof(orderId));
+
+            if (order.Status == OrderStatus.Confirmed)
+            {
+                StripeConfiguration.ApiKey = _stripeOptions.Value.SecretKey;
+
+                var chargeOptions = new ChargeCreateOptions
+                {
+                    Amount = (long?)(order.Total * 100), // Prix en cent
+                    Source = paymentData.Token,
+                    Currency = _stripeOptions.Value.CurrencyCode,
+                    Metadata = new Dictionary<string, string>
+                    {
+                        { "address_country", paymentData.Country! },
+                        { "address_line1", paymentData.Street! },
+                        { "address_city", paymentData.City! },
+                        { "address_zip", paymentData.PostalCode! },
+                        { "address_state", paymentData.StateProvince! },
+                        { "phone", paymentData.Phone! },
+                        { "name", paymentData.Name! }
+                    }
+                };
+
+                var chargeService = new ChargeService();
+                var charge = chargeService.Create(chargeOptions);
+
+                Payment payment = new Payment()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = paymentData.Name,
+                    Digits = paymentData.Digits,
+                    Phone = paymentData.Phone,
+                    Country = paymentData.Country,
+                    PostalCode = paymentData.PostalCode,
+                    PaymentDate = DateTime.UtcNow,
+                    StripePaymentId = paymentData.Token
+                };
+
+                order.Status = OrderStatus.Payed;
+                order.PaymentId = payment.Id;
+
+                //_context.Payments.Add(payment);
+                //_context.SaveChanges();
+
+                return Ok(charge.ToJson());
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        public IActionResult Receipt(Guid orderId)
+        {
+            Order? order = _context.Orders.Find(orderId);
+
+            if (order is null)
+                throw new ArgumentOutOfRangeException(nameof(orderId));
+
+            Entities.Address? address = _context.Addresses.Find(order.AddressId);
+
+            if (address is null)
+                throw new Exception("The address wasn't found.");
+
+            // TODO: vm qui va faire afficher tous les détails de la commande.
+
+            return View();
         }
 
         private string GenerateRandomOrderNumber()
         {
-            const string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             Random random = new Random();
             StringBuilder stringBuilder = new StringBuilder(16);
 
             for (int i = 0; i < 16; i++)
             {
-                int index = random.Next(characters.Length);
-                stringBuilder.Append(characters[index]);
+                int index = random.Next(Constants.CHARACTERS_BANK.Length);
+                stringBuilder.Append(Constants.CHARACTERS_BANK[index]);
             }
 
             return stringBuilder.ToString();

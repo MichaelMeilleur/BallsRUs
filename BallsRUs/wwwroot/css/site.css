@@ -48,10 +48,9 @@ input[type=submit], input[type=button], input[type=reset] {
         filter: brightness(1.10);
     }
 
-input[type=text], input[type=password], input[type=number], textarea {
+input[type=text], input[type=password], input[type=number], input[type=email], textarea {
     border: 0px solid #000000;
     outline: none;
-    margin-bottom: 1px;
     border-bottom-width: 1px;
     background-color: white;
     width: 100%;
@@ -60,10 +59,9 @@ input[type=text], input[type=password], input[type=number], textarea {
     border-radius: 0px;
 }
 
-    input[type=text]:focus, input[type=password]:focus, input[type=number]:focus, textarea:focus {
+    input[type=text]:focus, input[type=password]:focus, input[type=number]:focus, input[type=email]:focus, textarea:focus {
         outline: none;
         box-shadow: none;
-        margin-bottom: 0px;
         border-bottom-width: 2px;
         border-color: forestgreen;
     }
@@ -1098,6 +1096,15 @@ input[type=text], input[type=password], input[type=number], textarea {
     font-family: 'Poppins';
 }
 
+.account-ordershistory-container {
+    margin-top: 30px;
+    margin-bottom: 180px;
+}
+
+.account-ordershistory-title {
+    margin-top: 35px;
+}
+
 .shopping-cart-index-title {
     font-weight: bold;
     width: 100%;
@@ -1287,6 +1294,7 @@ input[type=text], input[type=password], input[type=number], textarea {
 }
 
 #checkout-information-title {
+    font-family: 'Poppins';
     width: fit-content;
     margin-left: auto;
     margin-right: auto;
@@ -1336,17 +1344,10 @@ input[type=text], input[type=password], input[type=number], textarea {
 }
 
 #checkout-confirmation-title {
+    font-family: 'Poppins';
     width: fit-content;
     margin-top: 40px;
     margin-bottom: 40px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#checkout-confirmation-title {
-    width: fit-content;
-    margin-top: 40px;
-    margin-bottom: 5px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -1417,14 +1418,79 @@ input[type=text], input[type=password], input[type=number], textarea {
         background-size: cover;
     }
 
-.account-ordershistory-container {
-    margin-top: 30px;
-    margin-bottom:180px;
-}   
-.account-ordershistory-title{
-    margin-top : 35px;
+#checkout-payment-container {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 75px;
+    width: max(50%, 375px);
 }
-#order-orderdetails-container{
-    margin-top:50px;
-    margin-bottom:150px;
+
+#checkout-payment-title {
+    font-family: 'Poppins';
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: bold;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.checkout-payment-form-label {
+    font-weight: bold;
+    font-family: 'Poppins';
+}
+
+#checkout-payment-credit-card-input {
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid black;
+    margin-bottom: 1px;
+    padding-bottom: 0px!important;
+}
+
+#checkout-payment-address-title {
+    width: fit-content;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#checkout-payment-terms-checkbox {
+    -webkit-appearance: none;
+    background-color: white;
+    border: 1px solid #cacece;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    padding: 7px;
+    border-radius: 0px;
+}
+    #checkout-payment-terms-checkbox:checked {
+        background-color: forestgreen;
+        background-image: url("/img/crochet.svg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+#checkout-payment-tos-link {
+    color: forestgreen;
+    font-weight: bold;
+}
+
+#checkout-payment-submit-button {
+    background-color: forestgreen;
+    border: none;
+    color: white;
+    width: 200px;
+    height: 35px;
+    display: block;
+    justify-self: center;
+    margin: auto;
+    margin-top: 10px;
+}
+    #checkout-payment-submit-button:hover {
+        filter: brightness(1.10);
+    }
+
+#order-orderdetails-container {
+    margin-top: 50px;
+    margin-bottom: 150px;
 }

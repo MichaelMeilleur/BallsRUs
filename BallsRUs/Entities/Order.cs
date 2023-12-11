@@ -22,12 +22,12 @@ namespace BallsRUs.Entities
         public decimal? Total { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime? ConfirmationDate { get; set; }
-        public DateTime? PaymentDate { get; set; }
         public DateTime? ModificationDate { get; set; }
 
         // Foreign keys
         public Guid? UserId { get; set; }
         public Guid AddressId { get; set; }
+        public Guid? PaymentId { get; set; }
 
         // Navigation properties
         [ForeignKey(nameof(UserId))]
@@ -35,5 +35,8 @@ namespace BallsRUs.Entities
 
         [ForeignKey(nameof(AddressId))]
         public virtual Address? Address { get; set; }
+
+        [ForeignKey(nameof(PaymentId))]
+        public virtual Payment? Payment { get; set; }
     }
 }

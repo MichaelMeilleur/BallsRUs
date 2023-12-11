@@ -319,6 +319,7 @@ namespace BallsRUs.Controllers
                 }
 
                 orderToCancel.Status = OrderStatus.Canceled;
+                orderToCancel.ModificationDate = DateTime.UtcNow;
                 _context.SaveChanges();
             }
 
