@@ -329,7 +329,7 @@ namespace BallsRUs.Controllers
                 {
                     Id = item.Id,
                     Quantity = item.Quantity,
-                    TotalCost = item.TotalCost,
+                    TotalCost = string.Format(new CultureInfo("fr-CA"), "{0:C}", item.TotalCost),
                     ProductName = itemProduct is not null ? itemProduct.Name : Constants.NA
                 };
 
@@ -345,11 +345,11 @@ namespace BallsRUs.Controllers
                 EmailAddress = order.EmailAddress,
                 PhoneNumber = order.PhoneNumber,
                 ProductQuantity = order.ProductQuantity,
-                ProductCost = order.ProductsCost,
-                ShippingCost = order.ShippingCost,
-                SubTotal = order.SubTotal,
-                Taxes = order.Taxes,
-                Total = order.Total,
+                ProductCost = string.Format(new CultureInfo("fr-CA"), "{0:C}", order.ProductsCost),
+                ShippingCost = string.Format(new CultureInfo("fr-CA"), "{0:C}", order.ShippingCost),
+                SubTotal = string.Format(new CultureInfo("fr-CA"), "{0:C}", order.SubTotal),
+                Taxes = string.Format(new CultureInfo("fr-CA"), "{0:C}", order.Taxes),
+                Total = string.Format(new CultureInfo("fr-CA"), "{0:C}", order.Total),
                 AddressStreet = address.Street,
                 AddressCity = address.City,
                 AddressStateProvince = address.StateProvince,
@@ -391,7 +391,7 @@ namespace BallsRUs.Controllers
                     {
                         Id = item.Id,
                         Quantity = item.Quantity,
-                        TotalCost = item.TotalCost,
+                        TotalCost = string.Format(new CultureInfo("fr-CA"), "{0:C}", item.TotalCost),
                         ProductName = itemProduct is not null ? itemProduct.Name : Constants.NA
                     };
 
@@ -405,11 +405,11 @@ namespace BallsRUs.Controllers
                 vm.EmailAddress = order.EmailAddress;
                 vm.PhoneNumber = order.PhoneNumber;
                 vm.ProductQuantity = order.ProductQuantity;
-                vm.ProductCost = order.ProductsCost;
-                vm.ShippingCost = order.ShippingCost;
-                vm.SubTotal = order.SubTotal;
-                vm.Taxes = order.Taxes;
-                vm.Total = order.Total;
+                vm.ProductCost = string.Format(new CultureInfo("fr-CA"), "{0:C}", order.ProductsCost);
+                vm.ShippingCost = string.Format(new CultureInfo("fr-CA"), "{0:C}", order.ShippingCost);
+                vm.SubTotal = string.Format(new CultureInfo("fr-CA"), "{0:C}", order.SubTotal);
+                vm.Taxes = string.Format(new CultureInfo("fr-CA"), "{0:C}", order.Taxes);
+                vm.Total = string.Format(new CultureInfo("fr-CA"), "{0:C}", order.Total);
                 vm.AddressStreet = address.Street;
                 vm.AddressCity = address.City;
                 vm.AddressStateProvince = address.StateProvince;
@@ -555,11 +555,11 @@ namespace BallsRUs.Controllers
                 PaymentFullName = payment.Name,
                 PaymentLast4 = payment.Digits,
                 PaymentDate = string.Format("{0:dd/MM/yyyy}", payment.PaymentDate),
-                AddressStreet = address.Street,
-                AddressCity = address.City,
-                AddressStateProvince = address.StateProvince,
-                AddressCountry = address.Country,
-                AddressPostalCode = address.PostalCode
+                AddressStreet = payment.Street,
+                AddressCity = payment.City,
+                AddressStateProvince = payment.StateProvince,
+                AddressCountry = payment.Country,
+                AddressPostalCode = payment.PostalCode
             };
 
             return View(vm);

@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 <div class="col-6">
-                    <span id="checkout-receipt-payment-card-subtitle">Livraison:</span>
+                    <span id="checkout-receipt-payment-card-subtitle">Facturation:</span>
                     <p id="checkout-receipt-payment-card-street" class="m-0">@Model.AddressStreet</p>
                     <p id="checkout-receipt-payment-card-country" class="m-0">@Model.AddressCity, @Model.AddressStateProvince (@Model.AddressCountry)</p>
                     <p id="checkout-receipt-payment-card-postal-code" class="m-0">@Model.AddressPostalCode</p>
@@ -57,7 +57,7 @@
     </div>
     @if (User!.Identity!.IsAuthenticated)
     {
-        <a asp-controller="Account" asp-action="Details" id="checkout-receipt-return-button"><span>Retour</span></a>
+        <a asp-controller="Order" asp-action="Details" asp-route-orderId="@Model.Id" id="checkout-receipt-return-button"><span>Retour</span></a>
     }
     else
     {
