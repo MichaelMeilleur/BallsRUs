@@ -1,20 +1,27 @@
-﻿@using BallsRUs.Models.Account
-@model IEnumerable<OrderManageVM>
+﻿@using BallsRUs.Entities
+@using BallsRUs.Models.Account
+@model IEnumerable<AccountOrderHistoryVM>
 
 @{
     ViewData["Title"] = "Liste des commandes";
 }
-<h3 class="account-orders-history-title">Historique de vos commandes</h3>
-<div class="account-orders-history-container">
+<h3 id="account-orders-history-title">Historique de vos commandes</h3>
+<div id="account-orders-history-back-button-container">
+    <a id="account-orders-history-back-button" asp-controller="Account" asp-action="Details">
+        <span id="account-orders-history-back-button-text">Retour</span>
+    </a>
+</div>
+<div id="account-orders-history-container">
     @if (Model.Count() > 0)
     {
-        <table class="table">
-            <thead class="order-orderslist-table">
+        <table id="account-order-history-table" class="table">
+            <thead>
                 <tr>
                     <th>Commande #</th>
                     <th>Date d'achat</th>
-                    <th>Facturé à</th>
-                    <th>Sous-Total</th>
+                    <th>Nom</th>
+                    <th>Total</th>
+                    <th>Nombre d'articles</th>
                     <th>Status</th>
                     <th></th>
                 </tr>
@@ -23,12 +30,17 @@
                 @foreach (var order in Model)
                 {
                     <tr>
-                        <th class="row">@order.Number</th>
-                        <td>@order.ConfirmationDate</td>
-                        <td>@order.LastName @order.FirstName</td>
-                        <td>@order.SubTotal$</td>
+                        <td>@order.Number</td>
+                        <td>@order.CreationDate</td>
+                        <td>@order.FullName</td>
+                        <td>@order.Total</td>
+                        <td>@order.ProductQuantity</td>
                         <td>@order.Status</td>
-                        <td>@Html.ActionLink("Détails","Details","Order", new{orderId = order.Id}, new{ @class=" btn btn-primary" })</td>
+                        <td>
+                            <a class="account-orders-history-details-button" asp-controller="Order" asp-action="Details" asp-route-orderId="@order.Id">
+                                <span class="account-orders-history-details-button-text">Détails</span>
+                            </a>
+                        </td>
                     </tr>
                 }
             </tbody>
@@ -36,6 +48,6 @@
     }
     else
     {
-        <h4>Vous n'avez aucune commande</h4>
+        <p id="account-order-history-no-order">Vous n'avez aucune commande</p>
     }
 </div>

@@ -8,7 +8,7 @@
 
 <div class="container">
     <h3 id="account-details-title">Mon compte</h3>
-    <div class="row mt-4">
+    <div class="row mt-4 mb-4 text-center">
         <div class="col-md-6">
             <div class="mb-4">
                 <h4>Informations</h4>
@@ -23,8 +23,8 @@
                 <p><strong>Numéro de téléphone : </strong>@Model.PhoneNumber</p>
             </div>
             <div class="mb-4">
-                <a asp-controller="Account" asp-action="Editinfo">
-                    <button class="account-details-modifier-button">Modifier</button>
+                <a class="account-details-modifier-button" asp-controller="Account" asp-action="Editinfo">
+                    <span class="account-details-modifier-button-text">Modifier</span>
                 </a>
             </div>
         </div>
@@ -36,8 +36,8 @@
                     <p>Aucune adresse</p>
                 </div>
                 <div class="form-group mt-4 text-start">
-                    <a asp-controller="Account" asp-action="Address">
-                        <button class="account-details-modifier-button">Ajouter une adresse</button>
+                    <a class="account-details-modifier-button" asp-controller="Account" asp-action="Address">
+                        <span class="account-details-modifier-button-text">Ajouter une adresse</span>
                     </a>
                 </div>
             }
@@ -56,20 +56,20 @@
                     <p>@Model.AddressPostalCode</p>
                 </div>
                 <div class="mb-4">
-                    <a asp-controller="Account" asp-action="Address">
-                        <button class="account-details-modifier-button">Modifier</button>
+                    <a class="account-details-modifier-button" asp-controller="Account" asp-action="Address">
+                        <span class="account-details-modifier-button-text">Modifier</span>
                     </a>
                 </div>
             }
         </div>
     </div>
-    <div class="row mt-4">
+    <div class="row pt-4 mb-5">
         <div class="col-9">
             <h4>Mes commandes récentes</h4>
         </div>
         <div class="col">
-            <a asp-controller="Account" asp-action="OrdersHistory">
-                <button class="account-details-modifier-button">Voir tout</button>
+            <a class="account-details-modifier-button" asp-controller="Account" asp-action="OrdersHistory">
+                <span class="account-details-modifier-button-text">Voir tout</span>
             </a>
         </div>
     </div>
