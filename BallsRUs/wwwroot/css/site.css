@@ -971,6 +971,7 @@ input[type=text], input[type=password], input[type=number], input[type=email], t
     font-weight: bold;
     width: fit-content;
     margin-top: 50px;
+    margin-bottom: 50px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -986,7 +987,6 @@ input[type=text], input[type=password], input[type=number], input[type=email], t
     cursor: pointer;
     width: 30%;
 }
-
     .account-details-button:hover {
         filter: brightness(1.10);
         text-decoration: none;
@@ -999,10 +999,18 @@ input[type=text], input[type=password], input[type=number], input[type=email], t
     color: white;
     width: 200px;
     height: 35px;
-    display: block;
-    justify-self: center;
+    display: flex;
     margin: auto;
     margin-top: 10px;
+}
+    .account-details-modifier-button:hover {
+        filter: brightness(1.10);
+        text-decoration: none;
+        color: white;
+    }
+
+.account-details-modifier-button-text {
+    margin: auto;
 }
 
 #account-address-container {
@@ -1096,13 +1104,63 @@ input[type=text], input[type=password], input[type=number], input[type=email], t
     font-family: 'Poppins';
 }
 
-.account-orders-history-container {
+#account-orders-history-container {
     margin-top: 30px;
     margin-bottom: 180px;
 }
 
-.account-orders-history-title {
-    margin-top: 35px;
+#account-orders-history-back-button {
+    background-color: #6c757d;
+    border: none;
+    color: white;
+    width: 200px;
+    height: 35px;
+    display: flex;
+}
+    #account-orders-history-back-button:hover {
+        filter: brightness(1.10);
+        text-decoration: none;
+        color: white;
+    }
+
+#account-orders-history-back-button-text {
+    margin: auto;
+}
+
+#account-orders-history-title {
+    font-family: 'Poppins';
+    font-weight: bold;
+    width: fit-content;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.account-orders-history-details-button {
+    background-color: forestgreen;
+    border: none;
+    color: white;
+    width: 100px;
+    height: 30px;
+    display: flex;
+    margin: auto;
+}
+
+    .account-orders-history-details-button:hover {
+        filter: brightness(1.10);
+        text-decoration: none;
+        color: white;
+    }
+
+.account-orders-history-details-button-text {
+    margin: auto;
+}
+
+#account-order-history-no-order {
+    text-align: center;
+    margin-top: 300px;
+    margin-bottom: 300px;
 }
 
 .shopping-cart-index-title {

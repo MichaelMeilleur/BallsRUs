@@ -5,12 +5,8 @@ using BallsRUs.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Server.IIS.Core;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Diagnostics.Metrics;
+using System.Globalization;
 using System.Security.Claims;
-using System.Text.RegularExpressions;
 
 namespace BallsRUs.Controllers
 {
@@ -405,25 +401,19 @@ namespace BallsRUs.Controllers
 
             Guid userId = Guid.Parse(userIdString);
 
-            IEnumerable<OrderManageVM> orders = _context.Orders.Where(x => x.UserId == userId).OrderByDescending(o => o.ConfirmationDate).Select(order => new OrderManageVM
+            IEnumerable<AccountOrderHistoryVM> orders = _context.Orders.Where(x => x.UserId == userId).OrderByDescending(o => o.ConfirmationDate).Select(order => new AccountOrderHistoryVM
             {
                 Id = order.Id,
-                ConfirmationDate = order.ConfirmationDate,
-                CreationDate = order.CreationDate,
-                EmailAddress = order.EmailAddress,
-                FirstName = order.FirstName,
-                LastName = order.LastName,
-                ModificationDate = order.ModificationDate,
                 Number = order.Number,
-                PhoneNumber = order.PhoneNumber,
+                Status = order.Status == OrderStatus.Opened ? "Ouvert"
+                    : order.Status == OrderStatus.Confirmed ? "Confirmée"
+                    : order.Status == OrderStatus.Payed ? "Payée"
+                    : order.Status == OrderStatus.Refunded ? "Remboursée"
+                    : order.Status == OrderStatus.Canceled ? "Annulée" : Constants.NA,
+                FullName = order.FirstName + " " + order.LastName,
                 ProductQuantity = order.ProductQuantity,
-                ProductsCost = order.ProductsCost,
-                ShippingCost = order.ShippingCost,
-                Status = order.Status,
-                SubTotal = order.SubTotal,
-                Taxes = order.Taxes,
-                Total = order.Total,
-                User = order.User
+                Total = string.Format(new CultureInfo("fr-CA"), "{0:C}", order.Total),
+                CreationDate = order.CreationDate
             });
 
             return View(orders);
@@ -446,7 +436,7 @@ namespace BallsRUs.Controllers
                 IEnumerable<ShoppingCartItem> items = _context.ShoppingCartItems.Where(i => i.ShoppingCartId == shoppingCartId);
                 foreach (ShoppingCartItem item in items)
                 {
-                    Product? product = _context.Products.Find(item.ProductId);
+                    Entities.Product? product = _context.Products.Find(item.ProductId);
 
                     if (product is null)
                         throw new Exception("The product of the item wasn't found.");
